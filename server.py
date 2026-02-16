@@ -250,6 +250,479 @@ def health():
     return jsonify({'status': 'ok'})
 
 
+# ============ MEP Meetings Endpoints ============
+
+import csv
+
+MEETINGS_CSV_PATH = os.path.join(PROJECT_ROOT, 'data', 'ep_meetings_all.csv')
+MEPS_CSV_PATH = os.path.join(PROJECT_ROOT, 'data', 'ep_meps.csv')
+
+# Cache for data
+_meetings_cache = None
+_meps_cache = None
+
+def load_meps_lookup():
+    """Load MEPs data and return lookup dict by ID."""
+    global _meps_cache
+    if _meps_cache is None:
+        _meps_cache = {}
+        with open(MEPS_CSV_PATH, 'r', encoding='utf-8') as f:
+            reader = csv.DictReader(f)
+            for row in reader:
+                mep_id = int(row['id'])
+                # Parse memberships JSON to get current committees
+                committees = []
+                try:
+                    memberships = json.loads(row.get('memberships', '[]'))
+                    for m in memberships:
+                        if m.get('classification', '').startswith('COMMITTEE_') and not m.get('end_date'):
+                            committees.append(m.get('code', ''))
+                except:
+                    pass
+
+                _meps_cache[mep_id] = {
+                    'id': mep_id,
+                    'name': row.get('name', ''),
+                    'country': row.get('country_name', '') or row.get('country', ''),
+                    'country_code': row.get('country_code', ''),
+                    'political_group': row.get('political_group', ''),
+                    'committees': list(set(committees)),  # dedupe
+                }
+    return _meps_cache
+
+def load_meetings_data():
+    """Load and cache meetings data from CSV, enriched with MEP info.
+
+    COLLAPSING LOGIC: Meetings with the same (mep_id, title, date) are collapsed
+    into a single record with an attendees list ONLY if there are more than 3
+    attendees. This handles large stakeholder dialogues (50+ orgs) while keeping
+    small meetings (1-3 attendees) as separate rows for granularity.
+    """
+    global _meetings_cache
+    if _meetings_cache is None:
+        meps = load_meps_lookup()
+
+        # First pass: group all rows by unique meeting key
+        meetings_grouped = {}
+
+        with open(MEETINGS_CSV_PATH, 'r', encoding='utf-8') as f:
+            reader = csv.DictReader(f)
+            for row in reader:
+                try:
+                    mep_id = int(row.get('member_id', 0))
+                except:
+                    continue
+
+                meeting_key = (
+                    mep_id,
+                    row.get('title', ''),
+                    row.get('meeting_date', '')
+                )
+
+                if meeting_key not in meetings_grouped:
+                    meetings_grouped[meeting_key] = []
+
+                meetings_grouped[meeting_key].append(row)
+
+        # Second pass: collapse only if >5 attendees, otherwise keep separate
+        _meetings_cache = []
+
+        for meeting_key, rows in meetings_grouped.items():
+            mep_id, title, meeting_date = meeting_key
+            mep_info = meps.get(mep_id, {})
+            committees = mep_info.get('committees', [])
+
+            if len(rows) > 3:
+                # Collapse into single meeting with attendees list
+                attendees = []
+                for row in rows:
+                    attendee = row.get('attendees', '').strip()
+                    lobbyist_id = row.get('lobbyist_id', '').strip()
+                    if attendee:
+                        attendees.append({
+                            'name': attendee,
+                            'lobbyist_id': lobbyist_id if lobbyist_id else None
+                        })
+
+                first_row = rows[0]
+                _meetings_cache.append({
+                    'mep_id': mep_id,
+                    'meeting_date': meeting_date,
+                    'title': title,
+                    'capacity': first_row.get('member_capacity', ''),
+                    'related_procedure': first_row.get('procedure_reference', '') or None,
+                    'committee_acronym': committees[0] if committees else None,
+                    'mep_committees': committees,
+                    'attendees': attendees,
+                    'source_data': {
+                        'mep_name': first_row.get('member_name', mep_info.get('name', '')),
+                        'mep_country': mep_info.get('country', ''),
+                        'mep_political_group': mep_info.get('political_group', ''),
+                    }
+                })
+            else:
+                # Keep as separate rows (1-5 attendees)
+                for row in rows:
+                    attendee = row.get('attendees', '').strip()
+                    lobbyist_id = row.get('lobbyist_id', '').strip()
+                    _meetings_cache.append({
+                        'mep_id': mep_id,
+                        'meeting_date': meeting_date,
+                        'title': title,
+                        'capacity': row.get('member_capacity', ''),
+                        'related_procedure': row.get('procedure_reference', '') or None,
+                        'committee_acronym': committees[0] if committees else None,
+                        'mep_committees': committees,
+                        'attendees': [{'name': attendee, 'lobbyist_id': lobbyist_id if lobbyist_id else None}] if attendee else [],
+                        'source_data': {
+                            'mep_name': row.get('member_name', mep_info.get('name', '')),
+                            'mep_country': mep_info.get('country', ''),
+                            'mep_political_group': mep_info.get('political_group', ''),
+                        }
+                    })
+
+    return _meetings_cache
+
+
+@app.route('/api/meps')
+def get_meps():
+    """
+    GET /api/meps
+    Returns list of all MEPs with their meeting counts.
+    """
+    try:
+        meetings = load_meetings_data()
+
+        # Aggregate MEP info
+        meps = {}
+        for m in meetings:
+            mep_id = m.get('mep_id')
+            if mep_id is None:
+                continue
+
+            source_data = m.get('source_data', {})
+            if mep_id not in meps:
+                meps[mep_id] = {
+                    'id': mep_id,
+                    'name': source_data.get('mep_name', 'Unknown'),
+                    'country': source_data.get('mep_country', ''),
+                    'political_group': source_data.get('mep_political_group', ''),
+                    'meeting_count': 0,
+                }
+            meps[mep_id]['meeting_count'] += 1
+
+        # Sort by meeting count descending
+        mep_list = sorted(meps.values(), key=lambda x: x['meeting_count'], reverse=True)
+
+        return jsonify({
+            'meps': mep_list,
+            'total': len(mep_list),
+        })
+
+    except Exception as e:
+        return jsonify({'error': str(e), 'meps': []}), 500
+
+
+@app.route('/api/meps/<int:mep_id>/timeline')
+def get_mep_timeline(mep_id):
+    """
+    GET /api/meps/<mep_id>/timeline
+    Returns monthly meeting counts for a specific MEP.
+
+    Query parameters:
+    - committee: filter by committee acronym
+    - procedure: filter by related procedure
+    - organization: filter by organization name (fuzzy match)
+    """
+    try:
+        meetings = load_meetings_data()
+
+        # Get filter parameters
+        committee_filter = request.args.get('committee')
+        procedure_filter = request.args.get('procedure')
+        organization_filter = request.args.get('organization')
+
+        # Filter meetings for this MEP
+        mep_meetings = [m for m in meetings if m.get('mep_id') == mep_id]
+
+        if not mep_meetings:
+            return jsonify({'error': f'MEP {mep_id} not found', 'timeline': []}), 404
+
+        # Apply filters
+        if committee_filter:
+            # Filter by MEP's committee memberships (since meetings don't have committee info)
+            mep_meetings = [m for m in mep_meetings if committee_filter in m.get('mep_committees', [])]
+        if procedure_filter:
+            mep_meetings = [m for m in mep_meetings if m.get('related_procedure') == procedure_filter]
+        if organization_filter:
+            # Filter by organization name (case-insensitive substring match)
+            org_lower = organization_filter.lower()
+            mep_meetings = [m for m in mep_meetings
+                          if any(org_lower in att.get('name', '').lower() for att in m.get('attendees', []))]
+
+        # Get MEP info from first meeting (before filtering)
+        all_mep_meetings = [m for m in meetings if m.get('mep_id') == mep_id]
+        source_data = all_mep_meetings[0].get('source_data', {})
+        mep_info = {
+            'id': mep_id,
+            'name': source_data.get('mep_name', 'Unknown'),
+            'country': source_data.get('mep_country', ''),
+            'political_group': source_data.get('mep_political_group', ''),
+        }
+
+        # Aggregate by week with individual meeting details
+        from datetime import datetime
+        weekly_data = {}
+        for m in mep_meetings:
+            date = m.get('meeting_date')
+            if date:
+                # Get ISO week: YYYY-WXX
+                try:
+                    dt = datetime.strptime(date, '%Y-%m-%d')
+                    week_key = f"{dt.isocalendar()[0]}-W{dt.isocalendar()[1]:02d}"
+                except:
+                    continue
+
+                if week_key not in weekly_data:
+                    weekly_data[week_key] = {'count': 0, 'meetings': []}
+                weekly_data[week_key]['count'] += 1
+                weekly_data[week_key]['meetings'].append({
+                    'date': date,
+                    'title': m.get('title', ''),
+                    'attendee_count': len(m.get('attendees', [])),
+                    'procedure': m.get('related_procedure'),
+                })
+
+        # Sort by week
+        timeline = [
+            {'week': k, 'count': v['count'], 'meetings': v['meetings']}
+            for k, v in sorted(weekly_data.items())
+        ]
+
+        return jsonify({
+            'mep': mep_info,
+            'timeline': timeline,
+            'total_meetings': len(mep_meetings),
+            'filters': {
+                'committee': committee_filter,
+                'procedure': procedure_filter,
+            }
+        })
+
+    except Exception as e:
+        return jsonify({'error': str(e), 'timeline': []}), 500
+
+
+@app.route('/api/committees')
+def get_committees():
+    """
+    GET /api/committees
+    Returns list of all committees with meeting counts.
+    """
+    try:
+        meetings = load_meetings_data()
+
+        committees = {}
+        for m in meetings:
+            comm = m.get('committee_acronym')
+            if comm:
+                if comm not in committees:
+                    committees[comm] = {'acronym': comm, 'count': 0}
+                committees[comm]['count'] += 1
+
+        # Sort by count descending
+        committee_list = sorted(committees.values(), key=lambda x: x['count'], reverse=True)
+
+        return jsonify({
+            'committees': committee_list,
+            'total': len(committee_list),
+        })
+
+    except Exception as e:
+        return jsonify({'error': str(e), 'committees': []}), 500
+
+
+@app.route('/api/procedures')
+def get_procedures():
+    """
+    GET /api/procedures
+    Returns list of all procedures with meeting counts.
+    """
+    try:
+        meetings = load_meetings_data()
+
+        procedures = {}
+        for m in meetings:
+            proc = m.get('related_procedure')
+            if proc:
+                if proc not in procedures:
+                    procedures[proc] = {'procedure': proc, 'count': 0}
+                procedures[proc]['count'] += 1
+
+        # Sort by count descending
+        procedure_list = sorted(procedures.values(), key=lambda x: x['count'], reverse=True)
+
+        return jsonify({
+            'procedures': procedure_list,
+            'total': len(procedure_list),
+        })
+
+    except Exception as e:
+        return jsonify({'error': str(e), 'procedures': []}), 500
+
+
+@app.route('/api/organizations')
+def get_organizations():
+    """
+    GET /api/organizations
+    Returns list of all organizations with meeting counts.
+    """
+    try:
+        meetings = load_meetings_data()
+
+        organizations = {}
+        for m in meetings:
+            for attendee in m.get('attendees', []):
+                org_name = attendee.get('name', '').strip()
+                if org_name:
+                    if org_name not in organizations:
+                        organizations[org_name] = {'name': org_name, 'count': 0}
+                    organizations[org_name]['count'] += 1
+
+        # Sort by count descending
+        org_list = sorted(organizations.values(), key=lambda x: x['count'], reverse=True)
+
+        return jsonify({
+            'organizations': org_list,
+            'total': len(org_list),
+        })
+
+    except Exception as e:
+        return jsonify({'error': str(e), 'organizations': []}), 500
+
+
+@app.route('/api/meps/<int:mep_id>/procedures')
+def get_mep_procedures(mep_id):
+    """
+    GET /api/meps/<mep_id>/procedures
+    Returns procedures for a specific MEP with meeting counts.
+    """
+    try:
+        meetings = load_meetings_data()
+
+        # Filter meetings for this MEP
+        mep_meetings = [m for m in meetings if m.get('mep_id') == mep_id]
+
+        if not mep_meetings:
+            return jsonify({'error': f'MEP {mep_id} not found', 'procedures': []}), 404
+
+        # Count procedures
+        procedures = {}
+        for m in mep_meetings:
+            proc = m.get('related_procedure')
+            if proc:
+                if proc not in procedures:
+                    procedures[proc] = {'procedure': proc, 'count': 0}
+                procedures[proc]['count'] += 1
+
+        # Sort by count descending
+        procedure_list = sorted(procedures.values(), key=lambda x: x['count'], reverse=True)
+
+        return jsonify({
+            'procedures': procedure_list,
+            'total': len(procedure_list),
+        })
+
+    except Exception as e:
+        return jsonify({'error': str(e), 'procedures': []}), 500
+
+
+@app.route('/api/procedures/<path:procedure_id>/timeline')
+def get_procedure_timeline(procedure_id):
+    """
+    GET /api/procedures/<procedure_id>/timeline
+    Returns monthly meeting counts for a procedure across ALL MEPs.
+    """
+    try:
+        meetings = load_meetings_data()
+
+        # Filter meetings for this procedure
+        proc_meetings = [m for m in meetings if m.get('related_procedure') == procedure_id]
+
+        if not proc_meetings:
+            return jsonify({'error': f'Procedure {procedure_id} not found', 'timeline': []}), 404
+
+        # Aggregate by month
+        monthly_counts = {}
+        meps_involved = set()
+        for m in proc_meetings:
+            date = m.get('meeting_date')
+            mep_id = m.get('mep_id')
+            if date:
+                month_key = date[:7]
+                monthly_counts[month_key] = monthly_counts.get(month_key, 0) + 1
+            if mep_id:
+                meps_involved.add(mep_id)
+
+        timeline = [
+            {'month': k, 'count': v}
+            for k, v in sorted(monthly_counts.items())
+        ]
+
+        return jsonify({
+            'procedure': procedure_id,
+            'timeline': timeline,
+            'total_meetings': len(proc_meetings),
+            'meps_involved': len(meps_involved),
+        })
+
+    except Exception as e:
+        return jsonify({'error': str(e), 'timeline': []}), 500
+
+
+@app.route('/api/committees/<committee_id>/timeline')
+def get_committee_timeline(committee_id):
+    """
+    GET /api/committees/<committee_id>/timeline
+    Returns monthly meeting counts for a committee across ALL MEPs.
+    """
+    try:
+        meetings = load_meetings_data()
+
+        # Filter meetings by MEPs who are members of this committee
+        comm_meetings = [m for m in meetings if committee_id in m.get('mep_committees', [])]
+
+        if not comm_meetings:
+            return jsonify({'error': f'Committee {committee_id} not found', 'timeline': []}), 404
+
+        # Aggregate by month
+        monthly_counts = {}
+        meps_involved = set()
+        for m in comm_meetings:
+            date = m.get('meeting_date')
+            mep_id = m.get('mep_id')
+            if date:
+                month_key = date[:7]
+                monthly_counts[month_key] = monthly_counts.get(month_key, 0) + 1
+            if mep_id:
+                meps_involved.add(mep_id)
+
+        timeline = [
+            {'month': k, 'count': v}
+            for k, v in sorted(monthly_counts.items())
+        ]
+
+        return jsonify({
+            'committee': committee_id,
+            'timeline': timeline,
+            'total_meetings': len(comm_meetings),
+            'meps_involved': len(meps_involved),
+        })
+
+    except Exception as e:
+        return jsonify({'error': str(e), 'timeline': []}), 500
+
+
 if __name__ == '__main__':
     print("Starting local development server...")
     print("API endpoint: http://localhost:5001/api/graph")
