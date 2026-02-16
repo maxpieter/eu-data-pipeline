@@ -11,6 +11,10 @@ const nextConfig = {
           destination: 'http://localhost:5001/api/graph',
         },
         {
+          source: '/api/timeline',
+          destination: 'http://localhost:5001/api/timeline',
+        },
+        {
           source: '/api/meps',
           destination: 'http://localhost:5001/api/meps',
         },
@@ -41,6 +45,10 @@ const nextConfig = {
         {
           source: '/api/organizations',
           destination: 'http://localhost:5001/api/organizations',
+        },
+        {
+          source: '/api/organizations/:name/timeline',
+          destination: 'http://localhost:5001/api/organizations/:name/timeline',
         },
       ]
     }

@@ -12,7 +12,7 @@ export default function Home() {
   const [chargeStrength, setChargeStrength] = useState(-150)
   const [filters, setFilters] = useState<GraphFilters>(defaultFilters)
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false)
-  const [viewMode, setViewMode] = useState<ViewMode>('network')
+  const [viewMode, setViewMode] = useState<ViewMode>('mep-meetings')
 
   // Trigger resize event when sidebar collapses/expands
   useEffect(() => {
@@ -43,21 +43,6 @@ export default function Home() {
             <span>Rebel Scores</span>
           </a>
           <button
-            onClick={() => setViewMode('network')}
-            className={viewMode === 'network' ? 'active' : ''}
-            style={{ background: 'none', border: 'none', cursor: 'pointer' }}
-          >
-            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M13 10V3L4 14h7v7l9-11h-7z"
-              />
-            </svg>
-            <span>Network Graph</span>
-          </button>
-          <button
             onClick={() => setViewMode('mep-meetings')}
             className={viewMode === 'mep-meetings' ? 'active' : ''}
             style={{ background: 'none', border: 'none', cursor: 'pointer' }}
@@ -71,6 +56,21 @@ export default function Home() {
               />
             </svg>
             <span>MEP Meetings</span>
+          </button>
+          <button
+            onClick={() => setViewMode('network')}
+            className={viewMode === 'network' ? 'active' : ''}
+            style={{ background: 'none', border: 'none', cursor: 'pointer' }}
+          >
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M13 10V3L4 14h7v7l9-11h-7z"
+              />
+            </svg>
+            <span>Network Graph</span>
           </button>
         </nav>
 

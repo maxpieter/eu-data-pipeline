@@ -140,6 +140,9 @@ export default function MepMeetingsGraph() {
   const [procedureDropdownOpen, setProcedureDropdownOpen] = useState(false);
   const [organizationDropdownOpen, setOrganizationDropdownOpen] = useState(false);
 
+  // EP Period filter
+  const [epPeriod, setEpPeriod] = useState<'both' | 'ep9' | 'ep10'>('both');
+
   // UI
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -225,22 +228,30 @@ export default function MepMeetingsGraph() {
     fetchData();
   }, []);
 
-  // Fetch MEP-specific procedures when MEP is selected
+  // Fetch MEP-specific procedures when MEP is selected, restore global when cleared
   useEffect(() => {
-    if (!selectedMep) return;
-
-    async function fetchMepProcedures() {
+    async function updateProcedures() {
       try {
-        const res = await fetch(`/api/meps/${selectedMep.id}/procedures`);
-        if (res.ok) {
-          const data = await res.json();
-          setProcedures(data.procedures || []);
+        if (selectedMep) {
+          // Fetch MEP-specific procedures
+          const res = await fetch(`/api/meps/${selectedMep.id}/procedures`);
+          if (res.ok) {
+            const data = await res.json();
+            setProcedures(data.procedures || []);
+          }
+        } else {
+          // Restore global procedures
+          const res = await fetch("/api/procedures");
+          if (res.ok) {
+            const data = await res.json();
+            setProcedures(data.procedures || []);
+          }
         }
       } catch (err) {
-        console.error("Failed to fetch MEP procedures:", err);
+        console.error("Failed to fetch procedures:", err);
       }
     }
-    fetchMepProcedures();
+    updateProcedures();
   }, [selectedMep]);
 
   // Fetch timeline based on selections
@@ -254,30 +265,14 @@ export default function MepMeetingsGraph() {
     async function fetchTimeline() {
       setLoading(true);
       try {
-        let url = "";
+        const params = new URLSearchParams();
+        if (selectedMep) params.set("mep", selectedMep.id.toString());
+        if (selectedCommittee) params.set("committee", selectedCommittee);
+        if (selectedProcedure) params.set("procedure", selectedProcedure);
+        if (selectedOrganization) params.set("organization", selectedOrganization);
+        if (epPeriod !== 'both') params.set("ep_period", epPeriod);
 
-        if (selectedMep) {
-          // MEP-specific timeline with filters
-          const params = new URLSearchParams();
-          if (selectedCommittee) params.set("committee", selectedCommittee);
-          if (selectedProcedure) params.set("procedure", selectedProcedure);
-          if (selectedOrganization) params.set("organization", selectedOrganization);
-          url = `/api/meps/${selectedMep.id}/timeline${params.toString() ? "?" + params.toString() : ""}`;
-        } else if (selectedProcedure) {
-          // Procedure timeline (all MEPs)
-          url = `/api/procedures/${encodeURIComponent(selectedProcedure)}/timeline`;
-        } else if (selectedCommittee) {
-          // Committee timeline (all MEPs)
-          url = `/api/committees/${selectedCommittee}/timeline`;
-        } else if (selectedOrganization) {
-          // For organization-only filter, we need MEP first
-          // Show a message that MEP is required for organization filter
-          setTimelineData(null);
-          setLoading(false);
-          return;
-        }
-
-        const res = await fetch(url);
+        const res = await fetch(`/api/timeline?${params.toString()}`);
         if (!res.ok) throw new Error("Failed to fetch timeline");
         const data = await res.json();
         setTimelineData(data);
@@ -289,7 +284,7 @@ export default function MepMeetingsGraph() {
       }
     }
     fetchTimeline();
-  }, [selectedMep, selectedCommittee, selectedProcedure, selectedOrganization]);
+  }, [selectedMep, selectedCommittee, selectedProcedure, selectedOrganization, epPeriod]);
 
   // Render timeline
   useEffect(() => {
@@ -546,6 +541,7 @@ export default function MepMeetingsGraph() {
     setCommitteeSearch("");
     setProcedureSearch("");
     setOrganizationSearch("");
+    setEpPeriod('both');
     // Restore global procedures
     try {
       const res = await fetch("/api/procedures");
@@ -825,8 +821,62 @@ export default function MepMeetingsGraph() {
         </div>
       </div>
 
+      {/* EP Period Filter */}
+      <div
+        style={{
+          marginBottom: "1rem",
+          display: "flex",
+          alignItems: "center",
+          gap: "0.75rem",
+        }}
+      >
+        <span
+          style={{
+            fontSize: "0.75rem",
+            fontWeight: 600,
+            color: "#475569",
+            textTransform: "uppercase",
+            letterSpacing: "0.05em",
+          }}
+        >
+          EP Period:
+        </span>
+        <div
+          style={{
+            display: "flex",
+            borderRadius: "8px",
+            border: "1px solid #e2e8f0",
+            overflow: "hidden",
+          }}
+        >
+          {[
+            { value: 'both' as const, label: 'Both' },
+            { value: 'ep9' as const, label: 'EP9 (2019-2024)' },
+            { value: 'ep10' as const, label: 'EP10 (2024-)' },
+          ].map((option) => (
+            <button
+              key={option.value}
+              onClick={() => setEpPeriod(option.value)}
+              style={{
+                padding: "0.5rem 1rem",
+                fontSize: "0.875rem",
+                fontWeight: epPeriod === option.value ? 600 : 400,
+                background: epPeriod === option.value ? "#3b82f6" : "white",
+                color: epPeriod === option.value ? "white" : "#475569",
+                border: "none",
+                cursor: "pointer",
+                borderRight: option.value !== 'ep10' ? "1px solid #e2e8f0" : "none",
+                transition: "all 0.15s ease",
+              }}
+            >
+              {option.label}
+            </button>
+          ))}
+        </div>
+      </div>
+
       {/* Active Filters */}
-      {(selectedMep || selectedCommittee || selectedProcedure || selectedOrganization) && (
+      {(selectedMep || selectedCommittee || selectedProcedure || selectedOrganization || epPeriod !== 'both') && (
         <div
           style={{
             marginBottom: "1.5rem",
@@ -846,6 +896,35 @@ export default function MepMeetingsGraph() {
           >
             Active filters:
           </span>
+          {epPeriod !== 'both' && (
+            <span
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "0.25rem",
+                padding: "0.25rem 0.5rem",
+                background: "#8b5cf6",
+                color: "white",
+                borderRadius: "9999px",
+                fontSize: "0.75rem",
+                fontWeight: 500,
+              }}
+            >
+              {epPeriod === 'ep9' ? 'EP9 (2019-2024)' : 'EP10 (2024-)'}
+              <button
+                onClick={() => setEpPeriod('both')}
+                style={{
+                  background: "none",
+                  border: "none",
+                  color: "white",
+                  cursor: "pointer",
+                  padding: "0 0.25rem",
+                }}
+              >
+                ×
+              </button>
+            </span>
+          )}
           {selectedMep && (
             <span
               style={{
@@ -1159,12 +1238,14 @@ export default function MepMeetingsGraph() {
               fontWeight: 600,
               color: "#1e293b",
               marginBottom: "1rem",
+              position: "relative",
+              zIndex: 1,
             }}
           >
-            Meetings per Month
+            Meetings per Week
           </h3>
-          <div style={{ width: "100%", minHeight: "400px" }}>
-            <svg ref={timelineRef} style={{ width: "100%", height: "400px" }} />
+          <div style={{ width: "100%", minHeight: "400px", position: "relative", zIndex: 10 }}>
+            <svg ref={timelineRef} style={{ width: "100%", height: "400px", overflow: "visible" }} />
           </div>
         </div>
       )}

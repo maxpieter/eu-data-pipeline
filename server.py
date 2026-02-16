@@ -423,6 +423,127 @@ def get_meps():
         return jsonify({'error': str(e), 'meps': []}), 500
 
 
+# EP Period cutoff date (EP9 ends 2024-07-15, EP10 starts 2024-07-16)
+EP9_END_DATE = '2024-07-15'
+EP10_START_DATE = '2024-07-16'
+
+
+@app.route('/api/timeline')
+def get_timeline():
+    """
+    GET /api/timeline
+    Returns meeting timeline with optional filters. All filters are optional and combinable.
+
+    Query parameters:
+    - mep: MEP ID
+    - committee: committee acronym
+    - procedure: procedure reference
+    - organization: organization name (substring match)
+    - ep_period: 'ep9', 'ep10', or 'both' (default: both)
+    """
+    try:
+        meetings = load_meetings_data()
+
+        # Get all filter parameters
+        mep_filter = request.args.get('mep')
+        committee_filter = request.args.get('committee')
+        procedure_filter = request.args.get('procedure')
+        organization_filter = request.args.get('organization')
+        ep_period = request.args.get('ep_period', 'both')
+
+        # Need at least one filter
+        if not any([mep_filter, committee_filter, procedure_filter, organization_filter]):
+            return jsonify({'error': 'At least one filter required', 'timeline': []}), 400
+
+        filtered = meetings
+
+        # Apply filters
+        if mep_filter:
+            try:
+                mep_id = int(mep_filter)
+                filtered = [m for m in filtered if m.get('mep_id') == mep_id]
+            except ValueError:
+                return jsonify({'error': 'Invalid MEP ID', 'timeline': []}), 400
+
+        if committee_filter:
+            filtered = [m for m in filtered if committee_filter in m.get('mep_committees', [])]
+
+        if procedure_filter:
+            filtered = [m for m in filtered if m.get('related_procedure') == procedure_filter]
+
+        if organization_filter:
+            org_lower = organization_filter.lower()
+            filtered = [m for m in filtered
+                       if any(org_lower in att.get('name', '').lower() for att in m.get('attendees', []))]
+
+        # Apply EP period filter
+        if ep_period == 'ep9':
+            filtered = [m for m in filtered if m.get('meeting_date', '') <= EP9_END_DATE]
+        elif ep_period == 'ep10':
+            filtered = [m for m in filtered if m.get('meeting_date', '') >= EP10_START_DATE]
+        # 'both' or any other value means no date filtering
+
+        # Aggregate by week
+        from datetime import datetime
+        weekly_data = {}
+        meps_involved = set()
+
+        for m in filtered:
+            date = m.get('meeting_date')
+            mep_id = m.get('mep_id')
+            if date:
+                try:
+                    dt = datetime.strptime(date, '%Y-%m-%d')
+                    week_key = f"{dt.isocalendar()[0]}-W{dt.isocalendar()[1]:02d}"
+                except:
+                    continue
+
+                if week_key not in weekly_data:
+                    weekly_data[week_key] = {'count': 0, 'meetings': []}
+                weekly_data[week_key]['count'] += 1
+                weekly_data[week_key]['meetings'].append({
+                    'date': date,
+                    'title': m.get('title', ''),
+                    'attendee_count': len(m.get('attendees', [])),
+                    'procedure': m.get('related_procedure'),
+                })
+            if mep_id:
+                meps_involved.add(mep_id)
+
+        timeline = [
+            {'week': k, 'count': v['count'], 'meetings': v['meetings']}
+            for k, v in sorted(weekly_data.items())
+        ]
+
+        # Get MEP info if filtering by MEP
+        mep_info = None
+        if mep_filter and filtered:
+            source_data = filtered[0].get('source_data', {})
+            mep_info = {
+                'id': int(mep_filter),
+                'name': source_data.get('mep_name', 'Unknown'),
+                'country': source_data.get('mep_country', ''),
+                'political_group': source_data.get('mep_political_group', ''),
+            }
+
+        return jsonify({
+            'timeline': timeline,
+            'total_meetings': len(filtered),
+            'meps_involved': len(meps_involved),
+            'mep': mep_info,
+            'filters': {
+                'mep': mep_filter,
+                'committee': committee_filter,
+                'procedure': procedure_filter,
+                'organization': organization_filter,
+                'ep_period': ep_period,
+            }
+        })
+
+    except Exception as e:
+        return jsonify({'error': str(e), 'timeline': []}), 500
+
+
 @app.route('/api/meps/<int:mep_id>/timeline')
 def get_mep_timeline(mep_id):
     """
@@ -642,15 +763,29 @@ def get_procedure_timeline(procedure_id):
     """
     GET /api/procedures/<procedure_id>/timeline
     Returns monthly meeting counts for a procedure across ALL MEPs.
+
+    Query parameters:
+    - committee: filter by committee acronym
+    - organization: filter by organization name
     """
     try:
         meetings = load_meetings_data()
+        committee_filter = request.args.get('committee')
+        organization_filter = request.args.get('organization')
 
         # Filter meetings for this procedure
         proc_meetings = [m for m in meetings if m.get('related_procedure') == procedure_id]
 
         if not proc_meetings:
             return jsonify({'error': f'Procedure {procedure_id} not found', 'timeline': []}), 404
+
+        # Apply additional filters
+        if committee_filter:
+            proc_meetings = [m for m in proc_meetings if committee_filter in m.get('mep_committees', [])]
+        if organization_filter:
+            org_lower = organization_filter.lower()
+            proc_meetings = [m for m in proc_meetings
+                           if any(org_lower in att.get('name', '').lower() for att in m.get('attendees', []))]
 
         # Aggregate by month
         monthly_counts = {}
@@ -685,15 +820,25 @@ def get_committee_timeline(committee_id):
     """
     GET /api/committees/<committee_id>/timeline
     Returns monthly meeting counts for a committee across ALL MEPs.
+
+    Query parameters:
+    - organization: filter by organization name
     """
     try:
         meetings = load_meetings_data()
+        organization_filter = request.args.get('organization')
 
         # Filter meetings by MEPs who are members of this committee
         comm_meetings = [m for m in meetings if committee_id in m.get('mep_committees', [])]
 
         if not comm_meetings:
             return jsonify({'error': f'Committee {committee_id} not found', 'timeline': []}), 404
+
+        # Apply additional filters
+        if organization_filter:
+            org_lower = organization_filter.lower()
+            comm_meetings = [m for m in comm_meetings
+                           if any(org_lower in att.get('name', '').lower() for att in m.get('attendees', []))]
 
         # Aggregate by month
         monthly_counts = {}
@@ -716,6 +861,53 @@ def get_committee_timeline(committee_id):
             'committee': committee_id,
             'timeline': timeline,
             'total_meetings': len(comm_meetings),
+            'meps_involved': len(meps_involved),
+        })
+
+    except Exception as e:
+        return jsonify({'error': str(e), 'timeline': []}), 500
+
+
+@app.route('/api/organizations/<path:org_name>/timeline')
+def get_organization_timeline(org_name):
+    """
+    GET /api/organizations/<org_name>/timeline
+    Returns monthly meeting counts for an organization across ALL MEPs.
+    """
+    try:
+        meetings = load_meetings_data()
+
+        # Filter meetings by organization name (case-insensitive substring match)
+        org_lower = org_name.lower()
+        org_meetings = [
+            m for m in meetings
+            if any(org_lower in att.get('name', '').lower() for att in m.get('attendees', []))
+        ]
+
+        if not org_meetings:
+            return jsonify({'error': f'Organization "{org_name}" not found', 'timeline': []}), 404
+
+        # Aggregate by month
+        monthly_counts = {}
+        meps_involved = set()
+        for m in org_meetings:
+            date = m.get('meeting_date')
+            mep_id = m.get('mep_id')
+            if date:
+                month_key = date[:7]
+                monthly_counts[month_key] = monthly_counts.get(month_key, 0) + 1
+            if mep_id:
+                meps_involved.add(mep_id)
+
+        timeline = [
+            {'month': k, 'count': v}
+            for k, v in sorted(monthly_counts.items())
+        ]
+
+        return jsonify({
+            'organization': org_name,
+            'timeline': timeline,
+            'total_meetings': len(org_meetings),
             'meps_involved': len(meps_involved),
         })
 
