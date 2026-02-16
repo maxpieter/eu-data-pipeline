@@ -2,13 +2,17 @@
 
 import { useState, useEffect } from 'react'
 import NetworkGraph from '@/components/NetworkGraph'
+import MepMeetingsGraph from '@/components/MepMeetingsGraph'
 import Sidebar from '@/components/Sidebar'
 import { GraphFilters, defaultFilters } from '@/lib/data'
+
+type ViewMode = 'network' | 'mep-meetings'
 
 export default function Home() {
   const [chargeStrength, setChargeStrength] = useState(-150)
   const [filters, setFilters] = useState<GraphFilters>(defaultFilters)
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false)
+  const [viewMode, setViewMode] = useState<ViewMode>('network')
 
   // Trigger resize event when sidebar collapses/expands
   useEffect(() => {
@@ -38,7 +42,11 @@ export default function Home() {
             </svg>
             <span>Rebel Scores</span>
           </a>
-          <a href="#" className="active">
+          <button
+            onClick={() => setViewMode('network')}
+            className={viewMode === 'network' ? 'active' : ''}
+            style={{ background: 'none', border: 'none', cursor: 'pointer' }}
+          >
             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path
                 strokeLinecap="round"
@@ -48,7 +56,22 @@ export default function Home() {
               />
             </svg>
             <span>Network Graph</span>
-          </a>
+          </button>
+          <button
+            onClick={() => setViewMode('mep-meetings')}
+            className={viewMode === 'mep-meetings' ? 'active' : ''}
+            style={{ background: 'none', border: 'none', cursor: 'pointer' }}
+          >
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+              />
+            </svg>
+            <span>MEP Meetings</span>
+          </button>
         </nav>
 
         <div className="header-actions">
@@ -72,24 +95,34 @@ export default function Home() {
 
       {/* App Container */}
       <div className="app-container">
-        {/* Sidebar */}
-        <Sidebar
-          collapsed={sidebarCollapsed}
-          onToggle={() => setSidebarCollapsed(!sidebarCollapsed)}
-          chargeStrength={chargeStrength}
-          setChargeStrength={setChargeStrength}
-          filters={filters}
-          setFilters={setFilters}
-        />
+        {/* Sidebar - only show for network view */}
+        {viewMode === 'network' && (
+          <Sidebar
+            collapsed={sidebarCollapsed}
+            onToggle={() => setSidebarCollapsed(!sidebarCollapsed)}
+            chargeStrength={chargeStrength}
+            setChargeStrength={setChargeStrength}
+            filters={filters}
+            setFilters={setFilters}
+          />
+        )}
 
         {/* Main Content */}
-        <main className={`main-content ${sidebarCollapsed ? 'collapsed' : ''}`}>
-          <div className="chart-container" style={{ height: 'calc(100vh - 64px - 3rem)' }}>
-            <NetworkGraph
-              chargeStrength={chargeStrength}
-              filters={filters}
-            />
-          </div>
+        <main className={`main-content ${viewMode === 'network' && !sidebarCollapsed ? '' : 'collapsed'}`}>
+          {viewMode === 'network' && (
+            <div className="chart-container" style={{ height: 'calc(100vh - 64px - 3rem)' }}>
+              <NetworkGraph
+                chargeStrength={chargeStrength}
+                filters={filters}
+              />
+            </div>
+          )}
+
+          {viewMode === 'mep-meetings' && (
+            <div style={{ height: 'calc(100vh - 64px)', background: 'rgb(250, 250, 255)' }}>
+              <MepMeetingsGraph />
+            </div>
+          )}
         </main>
       </div>
     </>
