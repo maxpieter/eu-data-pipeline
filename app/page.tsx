@@ -3,12 +3,13 @@
 import { useState, useEffect } from 'react'
 import NetworkGraph from '@/components/NetworkGraph'
 import Sidebar from '@/components/Sidebar'
-import { GraphFilters, defaultFilters } from '@/lib/data'
+import { GraphFilters, defaultFilters, GraphData } from '@/lib/data'
 
 export default function Home() {
   const [chargeStrength, setChargeStrength] = useState(-150)
   const [filters, setFilters] = useState<GraphFilters>(defaultFilters)
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false)
+  const [graphData, setGraphData] = useState<GraphData | null>(null)
 
   // Trigger resize event when sidebar collapses/expands
   useEffect(() => {
@@ -17,6 +18,30 @@ export default function Home() {
     }, 300)
     return () => clearTimeout(timer)
   }, [sidebarCollapsed])
+
+  // Prepare graph stats for sidebar
+    const filteringApplied =
+    graphData?.metadata?.org_min_degree_used != null &&
+    graphData?.metadata?.actor_min_degree_used != null &&
+    graphData?.metadata?.k_core_used != null &&
+    graphData?.metadata?.min_edge_weight_used != null
+      ? {
+          orgDegree: graphData.metadata.org_min_degree_used,
+          actorDegree: graphData.metadata.actor_min_degree_used,
+          kCore: graphData.metadata.k_core_used,
+          edgeWeight: graphData.metadata.min_edge_weight_used,
+        }
+      : undefined
+
+  const graphStats = graphData
+    ? {
+        nodeCount: graphData.nodes?.length || 0,
+        edgeCount: graphData.links?.length || 0,
+        initialEdgeCount: graphData.metadata?.initial_edge_count,
+        filteringApplied,
+      }
+    : undefined
+
 
   return (
     <>
@@ -88,7 +113,26 @@ export default function Home() {
             <NetworkGraph
               chargeStrength={chargeStrength}
               filters={filters}
+              onDataLoad={setGraphData}
             />
+            <div className="graph-byline">
+              {graphData ? (
+                <>
+                  {graphData.nodes?.length ?? 0} nodes · {graphData.links?.length ?? 0} edges
+                  {graphData.metadata?.org_min_degree_used != null &&
+                  graphData.metadata?.actor_min_degree_used != null &&
+                  graphData.metadata?.k_core_used != null &&
+                  graphData.metadata?.min_edge_weight_used != null ? (
+                    <> · org≥{graphData.metadata.org_min_degree_used} · actor≥{graphData.metadata.actor_min_degree_used} · k={graphData.metadata.k_core_used} · w≥{graphData.metadata.min_edge_weight_used}</>
+                  ) : null}
+                  {filters.start && filters.end ? (
+                    <> · {filters.start} → {filters.end}</>
+                  ) : null}
+                </>
+              ) : (
+                <>Loading…</>
+              )}
+            </div>
           </div>
         </main>
       </div>

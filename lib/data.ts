@@ -3,6 +3,7 @@ export interface Node {
   id: string
   type: 'org' | 'mep' | 'commission_employee'
   label: string
+  community?: number  // Community ID (0-5 for top 6, -1 for others)
   // MEP-specific fields
   party?: string
   country?: string
@@ -11,70 +12,109 @@ export interface Node {
   name?: string
   interests_represented?: string
   register_id?: string
+  // Commission fields
+  host?: string
+    // Centrality scores
+  centrality?: {
+    degree: number
+    betweenness: number
+    closeness: number
+    hub?: number        // Only for actors (MEPs/Commission)
+    authority?: number  // Only for orgs
+  }
 }
 
 export interface Link {
   source: string
   target: string
   weight: number
-  timestamps?: string[]
+}
+
+export interface GraphMetadata {
+  initial_edge_count?: number
+  final_edge_count?: number
+  final_node_count?: number
+  org_min_degree_used?: number
+  actor_min_degree_used?: number
+  k_core_used?: number
+  min_edge_weight_used?: number
+  communities?: Array<{
+    id: number
+    size: number
+    percentage: number
+  }>
+  community_method?: string
+  timeline?: {
+    start?: string | null
+    end?: string | null
+  }
 }
 
 export interface GraphData {
   nodes: Node[]
   links: Link[]
+  metadata?: GraphMetadata
 }
 
-// Node type labels for the legend
-export const typeLabels: Record<string, string> = {
-  'org': 'Organizations',
-  'mep': 'MEPs',
-  'commission_employee': 'Commission'
-}
-
-// Node type colors
-export const typeColors: Record<string, string> = {
-  'org': '#7C3AED',              // Violet for organizations
-  'mep': '#1E40AF',              // Blue for MEPs
-  'commission_employee': '#DC2626' // Red for Commission
-}
-
-// Available graph modes matching bip.py
+// Graph mode types
 export type GraphMode = 'mep' | 'commission' | 'full'
 
-// Filter options matching bip.py --flags
+// Filter settings
 export interface GraphFilters {
   mode: GraphMode
-  orgMinDegree: number      // --org-min-degree
-  actorMinDegree: number    // --actor-min-degree
-  bipartiteKCore: number    // --bipartite-k-core
-  minEdgeWeight: number     // --min-edge-weight
-  keepIsolates: boolean     // --keep-isolates
+  start: string           // YYYY-MM-DD (inclusive)
+  end: string             // YYYY-MM-DD (inclusive)
+  // Removed ALL filtering parameters:
+  // - orgMinDegree (automatic)
+  // - actorMinDegree (automatic)
+  // - bipartiteKCore (automatic)
+  // - minEdgeWeight (automatic)
 }
 
 export const defaultFilters: GraphFilters = {
   mode: 'full',
-  orgMinDegree: 2,
-  actorMinDegree: 1,
-  bipartiteKCore: 0,
-  minEdgeWeight: 1,
-  keepIsolates: false,
+  start: '2024-03-01',
+  end: '2025-06-30',
 }
+
+// Node type colors
+export const typeColors: Record<string, string> = {
+  org: '#64b5f6',                  // Light blue
+  mep: '#ffb74d',                  // Orange
+  commission_employee: '#81c784',  // Green
+}
+
+export const typeLabels: Record<string, string> = {
+  org: 'Organization',
+  mep: 'MEP',
+  commission_employee: 'Commission',
+}
+
+// Community colors (top 6)
+export const communityColors: string[] = [
+  '#e57373', // Red
+  '#64b5f6', // Blue
+  '#81c784', // Green
+  '#ffb74d', // Orange
+  '#ba68c8', // Purple
+  '#4db6ac', // Teal
+]
+export const defaultCommunityColor = '#9e9e9e' // Gray for other communities
 
 /**
  * Fetch graph data from the API with filters
- * @param filters - Graph filters matching bip.py arguments
+ * Note: ALL filtering (degrees, k-core, edge weight) is automatically
+ * determined by the backend based on the initial edge count
+ * @param filters - Graph filters (mode, start, end)
  */
 export async function fetchGraphData(filters: Partial<GraphFilters> = {}): Promise<GraphData> {
   const f = { ...defaultFilters, ...filters }
 
   const params = new URLSearchParams()
   params.set('mode', f.mode)
-  params.set('org_min_degree', String(f.orgMinDegree))
-  params.set('actor_min_degree', String(f.actorMinDegree))
-  params.set('bipartite_k_core', String(f.bipartiteKCore))
-  params.set('min_edge_weight', String(f.minEdgeWeight))
-  params.set('keep_isolates', String(f.keepIsolates))
+  params.set('start', f.start)
+  params.set('end', f.end)
+  // All filtering parameters are handled automatically by backend
 
   // Next.js rewrites will proxy to Python backend in development
   const url = `/api/graph?${params}`
@@ -84,7 +124,23 @@ export async function fetchGraphData(filters: Partial<GraphFilters> = {}): Promi
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`)
     }
-    return await response.json()
+    const data = await response.json()
+
+    // Log the automatic filtering info if available
+    if (data.metadata) {
+      console.log('🔍 Graph filtering applied:', {
+        'Initial edges': data.metadata.initial_edge_count?.toLocaleString(),
+        'Final edges': data.metadata.final_edge_count?.toLocaleString(),
+        'Final nodes': data.metadata.final_node_count?.toLocaleString(),
+        'Org min degree': data.metadata.org_min_degree_used,
+        'Actor min degree': data.metadata.actor_min_degree_used,
+        'K-core': data.metadata.k_core_used,
+        'Min edge weight': data.metadata.min_edge_weight_used,
+        'Timeline': data.metadata.timeline,
+      })
+    }
+
+    return data
   } catch (error) {
     console.error('Failed to fetch graph data:', error)
     return { nodes: [], links: [] }

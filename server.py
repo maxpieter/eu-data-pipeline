@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Local development server that wraps bip.py functionality.
-Exposes all filter parameters via REST API.
+ALL filtering is now automatic based on edge count.
 
 Run with: python server.py
 Then access: http://localhost:5001/api/graph?mode=full
@@ -12,6 +12,11 @@ import sys
 import json
 from flask import Flask, request, jsonify
 from flask_cors import CORS
+import numpy as np
+from datetime import datetime
+
+from scipy.sparse import coo_matrix
+from sklearn.cluster import SpectralCoclustering
 
 # Add project root to path
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
@@ -24,9 +29,9 @@ from api.bip import (
     attach_party_country,
     infer_commission_unmatched_org_nodes,
     guess_timestamp_column,
+    filter_edges_by_weight,
     filter_bipartite_by_degree,
     bipartite_k_core_prune,
-    filter_edges_by_weight,
     build_d3_bipartite,
     MEETINGS_JSON,
     COMMISSION_CSV,
@@ -37,15 +42,172 @@ app = Flask(__name__)
 CORS(app)
 
 
+def determine_pruning_params(edge_count):
+    """
+    Automatically determine ALL filtering parameters based on edge count.
+
+    UPDATED RULES - Keep more edges for better network density:
+    - < 5k edges: org≥1, actor≥1, k=1, weight≥1 (minimal filtering)
+    - 5k-20k edges: org≥2, actor≥1, k=2, weight≥1 (light filtering)
+    - 20k-40k edges: org≥3, actor≥2, k=2, weight≥1 (medium filtering)
+    - 40k-70k edges: org≥4, actor≥2, k=3, weight≥1 (strong filtering)
+    - 70k+ edges: org≥5, actor≥3, k=3, weight≥2 (very strong filtering)
+
+    Returns: (org_min_degree, actor_min_degree, k_core, min_edge_weight)
+    """
+    if edge_count < 5000:
+        return 1, 1, 1, 1  # Keep almost everything
+    elif edge_count < 30000:
+        return 1, 1, 2, 2  # Light filtering - focus on node quality
+    elif edge_count < 40000:
+        return 2, 2, 2, 2  # Medium filtering - remove low-degree nodes
+    elif edge_count < 70000:
+        return 2, 2, 2, 2  # Strong filtering - keep network core
+    else:
+        return 5, 5, 3, 2  # Very strong - only major players
+
+
+def parse_date_range(start_str, end_str):
+    """Parse YYYY-MM-DD start/end (inclusive). Returns (start_ts, end_ts) as pandas Timestamps or (None, None)."""
+    if not start_str and not end_str:
+        return None, None
+
+    def _parse(s):
+        return pd.to_datetime(s, errors='coerce').normalize()
+
+    start_ts = _parse(start_str) if start_str else None
+    end_ts = _parse(end_str) if end_str else None
+
+    if start_ts is not None and pd.isna(start_ts):
+        start_ts = None
+    if end_ts is not None and pd.isna(end_ts):
+        end_ts = None
+
+    if end_ts is not None:
+        # inclusive end-of-day
+        end_ts = end_ts + pd.Timedelta(days=1) - pd.Timedelta(milliseconds=1)
+
+    return start_ts, end_ts
+
+
+def filter_df_by_timerange(df, ts_col, start_ts, end_ts):
+    """Filter df to [start_ts, end_ts] on ts_col. If ts_col missing/None, returns df unchanged."""
+    if df is None or ts_col is None or ts_col not in df.columns:
+        return df
+
+    ts = pd.to_datetime(df[ts_col], errors='coerce')
+    mask = ts.notna()
+    if start_ts is not None:
+        mask &= (ts >= start_ts)
+    if end_ts is not None:
+        mask &= (ts <= end_ts)
+    return df.loc[mask].copy()
+
+
+def detect_communities(nodes, edges):
+    """
+    Detect communities using **native bipartite co-clustering** (spectral co-clustering)
+    and assign colors to the top 6 communities.
+
+    This is designed for bipartite graphs (actors ↔ orgs) and avoids
+    collapsing the network to a one-mode projection.
+
+    Returns: dict mapping node_id -> community_id (0-5 for top 6, -1 for others)
+    """
+    # Split bipartite sets
+    org_ids = [n["id"] for n in nodes if n.get("type") == "org"]
+    actor_ids = [n["id"] for n in nodes if n.get("type") != "org"]
+
+    # If one side is empty, we can't do bipartite community detection.
+    if len(org_ids) == 0 or len(actor_ids) == 0:
+        node_to_community = {n["id"]: -1 for n in nodes}
+        return node_to_community, []
+
+    # Index maps
+    actor_index = {nid: i for i, nid in enumerate(actor_ids)}
+    org_index = {nid: j for j, nid in enumerate(org_ids)}
+
+    # Build sparse biadjacency matrix (actors x orgs)
+    rows = []
+    cols = []
+    vals = []
+    for e in edges:
+        s = str(e.get("source"))
+        t = str(e.get("target"))
+        w = float(e.get("weight", 1))
+
+        # Robustness: edges might be oriented either way.
+        if s in actor_index and t in org_index:
+            rows.append(actor_index[s])
+            cols.append(org_index[t])
+            vals.append(w)
+        elif t in actor_index and s in org_index:
+            rows.append(actor_index[t])
+            cols.append(org_index[s])
+            vals.append(w)
+
+    if len(vals) == 0:
+        node_to_community = {n["id"]: -1 for n in nodes}
+        return node_to_community, []
+
+    X = coo_matrix(
+        (np.asarray(vals, dtype=float), (np.asarray(rows, dtype=int), np.asarray(cols, dtype=int))),
+        shape=(len(actor_ids), len(org_ids)),
+    ).tocsr()
+
+    # Choose number of co-clusters.
+    # Bound by min(n_rows, n_cols) to avoid sklearn errors.
+    max_possible = max(2, min(X.shape[0], X.shape[1]))
+    n_clusters = min(12, max_possible)
+    if n_clusters < 2:
+        node_to_community = {n["id"]: -1 for n in nodes}
+        return node_to_community, []
+
+    model = SpectralCoclustering(n_clusters=n_clusters, random_state=42)
+    model.fit(X)
+
+    actor_labels = model.row_labels_
+    org_labels = model.column_labels_
+
+    # Combined cluster sizes across both partitions
+    cluster_sizes = {c: 0 for c in range(n_clusters)}
+    for c in actor_labels:
+        cluster_sizes[int(c)] += 1
+    for c in org_labels:
+        cluster_sizes[int(c)] += 1
+
+    # Sort clusters by combined size and map top 6 -> 0..5
+    sorted_clusters = sorted(cluster_sizes.items(), key=lambda kv: kv[1], reverse=True)
+    top6 = [c for c, _sz in sorted_clusters[:6]]
+    remap = {c: i for i, c in enumerate(top6)}
+
+    node_to_community = {}
+    for nid, lbl in zip(actor_ids, actor_labels):
+        node_to_community[nid] = remap.get(int(lbl), -1)
+    for nid, lbl in zip(org_ids, org_labels):
+        node_to_community[nid] = remap.get(int(lbl), -1)
+
+    total_nodes = len(nodes)
+    community_stats = [
+        {
+            "id": i,
+            "size": int(cluster_sizes[c]),
+            "percentage": round(cluster_sizes[c] / total_nodes * 100, 1),
+        }
+        for i, c in enumerate(top6)
+    ]
+
+    return node_to_community, community_stats
+
+
+
 def build_graph(
     mode='full',
-    org_min_degree=2,
-    actor_min_degree=1,
-    bipartite_k_core=0,
-    min_edge_weight=1,
     keep_isolates=False,
+    start=None,
+    end=None,
 ):
-    """Build graph data with specified filters."""
+    """Build graph data with fully automatic filtering based on initial edge count."""
 
     # Load data
     orgs_df = load_orgs_table()
@@ -68,6 +230,13 @@ def build_graph(
     # Timestamps
     meetings_ts_col = guess_timestamp_column(meetings_df)
     commission_ts_col = guess_timestamp_column(commission_df)
+
+    # Apply timeline filter (inclusive)
+    start_ts, end_ts = parse_date_range(start, end)
+    if start_ts is not None or end_ts is not None:
+        meetings_df = filter_df_by_timerange(meetings_df, meetings_ts_col, start_ts, end_ts)
+        commission_df = filter_df_by_timerange(commission_df, commission_ts_col, start_ts, end_ts)
+        print(f"Timeline filter applied: {start or '…'} → {end or '…'}")
 
     # Build nodes/edges per mode
     mep_nodes = pd.DataFrame()
@@ -152,19 +321,15 @@ def build_graph(
         ts_col = "timestamp" if "timestamp" in edges.columns else None
         actor_label = "Actor"
 
-    # Apply structural filtering
-    edges = filter_bipartite_by_degree(
-        edges,
-        org_min_degree=org_min_degree,
-        actor_min_degree=actor_min_degree,
-        verbose=False,
-        actor_label=actor_label,
-    )
+    # Get initial edge count to determine ALL filtering parameters
+    initial_edge_count = len(edges)
+    print(f"Initial edge count: {initial_edge_count:,}")
 
-    if bipartite_k_core > 1:
-        edges = bipartite_k_core_prune(edges, k=bipartite_k_core, verbose=False, actor_label=actor_label)
+    # Automatically determine ALL filtering parameters based on edge count
+    org_min_degree, actor_min_degree, bipartite_k_core, min_edge_weight = determine_pruning_params(initial_edge_count)
+    print(f"Auto-selected filtering: org_degree={org_min_degree}, actor_degree={actor_min_degree}, k-core={bipartite_k_core}, edge_weight={min_edge_weight}")
 
-    # Edge weight filtering
+    # Edge weight filtering with automatic threshold
     edges_agg = filter_edges_by_weight(
         edges,
         min_weight=min_edge_weight,
@@ -172,10 +337,23 @@ def build_graph(
         verbose=False,
     )
 
+    # Apply structural filtering with automatic degree thresholds
+    edges = filter_bipartite_by_degree(
+        edges_agg,
+        org_min_degree=org_min_degree,
+        actor_min_degree=actor_min_degree,
+        verbose=False,
+        actor_label=actor_label,
+    )
+
+    # Apply automatic k-core pruning
+    if bipartite_k_core > 1:
+        edges = bipartite_k_core_prune(edges, k=bipartite_k_core, verbose=False, actor_label=actor_label)
+
     # Build D3 graph
     graph = build_d3_bipartite(
         nodes_df=nodes,
-        edges_df=edges_agg,
+        edges_df=edges,
         ts_col=None,  # Already aggregated
         keep_isolates=keep_isolates,
         verbose=False,
@@ -195,9 +373,38 @@ def build_graph(
         graph['nodes'].append({
             'id': org_id,
             'type': 'org',
-            'label': org_id,  # Use ID as label since we don't have the name
+            'label': org_id,
             'name': org_id,
         })
+
+    # Detect communities using native bipartite co-clustering
+    print(f"Running bipartite community detection on {len(graph['nodes'])} nodes...")
+    node_to_community, community_stats = detect_communities(graph['nodes'], graph['links'])
+
+    # Add community information to nodes
+    for node in graph['nodes']:
+        node['community'] = node_to_community.get(node['id'], -1)
+
+    print(f"Found {len(community_stats)} major communities (top 6 by size):")
+    for stat in community_stats:
+        print(f"  Community {stat['id']}: {stat['size']} nodes ({stat['percentage']}%)")
+
+    # Add metadata about the filtering parameters used
+    graph['metadata'] = {
+        'initial_edge_count': initial_edge_count,
+        'final_edge_count': len(graph['links']),
+        'final_node_count': len(graph['nodes']),
+        'org_min_degree_used': org_min_degree,
+        'actor_min_degree_used': actor_min_degree,
+        'k_core_used': bipartite_k_core,
+        'min_edge_weight_used': min_edge_weight,
+        'communities': community_stats,
+        'community_method': 'spectral_coclustering',
+        'timeline': {
+            'start': start,
+            'end': end,
+        },
+    }
 
     return graph
 
@@ -209,35 +416,35 @@ def get_graph():
 
     Query parameters:
     - mode: 'mep', 'commission', or 'full' (default: 'full')
-    - org_min_degree: int (default: 2)
-    - actor_min_degree: int (default: 1)
-    - bipartite_k_core: int (default: 0)
-    - min_edge_weight: int (default: 1)
     - keep_isolates: bool (default: false)
+    - start: YYYY-MM-DD (inclusive)
+    - end: YYYY-MM-DD (inclusive)
+
+    Note: ALL filtering parameters are now automatically determined
+    based on the initial edge count.
     """
     try:
         mode = request.args.get('mode', 'full')
         if mode not in ('mep', 'commission', 'full'):
             mode = 'full'
 
-        org_min_degree = int(request.args.get('org_min_degree', 2))
-        actor_min_degree = int(request.args.get('actor_min_degree', 1))
-        bipartite_k_core = int(request.args.get('bipartite_k_core', 0))
-        min_edge_weight = int(request.args.get('min_edge_weight', 1))
         keep_isolates = request.args.get('keep_isolates', 'false').lower() == 'true'
+
+        start = request.args.get('start')
+        end = request.args.get('end')
 
         graph = build_graph(
             mode=mode,
-            org_min_degree=org_min_degree,
-            actor_min_degree=actor_min_degree,
-            bipartite_k_core=bipartite_k_core,
-            min_edge_weight=min_edge_weight,
             keep_isolates=keep_isolates,
+            start=start,
+            end=end,
         )
 
         return jsonify(graph)
 
     except Exception as e:
+        import traceback
+        traceback.print_exc()
         return jsonify({
             'error': str(e),
             'nodes': [],
@@ -251,14 +458,11 @@ def health():
 
 
 if __name__ == '__main__':
-    print("Starting local development server...")
+    print("Starting local development server with FULLY AUTOMATIC FILTERING...")
     print("API endpoint: http://localhost:5001/api/graph")
     print("\nAvailable parameters:")
     print("  mode: mep, commission, full (default: full)")
-    print("  org_min_degree: int (default: 2)")
-    print("  actor_min_degree: int (default: 1)")
-    print("  bipartite_k_core: int (default: 0)")
-    print("  min_edge_weight: int (default: 1)")
     print("  keep_isolates: true/false (default: false)")
-    print("\nExample: http://localhost:5001/api/graph?mode=mep&org_min_degree=3")
+    print("  start/end: YYYY-MM-DD date range (inclusive)")
+    print("\nExample: http://localhost:5001/api/graph?mode=full&start=2024-03-01&end=2025-06-30")
     app.run(host='0.0.0.0', port=5001, debug=True)

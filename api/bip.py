@@ -37,6 +37,9 @@ from typing import Optional, Dict
 from networkx import edges, nodes
 import numpy as np
 import pandas as pd
+from scipy.sparse import coo_matrix
+from sklearn.cluster import SpectralCoclustering
+
 
 # --- Project root handling (script + notebook safe-ish) ---
 if "__file__" in globals():
@@ -402,6 +405,98 @@ def save_json(obj: Dict, path: str):
     with open(path, "w", encoding="utf-8") as f:
         json.dump(obj, f, ensure_ascii=False, indent=2)
 
+# =========================
+# Bipartite community detection (native)
+# =========================
+def detect_bipartite_communities(
+    nodes: list[dict],
+    links: list[dict],
+    top_k: int = 6,
+    max_clusters: int = 12,
+    random_state: int = 42,
+) -> tuple[dict[str, int], list[dict]]:
+    """Assign community ids using spectral co-clustering on the biadjacency matrix.
+
+    - Works directly on the bipartite structure (actors ↔ orgs)
+    - Produces co-clusters across both partitions
+
+    Returns:
+      node_to_community: node_id -> community_id (0..top_k-1 for top_k largest, -1 otherwise)
+      community_stats: list[{id,size,percentage}]
+    """
+    org_ids = [n["id"] for n in nodes if n.get("type") == "org"]
+    actor_ids = [n["id"] for n in nodes if n.get("type") != "org"]
+
+    if len(org_ids) == 0 or len(actor_ids) == 0:
+        return ({n["id"]: -1 for n in nodes}, [])
+
+    actor_index = {nid: i for i, nid in enumerate(actor_ids)}
+    org_index = {nid: j for j, nid in enumerate(org_ids)}
+
+    rows: list[int] = []
+    cols: list[int] = []
+    vals: list[float] = []
+    for e in links:
+        s = str(e.get("source"))
+        t = str(e.get("target"))
+        w = float(e.get("weight", 1))
+        if s in actor_index and t in org_index:
+            rows.append(actor_index[s])
+            cols.append(org_index[t])
+            vals.append(w)
+        elif t in actor_index and s in org_index:
+            rows.append(actor_index[t])
+            cols.append(org_index[s])
+            vals.append(w)
+
+    if not vals:
+        return ({n["id"]: -1 for n in nodes}, [])
+
+    X = coo_matrix(
+        (np.asarray(vals, dtype=float), (np.asarray(rows, dtype=int), np.asarray(cols, dtype=int))),
+        shape=(len(actor_ids), len(org_ids)),
+    ).tocsr()
+
+    max_possible = max(2, min(X.shape[0], X.shape[1]))
+    n_clusters = min(max_clusters, max_possible)
+    if n_clusters < 2:
+        return ({n["id"]: -1 for n in nodes}, [])
+
+    model = SpectralCoclustering(n_clusters=n_clusters, random_state=random_state)
+    model.fit(X)
+
+    actor_labels = model.row_labels_
+    org_labels = model.column_labels_
+
+    cluster_sizes: dict[int, int] = {c: 0 for c in range(n_clusters)}
+    for c in actor_labels:
+        cluster_sizes[int(c)] += 1
+    for c in org_labels:
+        cluster_sizes[int(c)] += 1
+
+    sorted_clusters = sorted(cluster_sizes.items(), key=lambda kv: kv[1], reverse=True)
+    top = [c for c, _sz in sorted_clusters[:top_k]]
+    remap = {c: i for i, c in enumerate(top)}
+
+    node_to_comm: dict[str, int] = {}
+    for nid, lbl in zip(actor_ids, actor_labels):
+        node_to_comm[nid] = remap.get(int(lbl), -1)
+    for nid, lbl in zip(org_ids, org_labels):
+        node_to_comm[nid] = remap.get(int(lbl), -1)
+
+    total_nodes = len(nodes)
+    stats = [
+        {
+            "id": i,
+            "size": int(cluster_sizes[c]),
+            "percentage": round(cluster_sizes[c] / total_nodes * 100, 1),
+        }
+        for i, c in enumerate(top)
+    ]
+
+    return node_to_comm, stats
+
+
 
 def parse_args():
     p = argparse.ArgumentParser(description="Export bipartite graph to D3 JSON with structural filtering.")
@@ -558,8 +653,20 @@ def main():
     print(f"Edge rows (pre-filter): {len(edges):,}")
     print(f"Unique pairs (pre-filter): {edges[['source','target']].drop_duplicates().shape[0]:,}")
 
-    edges = filter_bipartite_by_degree(
+    initial_edge_count = len(edges)
+    final_edge_count = len(edges)
+
+
+    # ---- Edge weight filtering (FIRST) ----
+    edges_agg = filter_edges_by_weight(
         edges,
+        min_weight=args.min_edge_weight,
+        ts_col=ts_col,
+        verbose=True,
+    )
+
+    edges = filter_bipartite_by_degree(
+        edges_agg,
         org_min_degree=args.org_min_degree,
         actor_min_degree=args.actor_min_degree,
         verbose=True,
@@ -572,22 +679,33 @@ def main():
     print(f"Edge rows (post-filter): {len(edges):,}")
     print(f"Unique pairs (post-filter): {edges[['source','target']].drop_duplicates().shape[0]:,}")
 
-    # ---- Edge weight filtering (after degree / k-core pruning) ----
-    edges_agg = filter_edges_by_weight(
-        edges,
-        min_weight=args.min_edge_weight,
-        ts_col=ts_col,
-        verbose=True,
-    )
-
     # ---- Build D3 JSON ----
     graph = build_d3_bipartite(
         nodes_df=nodes,
-        edges_df=edges_agg,
+        edges_df=edges,
         ts_col=None,  # already aggregated
         keep_isolates=args.keep_isolates,
         verbose=True,
     )
+    
+    # ---- Bipartite community detection (native) ----
+    print(f"\nRunning bipartite community detection on {len(graph['nodes']):,} nodes...")
+    node_to_comm, comm_stats = detect_bipartite_communities(graph["nodes"], graph["links"], top_k=6, max_clusters=12)
+    for n in graph["nodes"]:
+        n["community"] = node_to_comm.get(n["id"], -1)
+
+    # Add metadata (enables legend + keeps client consistent)
+    graph["metadata"] = {
+        "initial_edge_count": int(initial_edge_count),
+        "final_edge_count": int(len(graph["links"])),
+        "final_node_count": int(len(graph["nodes"])),
+        "org_min_degree_used": int(args.org_min_degree),
+        "actor_min_degree_used": int(args.actor_min_degree),
+        "k_core_used": int(args.bipartite_k_core),
+        "min_edge_weight_used": int(args.min_edge_weight),
+        "communities": comm_stats,
+        "community_method": "spectral_coclustering",
+    }
 
 
     out_path = args.out or os.path.join(OUT_DIR, f"bipartite_d3_{args.mode}.json")
