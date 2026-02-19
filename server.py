@@ -250,6 +250,17 @@ def health():
     return jsonify({'status': 'ok'})
 
 
+@app.route('/api/cache/clear', methods=['POST'])
+def clear_cache():
+    """POST /api/cache/clear — Force-clear all in-memory caches."""
+    global _meetings_cache, _meps_cache, _meetings_csv_mtime, _meps_csv_mtime
+    _meetings_cache = None
+    _meps_cache = None
+    _meetings_csv_mtime = None
+    _meps_csv_mtime = None
+    return jsonify({'status': 'cleared'})
+
+
 # ============ MEP Meetings Endpoints ============
 
 import csv
@@ -257,13 +268,38 @@ import csv
 MEETINGS_CSV_PATH = os.path.join(PROJECT_ROOT, 'data', 'ep_meetings_all.csv')
 MEPS_CSV_PATH = os.path.join(PROJECT_ROOT, 'data', 'ep_meps.csv')
 
-# Cache for data
+# Cache for data — automatically invalidated when CSV files change
 _meetings_cache = None
 _meps_cache = None
+_meetings_csv_mtime = None
+_meps_csv_mtime = None
+
+
+def _check_csv_freshness():
+    """Invalidate in-memory caches if CSV files have been modified."""
+    global _meetings_cache, _meps_cache, _meetings_csv_mtime, _meps_csv_mtime
+
+    try:
+        meetings_mtime = os.path.getmtime(MEETINGS_CSV_PATH)
+        if _meetings_csv_mtime is not None and meetings_mtime != _meetings_csv_mtime:
+            _meetings_cache = None
+            _meetings_csv_mtime = None
+    except OSError:
+        pass
+
+    try:
+        meps_mtime = os.path.getmtime(MEPS_CSV_PATH)
+        if _meps_csv_mtime is not None and meps_mtime != _meps_csv_mtime:
+            _meps_cache = None
+            _meps_csv_mtime = None
+    except OSError:
+        pass
+
 
 def load_meps_lookup():
     """Load MEPs data and return lookup dict by ID."""
-    global _meps_cache
+    global _meps_cache, _meps_csv_mtime
+    _check_csv_freshness()
     if _meps_cache is None:
         _meps_cache = {}
         with open(MEPS_CSV_PATH, 'r', encoding='utf-8') as f:
@@ -288,6 +324,10 @@ def load_meps_lookup():
                     'political_group': row.get('political_group', ''),
                     'committees': list(set(committees)),  # dedupe
                 }
+        try:
+            _meps_csv_mtime = os.path.getmtime(MEPS_CSV_PATH)
+        except OSError:
+            pass
     return _meps_cache
 
 def load_meetings_data():
@@ -298,7 +338,8 @@ def load_meetings_data():
     attendees. This handles large stakeholder dialogues (50+ orgs) while keeping
     small meetings (1-3 attendees) as separate rows for granularity.
     """
-    global _meetings_cache
+    global _meetings_cache, _meetings_csv_mtime
+    _check_csv_freshness()
     if _meetings_cache is None:
         meps = load_meps_lookup()
 
@@ -380,6 +421,11 @@ def load_meetings_data():
                             'mep_political_group': mep_info.get('political_group', ''),
                         }
                     })
+
+        try:
+            _meetings_csv_mtime = os.path.getmtime(MEETINGS_CSV_PATH)
+        except OSError:
+            pass
 
     return _meetings_cache
 

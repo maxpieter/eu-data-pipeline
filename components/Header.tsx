@@ -71,7 +71,7 @@ export default function Header() {
 
       <div className="header-actions">
         <a
-          href="https://github.com/maxpieter"
+          href="https://github.com/maxpieter/eu-data-pipeline"
           target="_blank"
           rel="noopener noreferrer"
           className="header-btn"
