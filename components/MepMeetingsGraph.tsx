@@ -1220,11 +1220,6 @@ export default function MepMeetingsGraph() {
               }}
             >
               {selectedProcedure}
-              {procedureEvents?.title && (
-                <span style={{ opacity: 0.85, fontWeight: 400 }}>
-                  — {procedureEvents.title}
-                </span>
-              )}
               <button
                 onClick={() => {
                   setSelectedProcedure("");
