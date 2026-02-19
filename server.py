@@ -488,18 +488,22 @@ def get_timeline():
         weekly_data = {}
         meps_involved = set()
 
+        from datetime import timedelta
+
         for m in filtered:
             date = m.get('meeting_date')
             mep_id = m.get('mep_id')
             if date:
                 try:
                     dt = datetime.strptime(date, '%Y-%m-%d')
-                    week_key = f"{dt.isocalendar()[0]}-W{dt.isocalendar()[1]:02d}"
+                    # Get Monday of this week (for sorting and display)
+                    monday = dt - timedelta(days=dt.weekday())
+                    week_key = monday.strftime('%d-%m-%Y')
                 except:
                     continue
 
                 if week_key not in weekly_data:
-                    weekly_data[week_key] = {'count': 0, 'meetings': []}
+                    weekly_data[week_key] = {'count': 0, 'meetings': [], 'sort_date': monday}
                 weekly_data[week_key]['count'] += 1
                 weekly_data[week_key]['meetings'].append({
                     'date': date,
@@ -512,7 +516,7 @@ def get_timeline():
 
         timeline = [
             {'week': k, 'count': v['count'], 'meetings': v['meetings']}
-            for k, v in sorted(weekly_data.items())
+            for k, v in sorted(weekly_data.items(), key=lambda x: x[1]['sort_date'])
         ]
 
         # Get MEP info if filtering by MEP
@@ -592,20 +596,21 @@ def get_mep_timeline(mep_id):
         }
 
         # Aggregate by week with individual meeting details
-        from datetime import datetime
+        from datetime import datetime, timedelta
         weekly_data = {}
         for m in mep_meetings:
             date = m.get('meeting_date')
             if date:
-                # Get ISO week: YYYY-WXX
                 try:
                     dt = datetime.strptime(date, '%Y-%m-%d')
-                    week_key = f"{dt.isocalendar()[0]}-W{dt.isocalendar()[1]:02d}"
+                    # Get Monday of this week (for sorting and display)
+                    monday = dt - timedelta(days=dt.weekday())
+                    week_key = monday.strftime('%d-%m-%Y')
                 except:
                     continue
 
                 if week_key not in weekly_data:
-                    weekly_data[week_key] = {'count': 0, 'meetings': []}
+                    weekly_data[week_key] = {'count': 0, 'meetings': [], 'sort_date': monday}
                 weekly_data[week_key]['count'] += 1
                 weekly_data[week_key]['meetings'].append({
                     'date': date,
@@ -617,7 +622,7 @@ def get_mep_timeline(mep_id):
         # Sort by week
         timeline = [
             {'week': k, 'count': v['count'], 'meetings': v['meetings']}
-            for k, v in sorted(weekly_data.items())
+            for k, v in sorted(weekly_data.items(), key=lambda x: x[1]['sort_date'])
         ]
 
         return jsonify({
