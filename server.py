@@ -920,6 +920,28 @@ def get_organization_timeline(org_name):
         return jsonify({'error': str(e), 'timeline': []}), 500
 
 
+@app.route('/api/procedure-events')
+def get_procedure_events_endpoint():
+    """
+    GET /api/procedure-events?procedure=2023/0212(COD)&force=false
+    Returns OEIL key events and documentation gateway items for a procedure.
+    """
+    try:
+        procedure = request.args.get('procedure')
+        if not procedure:
+            return jsonify({'error': 'procedure parameter required'}), 400
+
+        force = request.args.get('force', 'false').lower() == 'true'
+
+        from scrapers.scrape_oeil_events import get_procedure_events
+        result = get_procedure_events(procedure, force=force)
+
+        return jsonify(result)
+
+    except Exception as e:
+        return jsonify({'error': str(e), 'key_events': [], 'documentation_gateway': []}), 502
+
+
 if __name__ == '__main__':
     print("Starting local development server...")
     print("API endpoint: http://localhost:5001/api/graph")

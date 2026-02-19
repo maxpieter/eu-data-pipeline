@@ -48,6 +48,10 @@ const nextConfig = {
         source: '/api/organizations/:name/timeline',
         destination: 'http://localhost:5001/api/organizations/:name/timeline',
       },
+      {
+        source: '/api/procedure-events',
+        destination: 'http://localhost:5001/api/procedure-events',
+      },
     ]
   },
 }
