@@ -1,0 +1,38 @@
+{
+  "cluster_id": 24,
+  "cluster_label": "Ministre des affaires \u00e9trang\u00e8r",
+  "nodes": [
+    {
+      "id": "org_f56563b907725ffb",
+      "type": "org",
+      "label": "Ministre des affaires \u00e9trang\u00e8res du Panama",
+      "name": "Ministre des affaires \u00e9trang\u00e8res du Panama",
+      "interests": "",
+      "register_id": null,
+      "degree": 1
+    },
+    {
+      "id": "org_78a7106fd2a5e1c0",
+      "type": "org",
+      "label": "Observatoire de l'immigration et de la d\u00e9mographie",
+      "name": "Observatoire de l'immigration et de la d\u00e9mographie",
+      "interests": "",
+      "register_id": null,
+      "degree": 1
+    }
+  ],
+  "links": [
+    {
+      "source": "org_f56563b907725ffb",
+      "target": "org_78a7106fd2a5e1c0",
+      "weight": 13.86,
+      "shared": 2
+    }
+  ],
+  "external_connections": [],
+  "metadata": {
+    "node_count": 2,
+    "edge_count": 1,
+    "density": 1.0
+  }
+}

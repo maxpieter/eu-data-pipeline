@@ -1,0 +1,38 @@
+{
+  "cluster_id": 28,
+  "cluster_label": "Biljana Djordjevic",
+  "nodes": [
+    {
+      "id": "org_32c52aa6fa1104c4",
+      "type": "org",
+      "label": "Biljana Djordjevic",
+      "name": "Biljana Djordjevic",
+      "interests": "",
+      "register_id": null,
+      "degree": 1
+    },
+    {
+      "id": "org_7e0143a3fb9250b0",
+      "type": "org",
+      "label": "Stefan Janji\u0107",
+      "name": "Stefan Janji\u0107",
+      "interests": "",
+      "register_id": null,
+      "degree": 1
+    }
+  ],
+  "links": [
+    {
+      "source": "org_32c52aa6fa1104c4",
+      "target": "org_7e0143a3fb9250b0",
+      "weight": 12.25,
+      "shared": 2
+    }
+  ],
+  "external_connections": [],
+  "metadata": {
+    "node_count": 2,
+    "edge_count": 1,
+    "density": 1.0
+  }
+}

@@ -1,0 +1,834 @@
+{
+  "cluster_id": 14,
+  "cluster_label": "Tech & Digital / Chemicals & Industry",
+  "nodes": [
+    {
+      "id": "003058994490-80",
+      "type": "org",
+      "label": "Stowarzyszenie Producent\u00f3w Cementu",
+      "name": "Stowarzyszenie Producent\u00f3w Cementu",
+      "interests": "Promotes their own interests or the collective interests of their members",
+      "register_id": "003058994490-80",
+      "degree": 4
+    },
+    {
+      "id": "org_12c5af9f0a278285",
+      "type": "org",
+      "label": "K\u00e1rp\u00e1taljai Magyar Kultur\u00e1lis Sz\u00f6vets\u00e9g",
+      "name": "K\u00e1rp\u00e1taljai Magyar Kultur\u00e1lis Sz\u00f6vets\u00e9g",
+      "interests": "",
+      "register_id": null,
+      "degree": 13
+    },
+    {
+      "id": "317875637967-07",
+      "type": "org",
+      "label": "MVM Energetika Ltd.",
+      "name": "MVM Energetika Ltd.",
+      "interests": "Promotes their own interests or the collective interests of their members",
+      "register_id": "317875637967-07",
+      "degree": 4
+    },
+    {
+      "id": "org_2a1525c74902a1d0",
+      "type": "org",
+      "label": "Tett \u00e9s V\u00e9delem Alap\u00edtv\u00e1ny",
+      "name": "Tett \u00e9s V\u00e9delem Alap\u00edtv\u00e1ny",
+      "interests": "",
+      "register_id": null,
+      "degree": 11
+    },
+    {
+      "id": "530175752854-74",
+      "type": "org",
+      "label": "Egis Pharmaceuticals Private Limited Company",
+      "name": "Egis Pharmaceuticals Private Limited Company",
+      "interests": "Promotes their own interests or the collective interests of their members",
+      "register_id": "530175752854-74",
+      "degree": 1
+    },
+    {
+      "id": "108952749604-94",
+      "type": "org",
+      "label": "NIO",
+      "name": "NIO",
+      "interests": "Promotes their own interests or the collective interests of their members",
+      "register_id": "108952749604-94",
+      "degree": 2
+    },
+    {
+      "id": "771241237007-83",
+      "type": "org",
+      "label": "PRM-CEE Kft.",
+      "name": "PRM-CEE Kft.",
+      "interests": "Advances interests of their clients",
+      "register_id": "771241237007-83",
+      "degree": 7
+    },
+    {
+      "id": "08569166274-90",
+      "type": "org",
+      "label": "MOL Hungarian Oil and Gas Company",
+      "name": "MOL Hungarian Oil and Gas Company",
+      "interests": "Promotes their own interests or the collective interests of their members",
+      "register_id": "08569166274-90",
+      "degree": 16
+    },
+    {
+      "id": "263963514962-66",
+      "type": "org",
+      "label": "Stowarzyszenie Autor\u00f3w ZAiKS",
+      "name": "Stowarzyszenie Autor\u00f3w ZAiKS",
+      "interests": "Promotes their own interests or the collective interests of their members",
+      "register_id": "263963514962-66",
+      "degree": 3
+    },
+    {
+      "id": "819446791825-58",
+      "type": "org",
+      "label": "Polish Confederation Lewiatan",
+      "name": "Polish Confederation Lewiatan",
+      "interests": "Promotes their own interests or the collective interests of their members",
+      "register_id": "819446791825-58",
+      "degree": 6
+    },
+    {
+      "id": "814004851893-09",
+      "type": "org",
+      "label": "Mowi Poland",
+      "name": "Mowi Poland",
+      "interests": "Promotes their own interests or the collective interests of their members",
+      "register_id": "814004851893-09",
+      "degree": 5
+    },
+    {
+      "id": "960626692761-95",
+      "type": "org",
+      "label": "ContactEurope Ma\u0142gorzata Handzlik",
+      "name": "ContactEurope Ma\u0142gorzata Handzlik",
+      "interests": "Advances interests of their clients",
+      "register_id": "960626692761-95",
+      "degree": 4
+    },
+    {
+      "id": "org_75fdac28b7738734",
+      "type": "org",
+      "label": "National Assembly of the Republic of Serbia",
+      "name": "National Assembly of the Republic of Serbia",
+      "interests": "",
+      "register_id": null,
+      "degree": 2
+    },
+    {
+      "id": "441913146231-35",
+      "type": "org",
+      "label": "GAZ-SYSTEM S.A.",
+      "name": "GAZ-SYSTEM S.A.",
+      "interests": "Promotes their own interests or the collective interests of their members",
+      "register_id": "441913146231-35",
+      "degree": 2
+    },
+    {
+      "id": "890804512955-21",
+      "type": "org",
+      "label": "Hutnicza Izba Przemys\u0142owo-Handlowa",
+      "name": "Hutnicza Izba Przemys\u0142owo-Handlowa",
+      "interests": "Promotes their own interests or the collective interests of their members",
+      "register_id": "890804512955-21",
+      "degree": 2
+    },
+    {
+      "id": "670235597161-59",
+      "type": "org",
+      "label": "Richter Gedeon Nyrt.",
+      "name": "Richter Gedeon Nyrt.",
+      "interests": "Promotes their own interests or the collective interests of their members",
+      "register_id": "670235597161-59",
+      "degree": 7
+    },
+    {
+      "id": "org_d184189622080f57",
+      "type": "org",
+      "label": "Association of Chemical Industry of the Czech Republic",
+      "name": "Association of Chemical Industry of the Czech Republic",
+      "interests": "",
+      "register_id": null,
+      "degree": 2
+    },
+    {
+      "id": "253757237449-25",
+      "type": "org",
+      "label": "Republikov\u00e1 \u00fania zamestn\u00e1vate\u013eov",
+      "name": "Republikov\u00e1 \u00fania zamestn\u00e1vate\u013eov",
+      "interests": "Promotes their own interests or the collective interests of their members",
+      "register_id": "253757237449-25",
+      "degree": 1
+    },
+    {
+      "id": "444713544475-78",
+      "type": "org",
+      "label": "Sz\u00f6vets\u00e9g a Polg\u00e1ri Magyarorsz\u00e1g\u00e9rt Alap\u00edtv\u00e1ny",
+      "name": "Sz\u00f6vets\u00e9g a Polg\u00e1ri Magyarorsz\u00e1g\u00e9rt Alap\u00edtv\u00e1ny",
+      "interests": "Does not represent commercial interests",
+      "register_id": "444713544475-78",
+      "degree": 11
+    },
+    {
+      "id": "972512343021-81",
+      "type": "org",
+      "label": "EuroAtlantic Consulting & Investment PLC",
+      "name": "EuroAtlantic Consulting & Investment PLC",
+      "interests": "Advances interests of their clients",
+      "register_id": "972512343021-81",
+      "degree": 4
+    },
+    {
+      "id": "696666910201-20",
+      "type": "org",
+      "label": "Hungarian Chemical Industry Association",
+      "name": "Hungarian Chemical Industry Association",
+      "interests": "Promotes their own interests or the collective interests of their members",
+      "register_id": "696666910201-20",
+      "degree": 10
+    },
+    {
+      "id": "org_34af11854bf5832c",
+      "type": "org",
+      "label": "MCC Brussels",
+      "name": "MCC Brussels",
+      "interests": "",
+      "register_id": null,
+      "degree": 5
+    },
+    {
+      "id": "36486304230-57",
+      "type": "org",
+      "label": "National Society of Conservationists -Friends of the Earth Hungary (Magyar Termeszetvedok Szovetsege)",
+      "name": "National Society of Conservationists -Friends of the Earth Hungary (Magyar Termeszetvedok Szovetsege)",
+      "interests": "Does not represent commercial interests",
+      "register_id": "36486304230-57",
+      "degree": 1
+    },
+    {
+      "id": "19853116579-64",
+      "type": "org",
+      "label": "European Association for Coal and Lignite",
+      "name": "European Association for Coal and Lignite",
+      "interests": "Promotes their own interests or the collective interests of their members",
+      "register_id": "19853116579-64",
+      "degree": 1
+    },
+    {
+      "id": "490333327231-75",
+      "type": "org",
+      "label": "Zwi\u0105zek Pracodawc\u00f3w Transport i Logistyka Polska",
+      "name": "Zwi\u0105zek Pracodawc\u00f3w Transport i Logistyka Polska",
+      "interests": "Promotes their own interests or the collective interests of their members",
+      "register_id": "490333327231-75",
+      "degree": 1
+    },
+    {
+      "id": "681044352479-62",
+      "type": "org",
+      "label": "Mathias Corvinus Collegium Brussels AISBL",
+      "name": "Mathias Corvinus Collegium Brussels AISBL",
+      "interests": "Does not represent commercial interests",
+      "register_id": "681044352479-62",
+      "degree": 7
+    },
+    {
+      "id": "454237953057-37",
+      "type": "org",
+      "label": "Contemporary Amperex Technology Hungary",
+      "name": "Contemporary Amperex Technology Hungary",
+      "interests": "Promotes their own interests or the collective interests of their members",
+      "register_id": "454237953057-37",
+      "degree": 9
+    },
+    {
+      "id": "652884041904-28",
+      "type": "org",
+      "label": "Stichting ECPAT International",
+      "name": "Stichting ECPAT International",
+      "interests": "Does not represent commercial interests",
+      "register_id": "652884041904-28",
+      "degree": 3
+    },
+    {
+      "id": "org_331486dd3c88b7f9",
+      "type": "org",
+      "label": "MOL Group",
+      "name": "MOL Group",
+      "interests": "",
+      "register_id": null,
+      "degree": 2
+    },
+    {
+      "id": "org_43b867834df1dab9",
+      "type": "org",
+      "label": "Mission of the Republic of Serbia to the EU",
+      "name": "Mission of the Republic of Serbia to the EU",
+      "interests": "",
+      "register_id": null,
+      "degree": 2
+    },
+    {
+      "id": "org_36a3298e2afd1090",
+      "type": "org",
+      "label": "ZWI\u0104ZEK PRACODAWC\u00d3W PRODUCENT\u00d3W W\u00d3ZK\u00d3W DZIECI\u0118CYCH I KOMPONENT\u00d3W PRAMS FROM POLAND",
+      "name": "ZWI\u0104ZEK PRACODAWC\u00d3W PRODUCENT\u00d3W W\u00d3ZK\u00d3W DZIECI\u0118CYCH I KOMPONENT\u00d3W PRAMS FROM POLAND",
+      "interests": "",
+      "register_id": null,
+      "degree": 2
+    },
+    {
+      "id": "org_70d9d393192a1462",
+      "type": "org",
+      "label": "Foundation for a Civic Hungary",
+      "name": "Foundation for a Civic Hungary",
+      "interests": "",
+      "register_id": null,
+      "degree": 9
+    },
+    {
+      "id": "812711446192-91",
+      "type": "org",
+      "label": "Polskie Linie Lotnicze \"LOT\" S.A.",
+      "name": "Polskie Linie Lotnicze \"LOT\" S.A.",
+      "interests": "Promotes their own interests or the collective interests of their members",
+      "register_id": "812711446192-91",
+      "degree": 1
+    }
+  ],
+  "links": [
+    {
+      "source": "003058994490-80",
+      "target": "441913146231-35",
+      "weight": 14.78,
+      "shared": 2
+    },
+    {
+      "source": "003058994490-80",
+      "target": "814004851893-09",
+      "weight": 13.17,
+      "shared": 2
+    },
+    {
+      "source": "003058994490-80",
+      "target": "890804512955-21",
+      "weight": 16.82,
+      "shared": 2
+    },
+    {
+      "source": "003058994490-80",
+      "target": "819446791825-58",
+      "weight": 13.17,
+      "shared": 2
+    },
+    {
+      "source": "org_12c5af9f0a278285",
+      "target": "696666910201-20",
+      "weight": 20.53,
+      "shared": 3
+    },
+    {
+      "source": "org_12c5af9f0a278285",
+      "target": "681044352479-62",
+      "weight": 20.53,
+      "shared": 3
+    },
+    {
+      "source": "org_12c5af9f0a278285",
+      "target": "444713544475-78",
+      "weight": 51.71,
+      "shared": 7
+    },
+    {
+      "source": "org_12c5af9f0a278285",
+      "target": "08569166274-90",
+      "weight": 43.0,
+      "shared": 6
+    },
+    {
+      "source": "org_12c5af9f0a278285",
+      "target": "670235597161-59",
+      "weight": 13.18,
+      "shared": 2
+    },
+    {
+      "source": "org_12c5af9f0a278285",
+      "target": "108952749604-94",
+      "weight": 12.81,
+      "shared": 2
+    },
+    {
+      "source": "org_12c5af9f0a278285",
+      "target": "771241237007-83",
+      "weight": 13.18,
+      "shared": 2
+    },
+    {
+      "source": "org_12c5af9f0a278285",
+      "target": "317875637967-07",
+      "weight": 13.57,
+      "shared": 2
+    },
+    {
+      "source": "org_12c5af9f0a278285",
+      "target": "454237953057-37",
+      "weight": 13.18,
+      "shared": 2
+    },
+    {
+      "source": "org_12c5af9f0a278285",
+      "target": "org_34af11854bf5832c",
+      "weight": 37.22,
+      "shared": 5
+    },
+    {
+      "source": "org_12c5af9f0a278285",
+      "target": "org_2a1525c74902a1d0",
+      "weight": 28.13,
+      "shared": 4
+    },
+    {
+      "source": "org_12c5af9f0a278285",
+      "target": "org_70d9d393192a1462",
+      "weight": 20.79,
+      "shared": 3
+    },
+    {
+      "source": "org_12c5af9f0a278285",
+      "target": "org_331486dd3c88b7f9",
+      "weight": 14.75,
+      "shared": 2
+    },
+    {
+      "source": "317875637967-07",
+      "target": "696666910201-20",
+      "weight": 12.04,
+      "shared": 2
+    },
+    {
+      "source": "317875637967-07",
+      "target": "08569166274-90",
+      "weight": 19.57,
+      "shared": 3
+    },
+    {
+      "source": "317875637967-07",
+      "target": "454237953057-37",
+      "weight": 12.04,
+      "shared": 2
+    },
+    {
+      "source": "org_2a1525c74902a1d0",
+      "target": "696666910201-20",
+      "weight": 20.53,
+      "shared": 3
+    },
+    {
+      "source": "org_2a1525c74902a1d0",
+      "target": "681044352479-62",
+      "weight": 13.38,
+      "shared": 2
+    },
+    {
+      "source": "org_2a1525c74902a1d0",
+      "target": "444713544475-78",
+      "weight": 38.15,
+      "shared": 5
+    },
+    {
+      "source": "org_2a1525c74902a1d0",
+      "target": "08569166274-90",
+      "weight": 20.53,
+      "shared": 3
+    },
+    {
+      "source": "org_2a1525c74902a1d0",
+      "target": "972512343021-81",
+      "weight": 13.64,
+      "shared": 2
+    },
+    {
+      "source": "org_2a1525c74902a1d0",
+      "target": "670235597161-59",
+      "weight": 13.18,
+      "shared": 2
+    },
+    {
+      "source": "org_2a1525c74902a1d0",
+      "target": "771241237007-83",
+      "weight": 13.18,
+      "shared": 2
+    },
+    {
+      "source": "org_2a1525c74902a1d0",
+      "target": "454237953057-37",
+      "weight": 13.18,
+      "shared": 2
+    },
+    {
+      "source": "org_2a1525c74902a1d0",
+      "target": "org_34af11854bf5832c",
+      "weight": 14.75,
+      "shared": 2
+    },
+    {
+      "source": "org_2a1525c74902a1d0",
+      "target": "org_70d9d393192a1462",
+      "weight": 29.23,
+      "shared": 4
+    },
+    {
+      "source": "530175752854-74",
+      "target": "08569166274-90",
+      "weight": 12.07,
+      "shared": 2
+    },
+    {
+      "source": "108952749604-94",
+      "target": "08569166274-90",
+      "weight": 12.81,
+      "shared": 2
+    },
+    {
+      "source": "771241237007-83",
+      "target": "696666910201-20",
+      "weight": 13.18,
+      "shared": 2
+    },
+    {
+      "source": "771241237007-83",
+      "target": "08569166274-90",
+      "weight": 13.18,
+      "shared": 2
+    },
+    {
+      "source": "771241237007-83",
+      "target": "670235597161-59",
+      "weight": 13.18,
+      "shared": 2
+    },
+    {
+      "source": "771241237007-83",
+      "target": "454237953057-37",
+      "weight": 13.18,
+      "shared": 2
+    },
+    {
+      "source": "771241237007-83",
+      "target": "org_70d9d393192a1462",
+      "weight": 13.18,
+      "shared": 2
+    },
+    {
+      "source": "263963514962-66",
+      "target": "819446791825-58",
+      "weight": 22.97,
+      "shared": 3
+    },
+    {
+      "source": "263963514962-66",
+      "target": "960626692761-95",
+      "weight": 14.34,
+      "shared": 2
+    },
+    {
+      "source": "263963514962-66",
+      "target": "652884041904-28",
+      "weight": 15.37,
+      "shared": 2
+    },
+    {
+      "source": "819446791825-58",
+      "target": "814004851893-09",
+      "weight": 19.91,
+      "shared": 3
+    },
+    {
+      "source": "819446791825-58",
+      "target": "812711446192-91",
+      "weight": 13.67,
+      "shared": 2
+    },
+    {
+      "source": "819446791825-58",
+      "target": "960626692761-95",
+      "weight": 14.34,
+      "shared": 2
+    },
+    {
+      "source": "819446791825-58",
+      "target": "652884041904-28",
+      "weight": 15.37,
+      "shared": 2
+    },
+    {
+      "source": "814004851893-09",
+      "target": "441913146231-35",
+      "weight": 12.99,
+      "shared": 2
+    },
+    {
+      "source": "814004851893-09",
+      "target": "960626692761-95",
+      "weight": 21.91,
+      "shared": 3
+    },
+    {
+      "source": "814004851893-09",
+      "target": "org_36a3298e2afd1090",
+      "weight": 11.95,
+      "shared": 2
+    },
+    {
+      "source": "670235597161-59",
+      "target": "696666910201-20",
+      "weight": 13.18,
+      "shared": 2
+    },
+    {
+      "source": "670235597161-59",
+      "target": "08569166274-90",
+      "weight": 13.18,
+      "shared": 2
+    },
+    {
+      "source": "670235597161-59",
+      "target": "454237953057-37",
+      "weight": 13.18,
+      "shared": 2
+    },
+    {
+      "source": "670235597161-59",
+      "target": "org_70d9d393192a1462",
+      "weight": 13.18,
+      "shared": 2
+    },
+    {
+      "source": "960626692761-95",
+      "target": "890804512955-21",
+      "weight": 15.92,
+      "shared": 2
+    },
+    {
+      "source": "org_75fdac28b7738734",
+      "target": "444713544475-78",
+      "weight": 14.75,
+      "shared": 2
+    },
+    {
+      "source": "org_75fdac28b7738734",
+      "target": "org_43b867834df1dab9",
+      "weight": 14.75,
+      "shared": 2
+    },
+    {
+      "source": "org_d184189622080f57",
+      "target": "08569166274-90",
+      "weight": 13.13,
+      "shared": 2
+    },
+    {
+      "source": "org_d184189622080f57",
+      "target": "253757237449-25",
+      "weight": 12.66,
+      "shared": 2
+    },
+    {
+      "source": "444713544475-78",
+      "target": "696666910201-20",
+      "weight": 14.5,
+      "shared": 2
+    },
+    {
+      "source": "444713544475-78",
+      "target": "681044352479-62",
+      "weight": 21.69,
+      "shared": 3
+    },
+    {
+      "source": "444713544475-78",
+      "target": "08569166274-90",
+      "weight": 44.16,
+      "shared": 6
+    },
+    {
+      "source": "444713544475-78",
+      "target": "org_34af11854bf5832c",
+      "weight": 37.22,
+      "shared": 5
+    },
+    {
+      "source": "444713544475-78",
+      "target": "org_70d9d393192a1462",
+      "weight": 23.2,
+      "shared": 3
+    },
+    {
+      "source": "444713544475-78",
+      "target": "org_331486dd3c88b7f9",
+      "weight": 14.75,
+      "shared": 2
+    },
+    {
+      "source": "444713544475-78",
+      "target": "org_43b867834df1dab9",
+      "weight": 14.75,
+      "shared": 2
+    },
+    {
+      "source": "444713544475-78",
+      "target": "972512343021-81",
+      "weight": 14.8,
+      "shared": 2
+    },
+    {
+      "source": "972512343021-81",
+      "target": "681044352479-62",
+      "weight": 13.23,
+      "shared": 2
+    },
+    {
+      "source": "972512343021-81",
+      "target": "08569166274-90",
+      "weight": 13.23,
+      "shared": 2
+    },
+    {
+      "source": "696666910201-20",
+      "target": "08569166274-90",
+      "weight": 26.54,
+      "shared": 4
+    },
+    {
+      "source": "696666910201-20",
+      "target": "454237953057-37",
+      "weight": 19.19,
+      "shared": 3
+    },
+    {
+      "source": "696666910201-20",
+      "target": "org_70d9d393192a1462",
+      "weight": 13.18,
+      "shared": 2
+    },
+    {
+      "source": "696666910201-20",
+      "target": "681044352479-62",
+      "weight": 13.38,
+      "shared": 2
+    },
+    {
+      "source": "org_34af11854bf5832c",
+      "target": "08569166274-90",
+      "weight": 29.62,
+      "shared": 4
+    },
+    {
+      "source": "org_34af11854bf5832c",
+      "target": "org_70d9d393192a1462",
+      "weight": 14.75,
+      "shared": 2
+    },
+    {
+      "source": "36486304230-57",
+      "target": "454237953057-37",
+      "weight": 15.09,
+      "shared": 2
+    },
+    {
+      "source": "19853116579-64",
+      "target": "08569166274-90",
+      "weight": 12.01,
+      "shared": 2
+    },
+    {
+      "source": "490333327231-75",
+      "target": "org_36a3298e2afd1090",
+      "weight": 15.21,
+      "shared": 2
+    },
+    {
+      "source": "681044352479-62",
+      "target": "08569166274-90",
+      "weight": 20.58,
+      "shared": 3
+    },
+    {
+      "source": "681044352479-62",
+      "target": "652884041904-28",
+      "weight": 16.92,
+      "shared": 2
+    },
+    {
+      "source": "454237953057-37",
+      "target": "08569166274-90",
+      "weight": 19.19,
+      "shared": 3
+    },
+    {
+      "source": "454237953057-37",
+      "target": "org_70d9d393192a1462",
+      "weight": 13.18,
+      "shared": 2
+    },
+    {
+      "source": "org_70d9d393192a1462",
+      "target": "08569166274-90",
+      "weight": 13.18,
+      "shared": 2
+    }
+  ],
+  "external_connections": [
+    {
+      "cluster_id": 1,
+      "cluster_label": "German",
+      "edge_count": 15,
+      "weight": 196.26
+    },
+    {
+      "cluster_id": 5,
+      "cluster_label": "Pharma & Health",
+      "edge_count": 13,
+      "weight": 182.26
+    },
+    {
+      "cluster_id": 0,
+      "cluster_label": "Tech & Digital",
+      "edge_count": 7,
+      "weight": 112.5
+    },
+    {
+      "cluster_id": 7,
+      "cluster_label": "Agriculture & Food / Trade & Business",
+      "edge_count": 5,
+      "weight": 70.94
+    },
+    {
+      "cluster_id": 3,
+      "cluster_label": "Energy & Climate / Tech & Digital",
+      "edge_count": 4,
+      "weight": 48.78
+    },
+    {
+      "cluster_id": 9,
+      "cluster_label": "Finance & Banking / Tech & Digital",
+      "edge_count": 2,
+      "weight": 27.09
+    },
+    {
+      "cluster_id": 8,
+      "cluster_label": "ENEL SpA & A2A",
+      "edge_count": 2,
+      "weight": 25.75
+    }
+  ],
+  "metadata": {
+    "node_count": 33,
+    "edge_count": 80,
+    "density": 0.152
+  }
+}

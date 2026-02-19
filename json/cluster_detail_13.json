@@ -1,0 +1,1791 @@
+{
+  "cluster_id": 13,
+  "cluster_label": "Austrian",
+  "nodes": [
+    {
+      "id": "009543351056-37",
+      "type": "org",
+      "label": "Potravin\u00e1\u0159sk\u00e1 komora \u010cesk\u00e9 republiky",
+      "name": "Potravin\u00e1\u0159sk\u00e1 komora \u010cesk\u00e9 republiky",
+      "interests": "Promotes their own interests or the collective interests of their members",
+      "register_id": "009543351056-37",
+      "degree": 1
+    },
+    {
+      "id": "94274031992-65",
+      "type": "org",
+      "label": "OMV Aktiengesellschaft",
+      "name": "OMV Aktiengesellschaft",
+      "interests": "Promotes their own interests or the collective interests of their members",
+      "register_id": "94274031992-65",
+      "degree": 12
+    },
+    {
+      "id": "060605222884-13",
+      "type": "org",
+      "label": "AVL List GmbH",
+      "name": "AVL List GmbH",
+      "interests": "Promotes their own interests or the collective interests of their members",
+      "register_id": "060605222884-13",
+      "degree": 5
+    },
+    {
+      "id": "org_6fa7b1f901cb5ffe",
+      "type": "org",
+      "label": "A1",
+      "name": "A1",
+      "interests": "",
+      "register_id": null,
+      "degree": 5
+    },
+    {
+      "id": "org_915a953f98cba89d",
+      "type": "org",
+      "label": "EUSPA",
+      "name": "EUSPA",
+      "interests": "",
+      "register_id": null,
+      "degree": 5
+    },
+    {
+      "id": "org_a391a7a589a1a0c3",
+      "type": "org",
+      "label": "Agence Europe",
+      "name": "Agence Europe",
+      "interests": "",
+      "register_id": null,
+      "degree": 1
+    },
+    {
+      "id": "509209111889-44",
+      "type": "org",
+      "label": "Federation of Catholic Family Associations in Europe",
+      "name": "Federation of Catholic Family Associations in Europe",
+      "interests": "Does not represent commercial interests",
+      "register_id": "509209111889-44",
+      "degree": 3
+    },
+    {
+      "id": "400397949101-89",
+      "type": "org",
+      "label": "Czech Automotive Industry Association",
+      "name": "Czech Automotive Industry Association",
+      "interests": "Promotes their own interests or the collective interests of their members",
+      "register_id": "400397949101-89",
+      "degree": 5
+    },
+    {
+      "id": "org_be3280cc59d769de",
+      "type": "org",
+      "label": "Wirtschaftsagentur Burgenland",
+      "name": "Wirtschaftsagentur Burgenland",
+      "interests": "",
+      "register_id": null,
+      "degree": 9
+    },
+    {
+      "id": "org_d236c4fab9ed6b59",
+      "type": "org",
+      "label": "ALTPRO",
+      "name": "ALTPRO",
+      "interests": "",
+      "register_id": null,
+      "degree": 1
+    },
+    {
+      "id": "954804447582-37",
+      "type": "org",
+      "label": "Czech Hydrogen Technology Platform",
+      "name": "Czech Hydrogen Technology Platform",
+      "interests": "Promotes their own interests or the collective interests of their members",
+      "register_id": "954804447582-37",
+      "degree": 5
+    },
+    {
+      "id": "80966174852-38",
+      "type": "org",
+      "label": "\u00d6sterreichs E-Wirtschaft",
+      "name": "\u00d6sterreichs E-Wirtschaft",
+      "interests": "Promotes their own interests or the collective interests of their members",
+      "register_id": "80966174852-38",
+      "degree": 4
+    },
+    {
+      "id": "107033410802-19",
+      "type": "org",
+      "label": "WIENER STADTWERKE GmbH",
+      "name": "WIENER STADTWERKE GmbH",
+      "interests": "Promotes their own interests or the collective interests of their members",
+      "register_id": "107033410802-19",
+      "degree": 18
+    },
+    {
+      "id": "org_93fe8bcfd0e4d145",
+      "type": "org",
+      "label": "\u00d6AMTC",
+      "name": "\u00d6AMTC",
+      "interests": "",
+      "register_id": null,
+      "degree": 7
+    },
+    {
+      "id": "189510925414-06",
+      "type": "org",
+      "label": "voestalpine AG",
+      "name": "voestalpine AG",
+      "interests": "Promotes their own interests or the collective interests of their members",
+      "register_id": "189510925414-06",
+      "degree": 12
+    },
+    {
+      "id": "7829357255-35",
+      "type": "org",
+      "label": "Hospod\u00e1\u0159sk\u00e1 komora \u010cesk\u00e9 republiky",
+      "name": "Hospod\u00e1\u0159sk\u00e1 komora \u010cesk\u00e9 republiky",
+      "interests": "Promotes their own interests or the collective interests of their members",
+      "register_id": "7829357255-35",
+      "degree": 10
+    },
+    {
+      "id": "org_aef7cc5b13b3015c",
+      "type": "org",
+      "label": "Dachverband der \u00f6sterreichischen Sozialversicherungen",
+      "name": "Dachverband der \u00f6sterreichischen Sozialversicherungen",
+      "interests": "",
+      "register_id": null,
+      "degree": 5
+    },
+    {
+      "id": "66690371529-15",
+      "type": "org",
+      "label": "Landwirtschaftskammer \u00d6sterreich",
+      "name": "Landwirtschaftskammer \u00d6sterreich",
+      "interests": "Promotes their own interests or the collective interests of their members",
+      "register_id": "66690371529-15",
+      "degree": 8
+    },
+    {
+      "id": "org_67c125c8983c0bd1",
+      "type": "org",
+      "label": "Mission of North Macedonia to the EU",
+      "name": "Mission of North Macedonia to the EU",
+      "interests": "",
+      "register_id": null,
+      "degree": 5
+    },
+    {
+      "id": "org_38f948bae0cb6dc3",
+      "type": "org",
+      "label": "Arbeiterkammer Vorarlberg",
+      "name": "Arbeiterkammer Vorarlberg",
+      "interests": "",
+      "register_id": null,
+      "degree": 2
+    },
+    {
+      "id": "42119616334-41",
+      "type": "org",
+      "label": "Food & Water Action Europe",
+      "name": "Food & Water Action Europe",
+      "interests": "Does not represent commercial interests",
+      "register_id": "42119616334-41",
+      "degree": 2
+    },
+    {
+      "id": "112575639424-68",
+      "type": "org",
+      "label": "\u010cesk\u00e9 dr\u00e1hy, a.s.,",
+      "name": "\u010cesk\u00e9 dr\u00e1hy, a.s.,",
+      "interests": "Promotes their own interests or the collective interests of their members",
+      "register_id": "112575639424-68",
+      "degree": 5
+    },
+    {
+      "id": "09571422185-81",
+      "type": "org",
+      "label": "VERBUND AG",
+      "name": "VERBUND AG",
+      "interests": "Promotes their own interests or the collective interests of their members",
+      "register_id": "09571422185-81",
+      "degree": 12
+    },
+    {
+      "id": "org_6fe9232a7b97ae58",
+      "type": "org",
+      "label": "Mission of Israel to the EU",
+      "name": "Mission of Israel to the EU",
+      "interests": "",
+      "register_id": null,
+      "degree": 6
+    },
+    {
+      "id": "635640197662-79",
+      "type": "org",
+      "label": "Nieder\u00f6sterreichischer Landesjagdverband",
+      "name": "Nieder\u00f6sterreichischer Landesjagdverband",
+      "interests": "Promotes their own interests or the collective interests of their members",
+      "register_id": "635640197662-79",
+      "degree": 3
+    },
+    {
+      "id": "org_75f9779a305f24d9",
+      "type": "org",
+      "label": "Teneo",
+      "name": "Teneo",
+      "interests": "",
+      "register_id": null,
+      "degree": 1
+    },
+    {
+      "id": "026214147439-18",
+      "type": "org",
+      "label": "Nadace Partnerstv\u00ed",
+      "name": "Nadace Partnerstv\u00ed",
+      "interests": "Does not represent commercial interests",
+      "register_id": "026214147439-18",
+      "degree": 1
+    },
+    {
+      "id": "org_9895e9dc5623ee2d",
+      "type": "org",
+      "label": "Vegane Gesellschaft \u00d6sterreich",
+      "name": "Vegane Gesellschaft \u00d6sterreich",
+      "interests": "",
+      "register_id": null,
+      "degree": 3
+    },
+    {
+      "id": "org_cab42addfbb5d338",
+      "type": "org",
+      "label": "\u00d6sterreichischer Gemeindebund",
+      "name": "\u00d6sterreichischer Gemeindebund",
+      "interests": "",
+      "register_id": null,
+      "degree": 23
+    },
+    {
+      "id": "589554140655-40",
+      "type": "org",
+      "label": "OEUVRE D'ORIENT",
+      "name": "OEUVRE D'ORIENT",
+      "interests": "Does not represent commercial interests",
+      "register_id": "589554140655-40",
+      "degree": 1
+    },
+    {
+      "id": "org_7bd39942eb587604",
+      "type": "org",
+      "label": "Euractiv",
+      "name": "Euractiv",
+      "interests": "",
+      "register_id": null,
+      "degree": 5
+    },
+    {
+      "id": "592343015058-67",
+      "type": "org",
+      "label": "European Union Chamber of Commerce in China",
+      "name": "European Union Chamber of Commerce in China",
+      "interests": "Promotes their own interests or the collective interests of their members",
+      "register_id": "592343015058-67",
+      "degree": 1
+    },
+    {
+      "id": "294581211639-39",
+      "type": "org",
+      "label": "\u010cesk\u00e1 n\u00e1rodn\u00ed skupina Mezin\u00e1rodn\u00ed federace hudebn\u00edho pr\u016fmyslu, z.s.",
+      "name": "\u010cesk\u00e1 n\u00e1rodn\u00ed skupina Mezin\u00e1rodn\u00ed federace hudebn\u00edho pr\u016fmyslu, z.s.",
+      "interests": "Promotes their own interests or the collective interests of their members",
+      "register_id": "294581211639-39",
+      "degree": 4
+    },
+    {
+      "id": "10405322962-08",
+      "type": "org",
+      "label": "Wirtschaftskammer \u00d6sterreich",
+      "name": "Wirtschaftskammer \u00d6sterreich",
+      "interests": "Promotes their own interests or the collective interests of their members",
+      "register_id": "10405322962-08",
+      "degree": 28
+    },
+    {
+      "id": "org_790ef12435a3953f",
+      "type": "org",
+      "label": "Politico",
+      "name": "Politico",
+      "interests": "",
+      "register_id": null,
+      "degree": 2
+    },
+    {
+      "id": "730024411461-80",
+      "type": "org",
+      "label": "Umweltdachverband",
+      "name": "Umweltdachverband",
+      "interests": "Promotes their own interests or the collective interests of their members",
+      "register_id": "730024411461-80",
+      "degree": 1
+    },
+    {
+      "id": "036764449246-72",
+      "type": "org",
+      "label": "ECPAT \u00d6sterreich-Arbeitsgemeinschaft zum Schutz der Rechte der Kinder vor sexueller Ausbeutung",
+      "name": "ECPAT \u00d6sterreich-Arbeitsgemeinschaft zum Schutz der Rechte der Kinder vor sexueller Ausbeutung",
+      "interests": "Does not represent commercial interests",
+      "register_id": "036764449246-72",
+      "degree": 7
+    },
+    {
+      "id": "711479593597-72",
+      "type": "org",
+      "label": "Czech Business Representation to the EU in Brussels",
+      "name": "Czech Business Representation to the EU in Brussels",
+      "interests": "Promotes their own interests or the collective interests of their members",
+      "register_id": "711479593597-72",
+      "degree": 6
+    },
+    {
+      "id": "org_1eeaaca1619817ed",
+      "type": "org",
+      "label": "Lidl \u00d6sterreich",
+      "name": "Lidl \u00d6sterreich",
+      "interests": "",
+      "register_id": null,
+      "degree": 4
+    },
+    {
+      "id": "310282849811-01",
+      "type": "org",
+      "label": "CEZ, a.s.",
+      "name": "CEZ, a.s.",
+      "interests": "Promotes their own interests or the collective interests of their members",
+      "register_id": "310282849811-01",
+      "degree": 6
+    },
+    {
+      "id": "785320514128-81",
+      "type": "org",
+      "label": "Svaz pr\u016fmyslu a dopravy \u010cR",
+      "name": "Svaz pr\u016fmyslu a dopravy \u010cR",
+      "interests": "Promotes their own interests or the collective interests of their members",
+      "register_id": "785320514128-81",
+      "degree": 9
+    },
+    {
+      "id": "098025935611-30",
+      "type": "org",
+      "label": "PHARMIG - Verband der pharmazeutischen Industrie \u00d6sterreichs",
+      "name": "PHARMIG - Verband der pharmazeutischen Industrie \u00d6sterreichs",
+      "interests": "Promotes their own interests or the collective interests of their members",
+      "register_id": "098025935611-30",
+      "degree": 7
+    },
+    {
+      "id": "384694919450-50",
+      "type": "org",
+      "label": "AKM eingetragene Genossenschaft mit beschr\u00e4nkter Haftung",
+      "name": "AKM eingetragene Genossenschaft mit beschr\u00e4nkter Haftung",
+      "interests": "Promotes their own interests or the collective interests of their members",
+      "register_id": "384694919450-50",
+      "degree": 6
+    },
+    {
+      "id": "43246044354-41",
+      "type": "org",
+      "label": "\u00d6sterreichischer Gewerkschaftsbund",
+      "name": "\u00d6sterreichischer Gewerkschaftsbund",
+      "interests": "Promotes their own interests or the collective interests of their members",
+      "register_id": "43246044354-41",
+      "degree": 7
+    },
+    {
+      "id": "org_e9f4cab63081c280",
+      "type": "org",
+      "label": "Forum Europa",
+      "name": "Forum Europa",
+      "interests": "",
+      "register_id": null,
+      "degree": 1
+    },
+    {
+      "id": "33858106461-10",
+      "type": "org",
+      "label": "Raiffeisen Bank International AG",
+      "name": "Raiffeisen Bank International AG",
+      "interests": "Promotes their own interests or the collective interests of their members",
+      "register_id": "33858106461-10",
+      "degree": 7
+    },
+    {
+      "id": "23869471911-54",
+      "type": "org",
+      "label": "Bundesarbeitskammer \u00d6sterreich",
+      "name": "Bundesarbeitskammer \u00d6sterreich",
+      "interests": "Promotes their own interests or the collective interests of their members",
+      "register_id": "23869471911-54",
+      "degree": 3
+    },
+    {
+      "id": "org_06165f497912310e",
+      "type": "org",
+      "label": "Secretary General of the Parliament of Montenegro",
+      "name": "Secretary General of the Parliament of Montenegro",
+      "interests": "",
+      "register_id": null,
+      "degree": 5
+    },
+    {
+      "id": "253480052808-83",
+      "type": "org",
+      "label": "Svaz chemick\u00e9ho pr\u016fmyslu \u010cesk\u00e9 republiky, z.s.",
+      "name": "Svaz chemick\u00e9ho pr\u016fmyslu \u010cesk\u00e9 republiky, z.s.",
+      "interests": "Promotes their own interests or the collective interests of their members",
+      "register_id": "253480052808-83",
+      "degree": 5
+    },
+    {
+      "id": "6475183729-37",
+      "type": "org",
+      "label": "\u00d6sterreichische Notariatskammer",
+      "name": "\u00d6sterreichische Notariatskammer",
+      "interests": "Promotes their own interests or the collective interests of their members",
+      "register_id": "6475183729-37",
+      "degree": 10
+    },
+    {
+      "id": "744597146264-09",
+      "type": "org",
+      "label": "Refurbed Marketplace GmbH",
+      "name": "Refurbed Marketplace GmbH",
+      "interests": "Promotes their own interests or the collective interests of their members",
+      "register_id": "744597146264-09",
+      "degree": 6
+    },
+    {
+      "id": "316717053258-15",
+      "type": "org",
+      "label": "Heureka Group a.s.",
+      "name": "Heureka Group a.s.",
+      "interests": "Promotes their own interests or the collective interests of their members",
+      "register_id": "316717053258-15",
+      "degree": 5
+    },
+    {
+      "id": "596129227767-10",
+      "type": "org",
+      "label": "EUROPEUM Institute for European Policy",
+      "name": "EUROPEUM Institute for European Policy",
+      "interests": "Does not represent commercial interests",
+      "register_id": "596129227767-10",
+      "degree": 9
+    },
+    {
+      "id": "606518612244-15",
+      "type": "org",
+      "label": "Flughafen Wien AG",
+      "name": "Flughafen Wien AG",
+      "interests": "Promotes their own interests or the collective interests of their members",
+      "register_id": "606518612244-15",
+      "degree": 2
+    },
+    {
+      "id": "89093924456-06",
+      "type": "org",
+      "label": "Vereinigung der \u00f6sterreichischen Industrie - Industriellenvereinigung",
+      "name": "Vereinigung der \u00f6sterreichischen Industrie - Industriellenvereinigung",
+      "interests": "Promotes their own interests or the collective interests of their members",
+      "register_id": "89093924456-06",
+      "degree": 20
+    },
+    {
+      "id": "org_d2c8f20925df52b3",
+      "type": "org",
+      "label": "Verband der \u00f6sterreichischen Musikwirtschaft",
+      "name": "Verband der \u00f6sterreichischen Musikwirtschaft",
+      "interests": "",
+      "register_id": null,
+      "degree": 2
+    },
+    {
+      "id": "174652497312-48",
+      "type": "org",
+      "label": "Austropapier - Vereinigung der \u00d6sterreichischen Papierindustrie",
+      "name": "Austropapier - Vereinigung der \u00d6sterreichischen Papierindustrie",
+      "interests": "Promotes their own interests or the collective interests of their members",
+      "register_id": "174652497312-48",
+      "degree": 2
+    },
+    {
+      "id": "org_f0ba3421ee41daaa",
+      "type": "org",
+      "label": "ORSTED",
+      "name": "ORSTED",
+      "interests": "",
+      "register_id": null,
+      "degree": 5
+    },
+    {
+      "id": "739379646856-77",
+      "type": "org",
+      "label": "Verband der freien KFZ-Teile-Fachh\u00e4ndler",
+      "name": "Verband der freien KFZ-Teile-Fachh\u00e4ndler",
+      "interests": "Promotes their own interests or the collective interests of their members",
+      "register_id": "739379646856-77",
+      "degree": 4
+    },
+    {
+      "id": "155881930654-10",
+      "type": "org",
+      "label": "GLOBAL 2000, Friends of the Earth Austria",
+      "name": "GLOBAL 2000, Friends of the Earth Austria",
+      "interests": "Does not represent commercial interests",
+      "register_id": "155881930654-10",
+      "degree": 3
+    },
+    {
+      "id": "org_2a29239f44ad8fee",
+      "type": "org",
+      "label": "U.S. Mission to the EU",
+      "name": "U.S. Mission to the EU",
+      "interests": "",
+      "register_id": null,
+      "degree": 6
+    },
+    {
+      "id": "36636102190-34",
+      "type": "org",
+      "label": "\u00d6BB-Holding AG",
+      "name": "\u00d6BB-Holding AG",
+      "interests": "Promotes their own interests or the collective interests of their members",
+      "register_id": "36636102190-34",
+      "degree": 16
+    }
+  ],
+  "links": [
+    {
+      "source": "009543351056-37",
+      "target": "310282849811-01",
+      "weight": 12.61,
+      "shared": 2
+    },
+    {
+      "source": "94274031992-65",
+      "target": "36636102190-34",
+      "weight": 19.53,
+      "shared": 3
+    },
+    {
+      "source": "94274031992-65",
+      "target": "060605222884-13",
+      "weight": 12.34,
+      "shared": 2
+    },
+    {
+      "source": "94274031992-65",
+      "target": "66690371529-15",
+      "weight": 13.24,
+      "shared": 2
+    },
+    {
+      "source": "94274031992-65",
+      "target": "739379646856-77",
+      "weight": 13.24,
+      "shared": 2
+    },
+    {
+      "source": "94274031992-65",
+      "target": "org_93fe8bcfd0e4d145",
+      "weight": 13.24,
+      "shared": 2
+    },
+    {
+      "source": "94274031992-65",
+      "target": "10405322962-08",
+      "weight": 11.82,
+      "shared": 2
+    },
+    {
+      "source": "94274031992-65",
+      "target": "174652497312-48",
+      "weight": 12.06,
+      "shared": 2
+    },
+    {
+      "source": "94274031992-65",
+      "target": "89093924456-06",
+      "weight": 11.82,
+      "shared": 2
+    },
+    {
+      "source": "94274031992-65",
+      "target": "09571422185-81",
+      "weight": 12.34,
+      "shared": 2
+    },
+    {
+      "source": "94274031992-65",
+      "target": "189510925414-06",
+      "weight": 12.34,
+      "shared": 2
+    },
+    {
+      "source": "94274031992-65",
+      "target": "org_aef7cc5b13b3015c",
+      "weight": 12.34,
+      "shared": 2
+    },
+    {
+      "source": "94274031992-65",
+      "target": "org_cab42addfbb5d338",
+      "weight": 12.34,
+      "shared": 2
+    },
+    {
+      "source": "060605222884-13",
+      "target": "09571422185-81",
+      "weight": 12.34,
+      "shared": 2
+    },
+    {
+      "source": "060605222884-13",
+      "target": "189510925414-06",
+      "weight": 12.34,
+      "shared": 2
+    },
+    {
+      "source": "060605222884-13",
+      "target": "org_aef7cc5b13b3015c",
+      "weight": 12.34,
+      "shared": 2
+    },
+    {
+      "source": "060605222884-13",
+      "target": "org_cab42addfbb5d338",
+      "weight": 12.34,
+      "shared": 2
+    },
+    {
+      "source": "org_6fa7b1f901cb5ffe",
+      "target": "107033410802-19",
+      "weight": 10.87,
+      "shared": 2
+    },
+    {
+      "source": "org_6fa7b1f901cb5ffe",
+      "target": "10405322962-08",
+      "weight": 10.87,
+      "shared": 2
+    },
+    {
+      "source": "org_6fa7b1f901cb5ffe",
+      "target": "6475183729-37",
+      "weight": 10.87,
+      "shared": 2
+    },
+    {
+      "source": "org_6fa7b1f901cb5ffe",
+      "target": "89093924456-06",
+      "weight": 10.87,
+      "shared": 2
+    },
+    {
+      "source": "org_6fa7b1f901cb5ffe",
+      "target": "org_be3280cc59d769de",
+      "weight": 10.87,
+      "shared": 2
+    },
+    {
+      "source": "org_915a953f98cba89d",
+      "target": "785320514128-81",
+      "weight": 12.15,
+      "shared": 2
+    },
+    {
+      "source": "org_915a953f98cba89d",
+      "target": "596129227767-10",
+      "weight": 12.15,
+      "shared": 2
+    },
+    {
+      "source": "org_915a953f98cba89d",
+      "target": "7829357255-35",
+      "weight": 12.15,
+      "shared": 2
+    },
+    {
+      "source": "org_915a953f98cba89d",
+      "target": "112575639424-68",
+      "weight": 12.15,
+      "shared": 2
+    },
+    {
+      "source": "org_915a953f98cba89d",
+      "target": "316717053258-15",
+      "weight": 12.15,
+      "shared": 2
+    },
+    {
+      "source": "org_a391a7a589a1a0c3",
+      "target": "org_790ef12435a3953f",
+      "weight": 13.26,
+      "shared": 2
+    },
+    {
+      "source": "509209111889-44",
+      "target": "589554140655-40",
+      "weight": 12.13,
+      "shared": 2
+    },
+    {
+      "source": "509209111889-44",
+      "target": "33858106461-10",
+      "weight": 10.94,
+      "shared": 2
+    },
+    {
+      "source": "509209111889-44",
+      "target": "org_2a29239f44ad8fee",
+      "weight": 10.94,
+      "shared": 2
+    },
+    {
+      "source": "400397949101-89",
+      "target": "253480052808-83",
+      "weight": 11.89,
+      "shared": 2
+    },
+    {
+      "source": "400397949101-89",
+      "target": "310282849811-01",
+      "weight": 11.89,
+      "shared": 2
+    },
+    {
+      "source": "400397949101-89",
+      "target": "711479593597-72",
+      "weight": 11.89,
+      "shared": 2
+    },
+    {
+      "source": "400397949101-89",
+      "target": "7829357255-35",
+      "weight": 11.89,
+      "shared": 2
+    },
+    {
+      "source": "400397949101-89",
+      "target": "954804447582-37",
+      "weight": 11.89,
+      "shared": 2
+    },
+    {
+      "source": "org_be3280cc59d769de",
+      "target": "107033410802-19",
+      "weight": 16.44,
+      "shared": 3
+    },
+    {
+      "source": "org_be3280cc59d769de",
+      "target": "036764449246-72",
+      "weight": 10.5,
+      "shared": 2
+    },
+    {
+      "source": "org_be3280cc59d769de",
+      "target": "384694919450-50",
+      "weight": 10.5,
+      "shared": 2
+    },
+    {
+      "source": "org_be3280cc59d769de",
+      "target": "10405322962-08",
+      "weight": 16.44,
+      "shared": 3
+    },
+    {
+      "source": "org_be3280cc59d769de",
+      "target": "6475183729-37",
+      "weight": 10.87,
+      "shared": 2
+    },
+    {
+      "source": "org_be3280cc59d769de",
+      "target": "89093924456-06",
+      "weight": 16.44,
+      "shared": 3
+    },
+    {
+      "source": "org_be3280cc59d769de",
+      "target": "09571422185-81",
+      "weight": 11.5,
+      "shared": 2
+    },
+    {
+      "source": "org_be3280cc59d769de",
+      "target": "org_cab42addfbb5d338",
+      "weight": 10.5,
+      "shared": 2
+    },
+    {
+      "source": "org_d236c4fab9ed6b59",
+      "target": "33858106461-10",
+      "weight": 12.2,
+      "shared": 2
+    },
+    {
+      "source": "954804447582-37",
+      "target": "253480052808-83",
+      "weight": 11.89,
+      "shared": 2
+    },
+    {
+      "source": "954804447582-37",
+      "target": "310282849811-01",
+      "weight": 11.89,
+      "shared": 2
+    },
+    {
+      "source": "954804447582-37",
+      "target": "711479593597-72",
+      "weight": 11.89,
+      "shared": 2
+    },
+    {
+      "source": "954804447582-37",
+      "target": "7829357255-35",
+      "weight": 11.89,
+      "shared": 2
+    },
+    {
+      "source": "189510925414-06",
+      "target": "36636102190-34",
+      "weight": 12.22,
+      "shared": 2
+    },
+    {
+      "source": "189510925414-06",
+      "target": "107033410802-19",
+      "weight": 12.02,
+      "shared": 2
+    },
+    {
+      "source": "189510925414-06",
+      "target": "098025935611-30",
+      "weight": 18.07,
+      "shared": 3
+    },
+    {
+      "source": "189510925414-06",
+      "target": "10405322962-08",
+      "weight": 18.07,
+      "shared": 3
+    },
+    {
+      "source": "189510925414-06",
+      "target": "89093924456-06",
+      "weight": 11.99,
+      "shared": 2
+    },
+    {
+      "source": "189510925414-06",
+      "target": "org_1eeaaca1619817ed",
+      "weight": 12.13,
+      "shared": 2
+    },
+    {
+      "source": "189510925414-06",
+      "target": "09571422185-81",
+      "weight": 18.27,
+      "shared": 3
+    },
+    {
+      "source": "189510925414-06",
+      "target": "org_aef7cc5b13b3015c",
+      "weight": 12.34,
+      "shared": 2
+    },
+    {
+      "source": "189510925414-06",
+      "target": "org_cab42addfbb5d338",
+      "weight": 12.34,
+      "shared": 2
+    },
+    {
+      "source": "189510925414-06",
+      "target": "org_f0ba3421ee41daaa",
+      "weight": 11.99,
+      "shared": 2
+    },
+    {
+      "source": "80966174852-38",
+      "target": "33858106461-10",
+      "weight": 10.99,
+      "shared": 2
+    },
+    {
+      "source": "80966174852-38",
+      "target": "10405322962-08",
+      "weight": 10.99,
+      "shared": 2
+    },
+    {
+      "source": "80966174852-38",
+      "target": "89093924456-06",
+      "weight": 10.99,
+      "shared": 2
+    },
+    {
+      "source": "80966174852-38",
+      "target": "org_cab42addfbb5d338",
+      "weight": 10.99,
+      "shared": 2
+    },
+    {
+      "source": "107033410802-19",
+      "target": "36636102190-34",
+      "weight": 11.71,
+      "shared": 2
+    },
+    {
+      "source": "107033410802-19",
+      "target": "098025935611-30",
+      "weight": 12.02,
+      "shared": 2
+    },
+    {
+      "source": "107033410802-19",
+      "target": "10405322962-08",
+      "weight": 47.35,
+      "shared": 8
+    },
+    {
+      "source": "107033410802-19",
+      "target": "635640197662-79",
+      "weight": 11.02,
+      "shared": 2
+    },
+    {
+      "source": "107033410802-19",
+      "target": "66690371529-15",
+      "weight": 16.79,
+      "shared": 3
+    },
+    {
+      "source": "107033410802-19",
+      "target": "09571422185-81",
+      "weight": 17.12,
+      "shared": 3
+    },
+    {
+      "source": "107033410802-19",
+      "target": "036764449246-72",
+      "weight": 17.65,
+      "shared": 3
+    },
+    {
+      "source": "107033410802-19",
+      "target": "6475183729-37",
+      "weight": 25.0,
+      "shared": 4
+    },
+    {
+      "source": "107033410802-19",
+      "target": "744597146264-09",
+      "weight": 13.08,
+      "shared": 2
+    },
+    {
+      "source": "107033410802-19",
+      "target": "89093924456-06",
+      "weight": 29.36,
+      "shared": 5
+    },
+    {
+      "source": "107033410802-19",
+      "target": "384694919450-50",
+      "weight": 10.5,
+      "shared": 2
+    },
+    {
+      "source": "107033410802-19",
+      "target": "43246044354-41",
+      "weight": 18.32,
+      "shared": 3
+    },
+    {
+      "source": "107033410802-19",
+      "target": "org_cab42addfbb5d338",
+      "weight": 10.5,
+      "shared": 2
+    },
+    {
+      "source": "107033410802-19",
+      "target": "org_93fe8bcfd0e4d145",
+      "weight": 10.71,
+      "shared": 2
+    },
+    {
+      "source": "107033410802-19",
+      "target": "23869471911-54",
+      "weight": 12.92,
+      "shared": 2
+    },
+    {
+      "source": "org_93fe8bcfd0e4d145",
+      "target": "36636102190-34",
+      "weight": 13.24,
+      "shared": 2
+    },
+    {
+      "source": "org_93fe8bcfd0e4d145",
+      "target": "10405322962-08",
+      "weight": 10.71,
+      "shared": 2
+    },
+    {
+      "source": "org_93fe8bcfd0e4d145",
+      "target": "89093924456-06",
+      "weight": 10.71,
+      "shared": 2
+    },
+    {
+      "source": "org_93fe8bcfd0e4d145",
+      "target": "739379646856-77",
+      "weight": 13.24,
+      "shared": 2
+    },
+    {
+      "source": "org_93fe8bcfd0e4d145",
+      "target": "66690371529-15",
+      "weight": 18.18,
+      "shared": 3
+    },
+    {
+      "source": "7829357255-35",
+      "target": "785320514128-81",
+      "weight": 18.14,
+      "shared": 3
+    },
+    {
+      "source": "7829357255-35",
+      "target": "253480052808-83",
+      "weight": 11.89,
+      "shared": 2
+    },
+    {
+      "source": "7829357255-35",
+      "target": "596129227767-10",
+      "weight": 12.15,
+      "shared": 2
+    },
+    {
+      "source": "7829357255-35",
+      "target": "112575639424-68",
+      "weight": 12.15,
+      "shared": 2
+    },
+    {
+      "source": "7829357255-35",
+      "target": "316717053258-15",
+      "weight": 12.15,
+      "shared": 2
+    },
+    {
+      "source": "7829357255-35",
+      "target": "310282849811-01",
+      "weight": 11.89,
+      "shared": 2
+    },
+    {
+      "source": "7829357255-35",
+      "target": "711479593597-72",
+      "weight": 17.89,
+      "shared": 3
+    },
+    {
+      "source": "org_aef7cc5b13b3015c",
+      "target": "09571422185-81",
+      "weight": 12.34,
+      "shared": 2
+    },
+    {
+      "source": "org_aef7cc5b13b3015c",
+      "target": "org_cab42addfbb5d338",
+      "weight": 12.34,
+      "shared": 2
+    },
+    {
+      "source": "66690371529-15",
+      "target": "36636102190-34",
+      "weight": 13.24,
+      "shared": 2
+    },
+    {
+      "source": "66690371529-15",
+      "target": "10405322962-08",
+      "weight": 16.79,
+      "shared": 3
+    },
+    {
+      "source": "66690371529-15",
+      "target": "89093924456-06",
+      "weight": 10.71,
+      "shared": 2
+    },
+    {
+      "source": "66690371529-15",
+      "target": "739379646856-77",
+      "weight": 13.24,
+      "shared": 2
+    },
+    {
+      "source": "66690371529-15",
+      "target": "635640197662-79",
+      "weight": 11.02,
+      "shared": 2
+    },
+    {
+      "source": "org_67c125c8983c0bd1",
+      "target": "10405322962-08",
+      "weight": 10.31,
+      "shared": 2
+    },
+    {
+      "source": "org_67c125c8983c0bd1",
+      "target": "org_6fe9232a7b97ae58",
+      "weight": 10.31,
+      "shared": 2
+    },
+    {
+      "source": "org_67c125c8983c0bd1",
+      "target": "org_2a29239f44ad8fee",
+      "weight": 10.31,
+      "shared": 2
+    },
+    {
+      "source": "org_67c125c8983c0bd1",
+      "target": "org_cab42addfbb5d338",
+      "weight": 10.31,
+      "shared": 2
+    },
+    {
+      "source": "org_67c125c8983c0bd1",
+      "target": "org_06165f497912310e",
+      "weight": 10.31,
+      "shared": 2
+    },
+    {
+      "source": "org_38f948bae0cb6dc3",
+      "target": "10405322962-08",
+      "weight": 11.71,
+      "shared": 2
+    },
+    {
+      "source": "org_38f948bae0cb6dc3",
+      "target": "6475183729-37",
+      "weight": 11.71,
+      "shared": 2
+    },
+    {
+      "source": "42119616334-41",
+      "target": "36636102190-34",
+      "weight": 11.73,
+      "shared": 2
+    },
+    {
+      "source": "42119616334-41",
+      "target": "744597146264-09",
+      "weight": 11.73,
+      "shared": 2
+    },
+    {
+      "source": "112575639424-68",
+      "target": "785320514128-81",
+      "weight": 12.15,
+      "shared": 2
+    },
+    {
+      "source": "112575639424-68",
+      "target": "596129227767-10",
+      "weight": 12.15,
+      "shared": 2
+    },
+    {
+      "source": "112575639424-68",
+      "target": "316717053258-15",
+      "weight": 12.15,
+      "shared": 2
+    },
+    {
+      "source": "09571422185-81",
+      "target": "36636102190-34",
+      "weight": 12.22,
+      "shared": 2
+    },
+    {
+      "source": "09571422185-81",
+      "target": "098025935611-30",
+      "weight": 11.99,
+      "shared": 2
+    },
+    {
+      "source": "09571422185-81",
+      "target": "10405322962-08",
+      "weight": 17.55,
+      "shared": 3
+    },
+    {
+      "source": "09571422185-81",
+      "target": "89093924456-06",
+      "weight": 17.55,
+      "shared": 3
+    },
+    {
+      "source": "09571422185-81",
+      "target": "org_cab42addfbb5d338",
+      "weight": 17.91,
+      "shared": 3
+    },
+    {
+      "source": "09571422185-81",
+      "target": "org_f0ba3421ee41daaa",
+      "weight": 11.99,
+      "shared": 2
+    },
+    {
+      "source": "org_6fe9232a7b97ae58",
+      "target": "10405322962-08",
+      "weight": 10.31,
+      "shared": 2
+    },
+    {
+      "source": "org_6fe9232a7b97ae58",
+      "target": "org_75f9779a305f24d9",
+      "weight": 11.21,
+      "shared": 2
+    },
+    {
+      "source": "org_6fe9232a7b97ae58",
+      "target": "org_06165f497912310e",
+      "weight": 10.31,
+      "shared": 2
+    },
+    {
+      "source": "org_6fe9232a7b97ae58",
+      "target": "org_2a29239f44ad8fee",
+      "weight": 10.31,
+      "shared": 2
+    },
+    {
+      "source": "org_6fe9232a7b97ae58",
+      "target": "org_cab42addfbb5d338",
+      "weight": 10.31,
+      "shared": 2
+    },
+    {
+      "source": "635640197662-79",
+      "target": "10405322962-08",
+      "weight": 11.02,
+      "shared": 2
+    },
+    {
+      "source": "org_2a29239f44ad8fee",
+      "target": "592343015058-67",
+      "weight": 12.25,
+      "shared": 2
+    },
+    {
+      "source": "org_2a29239f44ad8fee",
+      "target": "org_06165f497912310e",
+      "weight": 10.31,
+      "shared": 2
+    },
+    {
+      "source": "org_2a29239f44ad8fee",
+      "target": "org_cab42addfbb5d338",
+      "weight": 10.31,
+      "shared": 2
+    },
+    {
+      "source": "026214147439-18",
+      "target": "596129227767-10",
+      "weight": 11.69,
+      "shared": 2
+    },
+    {
+      "source": "org_9895e9dc5623ee2d",
+      "target": "36636102190-34",
+      "weight": 12.09,
+      "shared": 2
+    },
+    {
+      "source": "org_9895e9dc5623ee2d",
+      "target": "155881930654-10",
+      "weight": 12.09,
+      "shared": 2
+    },
+    {
+      "source": "org_9895e9dc5623ee2d",
+      "target": "org_cab42addfbb5d338",
+      "weight": 12.09,
+      "shared": 2
+    },
+    {
+      "source": "org_cab42addfbb5d338",
+      "target": "36636102190-34",
+      "weight": 12.09,
+      "shared": 2
+    },
+    {
+      "source": "org_cab42addfbb5d338",
+      "target": "036764449246-72",
+      "weight": 10.5,
+      "shared": 2
+    },
+    {
+      "source": "org_cab42addfbb5d338",
+      "target": "33858106461-10",
+      "weight": 10.99,
+      "shared": 2
+    },
+    {
+      "source": "org_cab42addfbb5d338",
+      "target": "384694919450-50",
+      "weight": 10.5,
+      "shared": 2
+    },
+    {
+      "source": "org_cab42addfbb5d338",
+      "target": "10405322962-08",
+      "weight": 21.93,
+      "shared": 4
+    },
+    {
+      "source": "org_cab42addfbb5d338",
+      "target": "43246044354-41",
+      "weight": 11.36,
+      "shared": 2
+    },
+    {
+      "source": "org_cab42addfbb5d338",
+      "target": "155881930654-10",
+      "weight": 12.09,
+      "shared": 2
+    },
+    {
+      "source": "org_cab42addfbb5d338",
+      "target": "730024411461-80",
+      "weight": 11.66,
+      "shared": 2
+    },
+    {
+      "source": "org_cab42addfbb5d338",
+      "target": "89093924456-06",
+      "weight": 16.55,
+      "shared": 3
+    },
+    {
+      "source": "org_cab42addfbb5d338",
+      "target": "org_1eeaaca1619817ed",
+      "weight": 11.85,
+      "shared": 2
+    },
+    {
+      "source": "org_cab42addfbb5d338",
+      "target": "org_06165f497912310e",
+      "weight": 10.31,
+      "shared": 2
+    },
+    {
+      "source": "org_7bd39942eb587604",
+      "target": "785320514128-81",
+      "weight": 12.15,
+      "shared": 2
+    },
+    {
+      "source": "org_7bd39942eb587604",
+      "target": "596129227767-10",
+      "weight": 12.15,
+      "shared": 2
+    },
+    {
+      "source": "org_7bd39942eb587604",
+      "target": "294581211639-39",
+      "weight": 12.15,
+      "shared": 2
+    },
+    {
+      "source": "org_7bd39942eb587604",
+      "target": "org_790ef12435a3953f",
+      "weight": 12.11,
+      "shared": 2
+    },
+    {
+      "source": "org_7bd39942eb587604",
+      "target": "org_e9f4cab63081c280",
+      "weight": 10.24,
+      "shared": 2
+    },
+    {
+      "source": "155881930654-10",
+      "target": "36636102190-34",
+      "weight": 12.09,
+      "shared": 2
+    },
+    {
+      "source": "294581211639-39",
+      "target": "785320514128-81",
+      "weight": 12.15,
+      "shared": 2
+    },
+    {
+      "source": "294581211639-39",
+      "target": "596129227767-10",
+      "weight": 12.15,
+      "shared": 2
+    },
+    {
+      "source": "294581211639-39",
+      "target": "33858106461-10",
+      "weight": 12.15,
+      "shared": 2
+    },
+    {
+      "source": "10405322962-08",
+      "target": "36636102190-34",
+      "weight": 18.08,
+      "shared": 3
+    },
+    {
+      "source": "10405322962-08",
+      "target": "606518612244-15",
+      "weight": 12.55,
+      "shared": 2
+    },
+    {
+      "source": "10405322962-08",
+      "target": "036764449246-72",
+      "weight": 17.65,
+      "shared": 3
+    },
+    {
+      "source": "10405322962-08",
+      "target": "744597146264-09",
+      "weight": 13.08,
+      "shared": 2
+    },
+    {
+      "source": "10405322962-08",
+      "target": "098025935611-30",
+      "weight": 18.07,
+      "shared": 3
+    },
+    {
+      "source": "10405322962-08",
+      "target": "384694919450-50",
+      "weight": 10.5,
+      "shared": 2
+    },
+    {
+      "source": "10405322962-08",
+      "target": "org_1eeaaca1619817ed",
+      "weight": 12.13,
+      "shared": 2
+    },
+    {
+      "source": "10405322962-08",
+      "target": "89093924456-06",
+      "weight": 43.57,
+      "shared": 7
+    },
+    {
+      "source": "10405322962-08",
+      "target": "org_d2c8f20925df52b3",
+      "weight": 13.73,
+      "shared": 2
+    },
+    {
+      "source": "10405322962-08",
+      "target": "6475183729-37",
+      "weight": 31.78,
+      "shared": 5
+    },
+    {
+      "source": "10405322962-08",
+      "target": "43246044354-41",
+      "weight": 25.1,
+      "shared": 4
+    },
+    {
+      "source": "10405322962-08",
+      "target": "org_06165f497912310e",
+      "weight": 10.31,
+      "shared": 2
+    },
+    {
+      "source": "10405322962-08",
+      "target": "23869471911-54",
+      "weight": 12.92,
+      "shared": 2
+    },
+    {
+      "source": "10405322962-08",
+      "target": "org_f0ba3421ee41daaa",
+      "weight": 11.99,
+      "shared": 2
+    },
+    {
+      "source": "036764449246-72",
+      "target": "6475183729-37",
+      "weight": 12.09,
+      "shared": 2
+    },
+    {
+      "source": "036764449246-72",
+      "target": "89093924456-06",
+      "weight": 17.65,
+      "shared": 3
+    },
+    {
+      "source": "036764449246-72",
+      "target": "384694919450-50",
+      "weight": 10.5,
+      "shared": 2
+    },
+    {
+      "source": "711479593597-72",
+      "target": "785320514128-81",
+      "weight": 11.45,
+      "shared": 2
+    },
+    {
+      "source": "711479593597-72",
+      "target": "253480052808-83",
+      "weight": 11.89,
+      "shared": 2
+    },
+    {
+      "source": "711479593597-72",
+      "target": "310282849811-01",
+      "weight": 11.89,
+      "shared": 2
+    },
+    {
+      "source": "org_1eeaaca1619817ed",
+      "target": "098025935611-30",
+      "weight": 12.13,
+      "shared": 2
+    },
+    {
+      "source": "310282849811-01",
+      "target": "253480052808-83",
+      "weight": 11.89,
+      "shared": 2
+    },
+    {
+      "source": "785320514128-81",
+      "target": "316717053258-15",
+      "weight": 12.15,
+      "shared": 2
+    },
+    {
+      "source": "785320514128-81",
+      "target": "596129227767-10",
+      "weight": 18.83,
+      "shared": 3
+    },
+    {
+      "source": "785320514128-81",
+      "target": "33858106461-10",
+      "weight": 12.15,
+      "shared": 2
+    },
+    {
+      "source": "098025935611-30",
+      "target": "89093924456-06",
+      "weight": 11.99,
+      "shared": 2
+    },
+    {
+      "source": "098025935611-30",
+      "target": "org_f0ba3421ee41daaa",
+      "weight": 11.99,
+      "shared": 2
+    },
+    {
+      "source": "384694919450-50",
+      "target": "89093924456-06",
+      "weight": 10.5,
+      "shared": 2
+    },
+    {
+      "source": "43246044354-41",
+      "target": "36636102190-34",
+      "weight": 11.57,
+      "shared": 2
+    },
+    {
+      "source": "43246044354-41",
+      "target": "606518612244-15",
+      "weight": 12.55,
+      "shared": 2
+    },
+    {
+      "source": "43246044354-41",
+      "target": "89093924456-06",
+      "weight": 11.34,
+      "shared": 2
+    },
+    {
+      "source": "43246044354-41",
+      "target": "6475183729-37",
+      "weight": 13.76,
+      "shared": 2
+    },
+    {
+      "source": "33858106461-10",
+      "target": "596129227767-10",
+      "weight": 12.15,
+      "shared": 2
+    },
+    {
+      "source": "23869471911-54",
+      "target": "6475183729-37",
+      "weight": 12.92,
+      "shared": 2
+    },
+    {
+      "source": "6475183729-37",
+      "target": "744597146264-09",
+      "weight": 13.08,
+      "shared": 2
+    },
+    {
+      "source": "6475183729-37",
+      "target": "89093924456-06",
+      "weight": 18.02,
+      "shared": 3
+    },
+    {
+      "source": "316717053258-15",
+      "target": "596129227767-10",
+      "weight": 12.15,
+      "shared": 2
+    },
+    {
+      "source": "89093924456-06",
+      "target": "36636102190-34",
+      "weight": 11.71,
+      "shared": 2
+    },
+    {
+      "source": "89093924456-06",
+      "target": "744597146264-09",
+      "weight": 13.08,
+      "shared": 2
+    },
+    {
+      "source": "89093924456-06",
+      "target": "org_d2c8f20925df52b3",
+      "weight": 13.73,
+      "shared": 2
+    },
+    {
+      "source": "89093924456-06",
+      "target": "org_f0ba3421ee41daaa",
+      "weight": 11.99,
+      "shared": 2
+    },
+    {
+      "source": "174652497312-48",
+      "target": "36636102190-34",
+      "weight": 12.06,
+      "shared": 2
+    },
+    {
+      "source": "739379646856-77",
+      "target": "36636102190-34",
+      "weight": 13.24,
+      "shared": 2
+    },
+    {
+      "source": "744597146264-09",
+      "target": "36636102190-34",
+      "weight": 11.73,
+      "shared": 2
+    }
+  ],
+  "external_connections": [
+    {
+      "cluster_id": 1,
+      "cluster_label": "German",
+      "edge_count": 116,
+      "weight": 1495.23
+    },
+    {
+      "cluster_id": 3,
+      "cluster_label": "Energy & Climate / Tech & Digital",
+      "edge_count": 32,
+      "weight": 407.43
+    },
+    {
+      "cluster_id": 0,
+      "cluster_label": "Tech & Digital",
+      "edge_count": 25,
+      "weight": 413.94
+    },
+    {
+      "cluster_id": 4,
+      "cluster_label": "Tech & Digital / Transport & Aviation",
+      "edge_count": 21,
+      "weight": 273.38
+    },
+    {
+      "cluster_id": 2,
+      "cluster_label": "Tech & Digital / Human Rights & NGO",
+      "edge_count": 17,
+      "weight": 231.72
+    },
+    {
+      "cluster_id": 7,
+      "cluster_label": "Agriculture & Food / Trade & Business",
+      "edge_count": 14,
+      "weight": 172.28
+    },
+    {
+      "cluster_id": 8,
+      "cluster_label": "ENEL SpA & A2A",
+      "edge_count": 9,
+      "weight": 122.35
+    },
+    {
+      "cluster_id": 5,
+      "cluster_label": "Pharma & Health",
+      "edge_count": 8,
+      "weight": 129.44
+    },
+    {
+      "cluster_id": 10,
+      "cluster_label": "Dutch / Tech & Digital",
+      "edge_count": 3,
+      "weight": 35.53
+    },
+    {
+      "cluster_id": 12,
+      "cluster_label": "Nordic",
+      "edge_count": 3,
+      "weight": 41.73
+    },
+    {
+      "cluster_id": 9,
+      "cluster_label": "Finance & Banking / Tech & Digital",
+      "edge_count": 2,
+      "weight": 46.17
+    }
+  ],
+  "metadata": {
+    "node_count": 62,
+    "edge_count": 192,
+    "density": 0.102
+  }
+}

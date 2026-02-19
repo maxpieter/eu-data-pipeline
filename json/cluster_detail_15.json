@@ -1,0 +1,222 @@
+{
+  "cluster_id": 15,
+  "cluster_label": "Repr\u00e9sentant du Parl & Ambassade du Koweit",
+  "nodes": [
+    {
+      "id": "org_4c8b62a18a5dbb75",
+      "type": "org",
+      "label": "Repr\u00e9sentant du Parlement de Serbie",
+      "name": "Repr\u00e9sentant du Parlement de Serbie",
+      "interests": "",
+      "register_id": null,
+      "degree": 6
+    },
+    {
+      "id": "org_b601df205d2c13a9",
+      "type": "org",
+      "label": "Ambassade du Koweit",
+      "name": "Ambassade du Koweit",
+      "interests": "",
+      "register_id": null,
+      "degree": 6
+    },
+    {
+      "id": "org_9501b94dc3e1b690",
+      "type": "org",
+      "label": "Chambre de commerce et d'industrie France Serbie",
+      "name": "Chambre de commerce et d'industrie France Serbie",
+      "interests": "",
+      "register_id": null,
+      "degree": 6
+    },
+    {
+      "id": "org_f977c7cf168836e4",
+      "type": "org",
+      "label": "Repr\u00e9sentation de la Chine aupr\u00e8s de l'UE",
+      "name": "Repr\u00e9sentation de la Chine aupr\u00e8s de l'UE",
+      "interests": "",
+      "register_id": null,
+      "degree": 6
+    },
+    {
+      "id": "org_d732538f389d162a",
+      "type": "org",
+      "label": "Repr\u00e9sentant du bureau de coordination dans le cadre du processus de n\u00e9gociation avec Pristina",
+      "name": "Repr\u00e9sentant du bureau de coordination dans le cadre du processus de n\u00e9gociation avec Pristina",
+      "interests": "",
+      "register_id": null,
+      "degree": 6
+    },
+    {
+      "id": "org_3a65d43138b77c63",
+      "type": "org",
+      "label": "Secr\u00e9taire d'Etat serbe au Minist\u00e8re des Affaires \u00e9trang\u00e8res",
+      "name": "Secr\u00e9taire d'Etat serbe au Minist\u00e8re des Affaires \u00e9trang\u00e8res",
+      "interests": "",
+      "register_id": null,
+      "degree": 6
+    },
+    {
+      "id": "org_de94b111fa00df52",
+      "type": "org",
+      "label": "Vice-Pr\u00e9sidence de le Commission des Affaires \u00e9trang\u00e8res du Parlement serbe",
+      "name": "Vice-Pr\u00e9sidence de le Commission des Affaires \u00e9trang\u00e8res du Parlement serbe",
+      "interests": "",
+      "register_id": null,
+      "degree": 6
+    }
+  ],
+  "links": [
+    {
+      "source": "org_b601df205d2c13a9",
+      "target": "org_f977c7cf168836e4",
+      "weight": 13.23,
+      "shared": 2
+    },
+    {
+      "source": "org_b601df205d2c13a9",
+      "target": "org_de94b111fa00df52",
+      "weight": 13.23,
+      "shared": 2
+    },
+    {
+      "source": "org_b601df205d2c13a9",
+      "target": "org_d732538f389d162a",
+      "weight": 13.23,
+      "shared": 2
+    },
+    {
+      "source": "org_b601df205d2c13a9",
+      "target": "org_9501b94dc3e1b690",
+      "weight": 13.23,
+      "shared": 2
+    },
+    {
+      "source": "org_b601df205d2c13a9",
+      "target": "org_3a65d43138b77c63",
+      "weight": 13.23,
+      "shared": 2
+    },
+    {
+      "source": "org_b601df205d2c13a9",
+      "target": "org_4c8b62a18a5dbb75",
+      "weight": 13.23,
+      "shared": 2
+    },
+    {
+      "source": "org_f977c7cf168836e4",
+      "target": "org_3a65d43138b77c63",
+      "weight": 13.23,
+      "shared": 2
+    },
+    {
+      "source": "org_f977c7cf168836e4",
+      "target": "org_4c8b62a18a5dbb75",
+      "weight": 13.23,
+      "shared": 2
+    },
+    {
+      "source": "org_f977c7cf168836e4",
+      "target": "org_9501b94dc3e1b690",
+      "weight": 13.23,
+      "shared": 2
+    },
+    {
+      "source": "org_f977c7cf168836e4",
+      "target": "org_d732538f389d162a",
+      "weight": 13.23,
+      "shared": 2
+    },
+    {
+      "source": "org_f977c7cf168836e4",
+      "target": "org_de94b111fa00df52",
+      "weight": 13.23,
+      "shared": 2
+    },
+    {
+      "source": "org_d732538f389d162a",
+      "target": "org_de94b111fa00df52",
+      "weight": 13.23,
+      "shared": 2
+    },
+    {
+      "source": "org_d732538f389d162a",
+      "target": "org_3a65d43138b77c63",
+      "weight": 13.23,
+      "shared": 2
+    },
+    {
+      "source": "org_d732538f389d162a",
+      "target": "org_4c8b62a18a5dbb75",
+      "weight": 13.23,
+      "shared": 2
+    },
+    {
+      "source": "org_d732538f389d162a",
+      "target": "org_9501b94dc3e1b690",
+      "weight": 13.23,
+      "shared": 2
+    },
+    {
+      "source": "org_4c8b62a18a5dbb75",
+      "target": "org_de94b111fa00df52",
+      "weight": 13.23,
+      "shared": 2
+    },
+    {
+      "source": "org_4c8b62a18a5dbb75",
+      "target": "org_9501b94dc3e1b690",
+      "weight": 13.23,
+      "shared": 2
+    },
+    {
+      "source": "org_4c8b62a18a5dbb75",
+      "target": "org_3a65d43138b77c63",
+      "weight": 13.23,
+      "shared": 2
+    },
+    {
+      "source": "org_de94b111fa00df52",
+      "target": "org_3a65d43138b77c63",
+      "weight": 13.23,
+      "shared": 2
+    },
+    {
+      "source": "org_de94b111fa00df52",
+      "target": "org_9501b94dc3e1b690",
+      "weight": 13.23,
+      "shared": 2
+    },
+    {
+      "source": "org_9501b94dc3e1b690",
+      "target": "org_3a65d43138b77c63",
+      "weight": 13.23,
+      "shared": 2
+    }
+  ],
+  "external_connections": [
+    {
+      "cluster_id": 5,
+      "cluster_label": "Pharma & Health",
+      "edge_count": 1,
+      "weight": 14.01
+    },
+    {
+      "cluster_id": 4,
+      "cluster_label": "Tech & Digital / Transport & Aviation",
+      "edge_count": 1,
+      "weight": 14.01
+    },
+    {
+      "cluster_id": 3,
+      "cluster_label": "Energy & Climate / Tech & Digital",
+      "edge_count": 1,
+      "weight": 21.25
+    }
+  ],
+  "metadata": {
+    "node_count": 7,
+    "edge_count": 21,
+    "density": 1.0
+  }
+}

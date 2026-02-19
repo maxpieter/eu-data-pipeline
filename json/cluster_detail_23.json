@@ -1,0 +1,38 @@
+{
+  "cluster_id": 23,
+  "cluster_label": "Embajada de Panam\u00e1",
+  "nodes": [
+    {
+      "id": "org_94703a2d50ef8191",
+      "type": "org",
+      "label": "Embajada de Panam\u00e1",
+      "name": "Embajada de Panam\u00e1",
+      "interests": "",
+      "register_id": null,
+      "degree": 1
+    },
+    {
+      "id": "org_fab1e845b5273310",
+      "type": "org",
+      "label": "SEDRA",
+      "name": "SEDRA",
+      "interests": "",
+      "register_id": null,
+      "degree": 1
+    }
+  ],
+  "links": [
+    {
+      "source": "org_94703a2d50ef8191",
+      "target": "org_fab1e845b5273310",
+      "weight": 11.29,
+      "shared": 2
+    }
+  ],
+  "external_connections": [],
+  "metadata": {
+    "node_count": 2,
+    "edge_count": 1,
+    "density": 1.0
+  }
+}

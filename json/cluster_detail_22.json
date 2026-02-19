@@ -1,0 +1,38 @@
+{
+  "cluster_id": 22,
+  "cluster_label": "Aerospace, Security and Defenc",
+  "nodes": [
+    {
+      "id": "72699997886-57",
+      "type": "org",
+      "label": "Aerospace, Security and Defence Industries Association of Europe",
+      "name": "Aerospace, Security and Defence Industries Association of Europe",
+      "interests": "Promotes their own interests or the collective interests of their members",
+      "register_id": "72699997886-57",
+      "degree": 1
+    },
+    {
+      "id": "666636798087-06",
+      "type": "org",
+      "label": "Agentur f\u00fcr Innovation in der Cybersicherheit GmbH",
+      "name": "Agentur f\u00fcr Innovation in der Cybersicherheit GmbH",
+      "interests": "Promotes their own interests or the collective interests of their members",
+      "register_id": "666636798087-06",
+      "degree": 1
+    }
+  ],
+  "links": [
+    {
+      "source": "72699997886-57",
+      "target": "666636798087-06",
+      "weight": 12.07,
+      "shared": 2
+    }
+  ],
+  "external_connections": [],
+  "metadata": {
+    "node_count": 2,
+    "edge_count": 1,
+    "density": 1.0
+  }
+}

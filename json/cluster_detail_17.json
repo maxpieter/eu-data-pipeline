@@ -1,0 +1,59 @@
+{
+  "cluster_id": 17,
+  "cluster_label": "Can Europe & Costas Kadis",
+  "nodes": [
+    {
+      "id": "org_a8002ccd885915f4",
+      "type": "org",
+      "label": "Can Europe",
+      "name": "Can Europe",
+      "interests": "",
+      "register_id": null,
+      "degree": 2
+    },
+    {
+      "id": "org_1ebde004506b642e",
+      "type": "org",
+      "label": "Costas Kadis",
+      "name": "Costas Kadis",
+      "interests": "",
+      "register_id": null,
+      "degree": 2
+    },
+    {
+      "id": "org_d369d3a51a6ef5be",
+      "type": "org",
+      "label": "Oliv\u00e9r V\u00e1rhelyi",
+      "name": "Oliv\u00e9r V\u00e1rhelyi",
+      "interests": "",
+      "register_id": null,
+      "degree": 2
+    }
+  ],
+  "links": [
+    {
+      "source": "org_a8002ccd885915f4",
+      "target": "org_1ebde004506b642e",
+      "weight": 11.41,
+      "shared": 2
+    },
+    {
+      "source": "org_a8002ccd885915f4",
+      "target": "org_d369d3a51a6ef5be",
+      "weight": 11.41,
+      "shared": 2
+    },
+    {
+      "source": "org_1ebde004506b642e",
+      "target": "org_d369d3a51a6ef5be",
+      "weight": 11.41,
+      "shared": 2
+    }
+  ],
+  "external_connections": [],
+  "metadata": {
+    "node_count": 3,
+    "edge_count": 3,
+    "density": 1.0
+  }
+}

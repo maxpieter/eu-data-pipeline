@@ -1,0 +1,38 @@
+{
+  "cluster_id": 26,
+  "cluster_label": "National People's Congress of ",
+  "nodes": [
+    {
+      "id": "org_9dd2eb931d5ac9c2",
+      "type": "org",
+      "label": "National People's Congress of China",
+      "name": "National People's Congress of China",
+      "interests": "",
+      "register_id": null,
+      "degree": 1
+    },
+    {
+      "id": "org_a48cdc36fcf68378",
+      "type": "org",
+      "label": "Ambassador of Mexico",
+      "name": "Ambassador of Mexico",
+      "interests": "",
+      "register_id": null,
+      "degree": 1
+    }
+  ],
+  "links": [
+    {
+      "source": "org_9dd2eb931d5ac9c2",
+      "target": "org_a48cdc36fcf68378",
+      "weight": 11.52,
+      "shared": 2
+    }
+  ],
+  "external_connections": [],
+  "metadata": {
+    "node_count": 2,
+    "edge_count": 1,
+    "density": 1.0
+  }
+}

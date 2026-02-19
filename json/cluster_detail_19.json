@@ -1,0 +1,59 @@
+{
+  "cluster_id": 19,
+  "cluster_label": "Bristol Myers Squibb & European Brain Counc",
+  "nodes": [
+    {
+      "id": "org_57ea6c829df4f9f5",
+      "type": "org",
+      "label": "Bristol Myers Squibb",
+      "name": "Bristol Myers Squibb",
+      "interests": "",
+      "register_id": null,
+      "degree": 2
+    },
+    {
+      "id": "org_27f1f6d1a8872a9b",
+      "type": "org",
+      "label": "European Brain Council (EBC)",
+      "name": "European Brain Council (EBC)",
+      "interests": "",
+      "register_id": null,
+      "degree": 2
+    },
+    {
+      "id": "org_2b712b42152e3670",
+      "type": "org",
+      "label": "Permanent Representation of the Czech Republic to the European Union",
+      "name": "Permanent Representation of the Czech Republic to the European Union",
+      "interests": "",
+      "register_id": null,
+      "degree": 2
+    }
+  ],
+  "links": [
+    {
+      "source": "org_57ea6c829df4f9f5",
+      "target": "org_2b712b42152e3670",
+      "weight": 10.55,
+      "shared": 2
+    },
+    {
+      "source": "org_57ea6c829df4f9f5",
+      "target": "org_27f1f6d1a8872a9b",
+      "weight": 10.55,
+      "shared": 2
+    },
+    {
+      "source": "org_27f1f6d1a8872a9b",
+      "target": "org_2b712b42152e3670",
+      "weight": 10.55,
+      "shared": 2
+    }
+  ],
+  "external_connections": [],
+  "metadata": {
+    "node_count": 3,
+    "edge_count": 3,
+    "density": 1.0
+  }
+}
