@@ -31,6 +31,7 @@ npm-debug.log*
 next-env.d.ts
 .env*.local
 
-# Python
+# cache
 api/__pycache__/
 __pycache__/
+.scraper_cache/

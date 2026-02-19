@@ -26,6 +26,24 @@ interface OrganizationInfo {
   count: number;
 }
 
+interface OeilEvent {
+  date: string;
+  event?: string;
+  doc_type?: string;
+  reference: string;
+  committee?: string;
+  source?: string;
+  link?: string | null;
+  category: "key_event" | "documentation";
+}
+
+interface ProcedureEventsData {
+  procedure: string;
+  title: string;
+  key_events: OeilEvent[];
+  documentation_gateway: OeilEvent[];
+}
+
 interface MeetingDetail {
   date: string;
   title: string;
@@ -122,6 +140,13 @@ export default function MepMeetingsGraph() {
   const [organizations, setOrganizations] = useState<OrganizationInfo[]>([]);
   const [timelineData, setTimelineData] = useState<TimelineData | null>(null);
 
+  // Procedure events (OEIL)
+  const [procedureEvents, setProcedureEvents] =
+    useState<ProcedureEventsData | null>(null);
+  const [eventsLoading, setEventsLoading] = useState(false);
+  const [showKeyEvents, setShowKeyEvents] = useState(true);
+  const [showDocGateway, setShowDocGateway] = useState(true);
+
   // Selections
   const [selectedMep, setSelectedMep] = useState<MepInfo | null>(null);
   const [selectedCommittee, setSelectedCommittee] = useState<string>("");
@@ -138,10 +163,11 @@ export default function MepMeetingsGraph() {
   const [mepDropdownOpen, setMepDropdownOpen] = useState(false);
   const [committeeDropdownOpen, setCommitteeDropdownOpen] = useState(false);
   const [procedureDropdownOpen, setProcedureDropdownOpen] = useState(false);
-  const [organizationDropdownOpen, setOrganizationDropdownOpen] = useState(false);
+  const [organizationDropdownOpen, setOrganizationDropdownOpen] =
+    useState(false);
 
   // EP Period filter
-  const [epPeriod, setEpPeriod] = useState<'both' | 'ep9' | 'ep10'>('both');
+  const [epPeriod, setEpPeriod] = useState<"both" | "ep9" | "ep10">("both");
 
   // UI
   const [loading, setLoading] = useState(true);
@@ -200,20 +226,27 @@ export default function MepMeetingsGraph() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const [mepsRes, committeesRes, proceduresRes, organizationsRes] = await Promise.all([
-          fetch("/api/meps"),
-          fetch("/api/committees"),
-          fetch("/api/procedures"),
-          fetch("/api/organizations"),
-        ]);
-        if (!mepsRes.ok || !committeesRes.ok || !proceduresRes.ok || !organizationsRes.ok)
+        const [mepsRes, committeesRes, proceduresRes, organizationsRes] =
+          await Promise.all([
+            fetch("/api/meps"),
+            fetch("/api/committees"),
+            fetch("/api/procedures"),
+            fetch("/api/organizations"),
+          ]);
+        if (
+          !mepsRes.ok ||
+          !committeesRes.ok ||
+          !proceduresRes.ok ||
+          !organizationsRes.ok
+        )
           throw new Error("Failed to fetch");
-        const [mepsData, committeesData, proceduresData, organizationsData] = await Promise.all([
-          mepsRes.json(),
-          committeesRes.json(),
-          proceduresRes.json(),
-          organizationsRes.json(),
-        ]);
+        const [mepsData, committeesData, proceduresData, organizationsData] =
+          await Promise.all([
+            mepsRes.json(),
+            committeesRes.json(),
+            proceduresRes.json(),
+            organizationsRes.json(),
+          ]);
         setMepList(mepsData.meps || []);
         setCommittees(committeesData.committees || []);
         setProcedures(proceduresData.procedures || []);
@@ -257,7 +290,12 @@ export default function MepMeetingsGraph() {
   // Fetch timeline based on selections
   useEffect(() => {
     // Need at least one filter
-    if (!selectedMep && !selectedCommittee && !selectedProcedure && !selectedOrganization) {
+    if (
+      !selectedMep &&
+      !selectedCommittee &&
+      !selectedProcedure &&
+      !selectedOrganization
+    ) {
       setTimelineData(null);
       return;
     }
@@ -269,8 +307,9 @@ export default function MepMeetingsGraph() {
         if (selectedMep) params.set("mep", selectedMep.id.toString());
         if (selectedCommittee) params.set("committee", selectedCommittee);
         if (selectedProcedure) params.set("procedure", selectedProcedure);
-        if (selectedOrganization) params.set("organization", selectedOrganization);
-        if (epPeriod !== 'both') params.set("ep_period", epPeriod);
+        if (selectedOrganization)
+          params.set("organization", selectedOrganization);
+        if (epPeriod !== "both") params.set("ep_period", epPeriod);
 
         const res = await fetch(`/api/timeline?${params.toString()}`);
         if (!res.ok) throw new Error("Failed to fetch timeline");
@@ -284,7 +323,40 @@ export default function MepMeetingsGraph() {
       }
     }
     fetchTimeline();
-  }, [selectedMep, selectedCommittee, selectedProcedure, selectedOrganization, epPeriod]);
+  }, [
+    selectedMep,
+    selectedCommittee,
+    selectedProcedure,
+    selectedOrganization,
+    epPeriod,
+  ]);
+
+  // Fetch OEIL procedure events when a procedure is selected
+  useEffect(() => {
+    if (!selectedProcedure) {
+      setProcedureEvents(null);
+      return;
+    }
+
+    async function fetchEvents() {
+      setEventsLoading(true);
+      try {
+        const params = new URLSearchParams({ procedure: selectedProcedure });
+        const res = await fetch(`/api/procedure-events?${params.toString()}`);
+        if (res.ok) {
+          const data = await res.json();
+          setProcedureEvents(data);
+        } else {
+          setProcedureEvents(null);
+        }
+      } catch {
+        setProcedureEvents(null);
+      } finally {
+        setEventsLoading(false);
+      }
+    }
+    fetchEvents();
+  }, [selectedProcedure]);
 
   // Render timeline
   useEffect(() => {
@@ -309,7 +381,7 @@ export default function MepMeetingsGraph() {
     const data = timelineData.timeline;
 
     // Use week or month depending on data
-    const getTimeKey = (d: TimelineEntry) => d.week || d.month || '';
+    const getTimeKey = (d: TimelineEntry) => d.week || d.month || "";
 
     const x = d3
       .scaleBand()
@@ -331,9 +403,7 @@ export default function MepMeetingsGraph() {
         d3
           .axisBottom(x)
           .tickValues(
-            data
-              .filter((_, i) => i % tickInterval === 0)
-              .map(getTimeKey),
+            data.filter((_, i) => i % tickInterval === 0).map(getTimeKey),
           ),
       )
       .selectAll("text")
@@ -369,7 +439,8 @@ export default function MepMeetingsGraph() {
 
       // Calculate segment heights
       const totalHeight = innerHeight - y(periodData.count);
-      const segmentHeight = meetings.length > 0 ? totalHeight / meetings.length : totalHeight;
+      const segmentHeight =
+        meetings.length > 0 ? totalHeight / meetings.length : totalHeight;
 
       // Draw each meeting as a segment
       sortedMeetings.forEach((meeting, i) => {
@@ -447,38 +518,156 @@ export default function MepMeetingsGraph() {
       }
     });
 
-    // Add legend for color scale
-    const legendX = innerWidth - 120;
-    const legendY = 10;
-    const legendItems = [
-      { label: "1", color: "#93c5fd" },
-      { label: "2-3", color: "#60a5fa" },
-      { label: "4-10", color: "#3b82f6" },
-      { label: "11-25", color: "#2563eb" },
-      { label: "26-50", color: "#1d4ed8" },
-      { label: "50+", color: "#1e40af" },
-    ];
+    // === OEIL Procedure Events Overlay ===
+    if (procedureEvents) {
+      // Helper: map an ISO date to the week key (DD-MM-YYYY of Monday)
+      const dateToWeekKey = (isoDate: string): string | null => {
+        const dt = new Date(isoDate + "T00:00:00");
+        if (isNaN(dt.getTime())) return null;
+        const day = dt.getDay();
+        const diff = dt.getDate() - day + (day === 0 ? -6 : 1); // Monday
+        const monday = new Date(dt);
+        monday.setDate(diff);
+        const dd = String(monday.getDate()).padStart(2, "0");
+        const mm = String(monday.getMonth() + 1).padStart(2, "0");
+        const yyyy = monday.getFullYear();
+        return `${dd}-${mm}-${yyyy}`;
+      };
 
-    const legend = g.append("g").attr("class", "legend");
-    legend
-      .append("text")
-      .attr("x", legendX)
-      .attr("y", legendY)
-      .style("font-size", "10px")
-      .style("fill", "#64748b")
-      .text("Attendees:");
+      const allWeekKeys = new Set(data.map(getTimeKey));
 
-    legendItems.forEach((item, i) => {
-      legend
-        .append("rect")
-        .attr("x", legendX + i * 18)
-        .attr("y", legendY + 8)
-        .attr("width", 16)
-        .attr("height", 10)
-        .attr("fill", item.color)
-        .attr("rx", 2);
-    });
-  }, [timelineData, selectedMep]);
+      // Collect events per week
+      const eventsPerWeek: Record<string, OeilEvent[]> = {};
+
+      const allEvents = [
+        ...(showKeyEvents ? procedureEvents.key_events : []),
+        ...(showDocGateway ? procedureEvents.documentation_gateway : []),
+      ];
+
+      allEvents.forEach((evt) => {
+        const wk = dateToWeekKey(evt.date);
+        if (wk && allWeekKeys.has(wk)) {
+          if (!eventsPerWeek[wk]) eventsPerWeek[wk] = [];
+          eventsPerWeek[wk].push(evt);
+        }
+      });
+
+      const eventsGroup = g.append("g").attr("class", "oeil-events");
+
+      Object.entries(eventsPerWeek).forEach(([weekKey, events]) => {
+        const barX = x(weekKey);
+        if (barX === undefined) return;
+        const centerX = barX + x.bandwidth() / 2;
+
+        // Draw vertical dashed line
+        const lineColor = events.some((e) => e.category === "key_event")
+          ? "#fca5a5"
+          : "#fcd34d";
+        eventsGroup
+          .append("line")
+          .attr("x1", centerX)
+          .attr("x2", centerX)
+          .attr("y1", 0)
+          .attr("y2", innerHeight)
+          .attr("stroke", lineColor)
+          .attr("stroke-width", 1.5)
+          .attr("stroke-dasharray", "4,3")
+          .attr("opacity", 0.7);
+
+        // Draw stacked dots at the top
+        events.forEach((evt, i) => {
+          const dotColor = evt.category === "key_event" ? "#dc2626" : "#f59e0b";
+          const dotY = -8 - i * 10;
+
+          eventsGroup
+            .append("circle")
+            .attr("cx", centerX)
+            .attr("cy", dotY)
+            .attr("r", 4)
+            .attr("fill", dotColor)
+            .attr("stroke", "white")
+            .attr("stroke-width", 1)
+            .style("cursor", "pointer")
+            .on("mouseover", function (event: MouseEvent) {
+              d3.select(this).attr("r", 6);
+
+              const tooltip = svg.append("g").attr("class", "tooltip");
+              const tx = centerX + margin.left;
+              const ty = dotY + margin.top - 10;
+
+              const label =
+                evt.category === "key_event"
+                  ? evt.event || "Key Event"
+                  : evt.doc_type || "Document";
+              const displayLabel =
+                label.length > 50 ? label.slice(0, 47) + "..." : label;
+              const tooltipWidth = Math.max(
+                displayLabel.length * 6.5 + 24,
+                180,
+              );
+
+              // Clamp tooltip so it doesn't go off-screen
+              const tooltipX = Math.max(
+                tooltipWidth / 2,
+                Math.min(tx, width - tooltipWidth / 2),
+              );
+
+              tooltip
+                .append("rect")
+                .attr("x", tooltipX - tooltipWidth / 2)
+                .attr("y", ty - 58)
+                .attr("width", tooltipWidth)
+                .attr("height", 52)
+                .attr("fill", "white")
+                .attr("stroke", "#e2e8f0")
+                .attr("rx", 4)
+                .style("filter", "drop-shadow(0 2px 4px rgba(0,0,0,0.1))");
+
+              tooltip
+                .append("text")
+                .attr("x", tooltipX)
+                .attr("y", ty - 42)
+                .attr("text-anchor", "middle")
+                .style("font-size", "11px")
+                .style("font-weight", "600")
+                .style("fill", dotColor)
+                .text(evt.category === "key_event" ? "Key Event" : "Document");
+
+              tooltip
+                .append("text")
+                .attr("x", tooltipX)
+                .attr("y", ty - 28)
+                .attr("text-anchor", "middle")
+                .style("font-size", "11px")
+                .style("fill", "#1e293b")
+                .text(displayLabel);
+
+              const detail = `${evt.date}${evt.reference ? " · " + evt.reference : ""}${evt.source ? " · " + evt.source : ""}`;
+              tooltip
+                .append("text")
+                .attr("x", tooltipX)
+                .attr("y", ty - 14)
+                .attr("text-anchor", "middle")
+                .style("font-size", "10px")
+                .style("fill", "#64748b")
+                .text(
+                  detail.length > 60 ? detail.slice(0, 57) + "..." : detail,
+                );
+            })
+            .on("mouseout", function () {
+              d3.select(this).attr("r", 4);
+              svg.selectAll(".tooltip").remove();
+            });
+        });
+      });
+    }
+  }, [
+    timelineData,
+    selectedMep,
+    procedureEvents,
+    showKeyEvents,
+    showDocGateway,
+  ]);
 
   // Autocomplete dropdown component
   const AutocompleteDropdown = ({
@@ -541,7 +730,7 @@ export default function MepMeetingsGraph() {
     setCommitteeSearch("");
     setProcedureSearch("");
     setOrganizationSearch("");
-    setEpPeriod('both');
+    setEpPeriod("both");
     // Restore global procedures
     try {
       const res = await fetch("/api/procedures");
@@ -813,8 +1002,20 @@ export default function MepMeetingsGraph() {
             }}
             renderItem={(org: OrganizationInfo) => (
               <div style={{ display: "flex", justifyContent: "space-between" }}>
-                <span style={{ fontWeight: 500, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", maxWidth: "200px" }}>{org.name}</span>
-                <span style={{ color: "#94a3b8", flexShrink: 0 }}>{org.count} meetings</span>
+                <span
+                  style={{
+                    fontWeight: 500,
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                    whiteSpace: "nowrap",
+                    maxWidth: "200px",
+                  }}
+                >
+                  {org.name}
+                </span>
+                <span style={{ color: "#94a3b8", flexShrink: 0 }}>
+                  {org.count} meetings
+                </span>
               </div>
             )}
           />
@@ -850,9 +1051,9 @@ export default function MepMeetingsGraph() {
           }}
         >
           {[
-            { value: 'both' as const, label: 'Both' },
-            { value: 'ep9' as const, label: 'EP9 (2019-2024)' },
-            { value: 'ep10' as const, label: 'EP10 (2024-)' },
+            { value: "both" as const, label: "Both" },
+            { value: "ep9" as const, label: "EP9 (2019-2024)" },
+            { value: "ep10" as const, label: "EP10 (2024-)" },
           ].map((option) => (
             <button
               key={option.value}
@@ -865,7 +1066,8 @@ export default function MepMeetingsGraph() {
                 color: epPeriod === option.value ? "white" : "#475569",
                 border: "none",
                 cursor: "pointer",
-                borderRight: option.value !== 'ep10' ? "1px solid #e2e8f0" : "none",
+                borderRight:
+                  option.value !== "ep10" ? "1px solid #e2e8f0" : "none",
                 transition: "all 0.15s ease",
               }}
             >
@@ -876,7 +1078,11 @@ export default function MepMeetingsGraph() {
       </div>
 
       {/* Active Filters */}
-      {(selectedMep || selectedCommittee || selectedProcedure || selectedOrganization || epPeriod !== 'both') && (
+      {(selectedMep ||
+        selectedCommittee ||
+        selectedProcedure ||
+        selectedOrganization ||
+        epPeriod !== "both") && (
         <div
           style={{
             marginBottom: "1.5rem",
@@ -896,7 +1102,7 @@ export default function MepMeetingsGraph() {
           >
             Active filters:
           </span>
-          {epPeriod !== 'both' && (
+          {epPeriod !== "both" && (
             <span
               style={{
                 display: "inline-flex",
@@ -910,9 +1116,9 @@ export default function MepMeetingsGraph() {
                 fontWeight: 500,
               }}
             >
-              {epPeriod === 'ep9' ? 'EP9 (2019-2024)' : 'EP10 (2024-)'}
+              {epPeriod === "ep9" ? "EP9 (2019-2024)" : "EP10 (2024-)"}
               <button
-                onClick={() => setEpPeriod('both')}
+                onClick={() => setEpPeriod("both")}
                 style={{
                   background: "none",
                   border: "none",
@@ -1014,6 +1220,11 @@ export default function MepMeetingsGraph() {
               }}
             >
               {selectedProcedure}
+              {procedureEvents?.title && (
+                <span style={{ opacity: 0.85, fontWeight: 400 }}>
+                  — {procedureEvents.title}
+                </span>
+              )}
               <button
                 onClick={() => {
                   setSelectedProcedure("");
@@ -1046,7 +1257,13 @@ export default function MepMeetingsGraph() {
                 maxWidth: "200px",
               }}
             >
-              <span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+              <span
+                style={{
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                  whiteSpace: "nowrap",
+                }}
+              >
                 {selectedOrganization}
               </span>
               <button
@@ -1163,11 +1380,15 @@ export default function MepMeetingsGraph() {
           ) : (
             <div style={{ flex: 1 }}>
               <div style={{ fontWeight: 700, color: "#1e293b" }}>
-                {selectedProcedure || selectedCommittee || "All Meetings"}
+                {selectedProcedure
+                  ? procedureEvents?.title || selectedProcedure
+                  : selectedCommittee || "All Meetings"}
               </div>
               <div style={{ fontSize: "0.875rem", color: "#64748b" }}>
                 {selectedProcedure
-                  ? "Procedure"
+                  ? procedureEvents?.title
+                    ? selectedProcedure
+                    : "Procedure"
                   : selectedCommittee
                     ? "Committee"
                     : ""}
@@ -1232,20 +1453,114 @@ export default function MepMeetingsGraph() {
             boxShadow: "0 1px 3px rgba(0,0,0,0.05)",
           }}
         >
-          <h3
+          <div
             style={{
-              fontSize: "0.875rem",
-              fontWeight: 600,
-              color: "#1e293b",
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
               marginBottom: "1rem",
-              position: "relative",
-              zIndex: 1,
+              flexWrap: "wrap",
+              gap: "0.5rem",
             }}
           >
-            Meetings per Week
-          </h3>
-          <div style={{ width: "100%", minHeight: "400px", position: "relative", zIndex: 10 }}>
-            <svg ref={timelineRef} style={{ width: "100%", height: "400px", overflow: "visible" }} />
+            <h3
+              style={{
+                fontSize: "0.875rem",
+                fontWeight: 600,
+                color: "#1e293b",
+                position: "relative",
+                zIndex: 1,
+                margin: 0,
+              }}
+            >
+              Meetings per Week
+            </h3>
+            <div
+              style={{
+                display: "flex",
+                gap: "1rem",
+                alignItems: "center",
+                fontSize: "0.75rem",
+              }}
+            >
+              {procedureEvents && (
+                <>
+                  {eventsLoading && (
+                    <span style={{ color: "#94a3b8" }}>Loading events...</span>
+                  )}
+                  <label
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "0.25rem",
+                      cursor: "pointer",
+                      color: "#475569",
+                    }}
+                  >
+                    <input
+                      type="checkbox"
+                      checked={showKeyEvents}
+                      onChange={(e) => setShowKeyEvents(e.target.checked)}
+                      style={{ accentColor: "#dc2626" }}
+                    />
+                    Key Events ({procedureEvents.key_events.length})
+                  </label>
+                  <label
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "0.25rem",
+                      cursor: "pointer",
+                      color: "#475569",
+                    }}
+                  >
+                    <input
+                      type="checkbox"
+                      checked={showDocGateway}
+                      onChange={(e) => setShowDocGateway(e.target.checked)}
+                      style={{ accentColor: "#f59e0b" }}
+                    />
+                    Documents ({procedureEvents.documentation_gateway.length})
+                  </label>
+                </>
+              )}
+              {/* Attendees color scale */}
+              <div style={{ display: "flex", alignItems: "center", gap: "0.25rem" }}>
+                <span style={{ color: "#64748b" }}>Attendees:</span>
+                {[
+                  { color: "#93c5fd" },
+                  { color: "#60a5fa" },
+                  { color: "#3b82f6" },
+                  { color: "#2563eb" },
+                  { color: "#1d4ed8" },
+                  { color: "#1e40af" },
+                ].map((item, i) => (
+                  <span
+                    key={i}
+                    style={{
+                      width: "16px",
+                      height: "10px",
+                      background: item.color,
+                      borderRadius: "2px",
+                      display: "inline-block",
+                    }}
+                  />
+                ))}
+              </div>
+            </div>
+          </div>
+          <div
+            style={{
+              width: "100%",
+              minHeight: "400px",
+              position: "relative",
+              zIndex: 10,
+            }}
+          >
+            <svg
+              ref={timelineRef}
+              style={{ width: "100%", height: "400px", overflow: "visible" }}
+            />
           </div>
         </div>
       )}
