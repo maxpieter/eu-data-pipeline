@@ -536,28 +536,45 @@ export default function MepMeetingsGraph() {
 
       const allWeekKeys = new Set(data.map(getTimeKey));
 
-      // Collect events per week
-      const eventsPerWeek: Record<string, OeilEvent[]> = {};
+      // Helper: get the x position for an event based on its exact day within the week
+      const eventX = (evt: OeilEvent): { weekKey: string; xPos: number } | null => {
+        const wk = dateToWeekKey(evt.date);
+        if (!wk || !allWeekKeys.has(wk)) return null;
+        const barXPos = x(wk);
+        if (barXPos === undefined) return null;
+        const dt = new Date(evt.date + "T00:00:00");
+        const dayOfWeek = dt.getDay();
+        // 0=Sun..6=Sat → remap to 0=Mon..6=Sun
+        const dayOffset = dayOfWeek === 0 ? 6 : dayOfWeek - 1;
+        const xPos = barXPos + (dayOffset / 6) * x.bandwidth();
+        return { weekKey: wk, xPos };
+      };
 
       const allEvents = [
         ...(showKeyEvents ? procedureEvents.key_events : []),
         ...(showDocGateway ? procedureEvents.documentation_gateway : []),
       ];
 
+      // Group events by exact x position to stack dots that land on the same day
+      const eventPositions: { evt: OeilEvent; xPos: number }[] = [];
       allEvents.forEach((evt) => {
-        const wk = dateToWeekKey(evt.date);
-        if (wk && allWeekKeys.has(wk)) {
-          if (!eventsPerWeek[wk]) eventsPerWeek[wk] = [];
-          eventsPerWeek[wk].push(evt);
-        }
+        const pos = eventX(evt);
+        if (pos) eventPositions.push({ evt, xPos: pos.xPos });
       });
 
       const eventsGroup = g.append("g").attr("class", "oeil-events");
 
-      Object.entries(eventsPerWeek).forEach(([weekKey, events]) => {
-        const barX = x(weekKey);
-        if (barX === undefined) return;
-        const centerX = barX + x.bandwidth() / 2;
+      // Draw a line + dot per event at its exact day position
+      // Group by xPos to stack dots that share the same day
+      const byXPos: Record<number, OeilEvent[]> = {};
+      eventPositions.forEach(({ evt, xPos }) => {
+        const key = Math.round(xPos); // group by rounded pixel
+        if (!byXPos[key]) byXPos[key] = [];
+        byXPos[key].push(evt);
+      });
+
+      Object.entries(byXPos).forEach(([xKey, events]) => {
+        const posX = Number(xKey);
 
         // Draw vertical dashed line
         const lineColor = events.some((e) => e.category === "key_event")
@@ -565,8 +582,8 @@ export default function MepMeetingsGraph() {
           : "#fcd34d";
         eventsGroup
           .append("line")
-          .attr("x1", centerX)
-          .attr("x2", centerX)
+          .attr("x1", posX)
+          .attr("x2", posX)
           .attr("y1", 0)
           .attr("y2", innerHeight)
           .attr("stroke", lineColor)
@@ -581,7 +598,7 @@ export default function MepMeetingsGraph() {
 
           eventsGroup
             .append("circle")
-            .attr("cx", centerX)
+            .attr("cx", posX)
             .attr("cy", dotY)
             .attr("r", 4)
             .attr("fill", dotColor)
@@ -592,7 +609,7 @@ export default function MepMeetingsGraph() {
               d3.select(this).attr("r", 6);
 
               const tooltip = svg.append("g").attr("class", "tooltip");
-              const tx = centerX + margin.left;
+              const tx = posX + margin.left;
               const ty = dotY + margin.top - 10;
 
               const label =
@@ -833,9 +850,6 @@ export default function MepMeetingsGraph() {
                     {getGroupShortName(mep.political_group)} · {mep.country}
                   </div>
                 </div>
-                <span style={{ fontSize: "0.75rem", color: "#94a3b8" }}>
-                  {mep.meeting_count}
-                </span>
               </div>
             )}
           />
@@ -891,7 +905,6 @@ export default function MepMeetingsGraph() {
             renderItem={(c: CommitteeInfo) => (
               <div style={{ display: "flex", justifyContent: "space-between" }}>
                 <span style={{ fontWeight: 500 }}>{c.acronym}</span>
-                <span style={{ color: "#94a3b8" }}>{c.count} meetings</span>
               </div>
             )}
           />
@@ -947,7 +960,6 @@ export default function MepMeetingsGraph() {
             renderItem={(p: ProcedureInfo) => (
               <div style={{ display: "flex", justifyContent: "space-between" }}>
                 <span style={{ fontWeight: 500 }}>{p.procedure}</span>
-                <span style={{ color: "#94a3b8" }}>{p.count} meetings</span>
               </div>
             )}
           />
@@ -1012,9 +1024,6 @@ export default function MepMeetingsGraph() {
                   }}
                 >
                   {org.name}
-                </span>
-                <span style={{ color: "#94a3b8", flexShrink: 0 }}>
-                  {org.count} meetings
                 </span>
               </div>
             )}
