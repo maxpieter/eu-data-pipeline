@@ -43,6 +43,11 @@ body {
   border-bottom: 1px solid rgba(191, 219, 254, 0.4);
 }
 
+.header-logo {
+  flex: 1;
+  min-width: 0;
+}
+
 .header-logo h1 {
   font-size: 1.25rem;
   font-weight: 900;
@@ -63,7 +68,8 @@ body {
   border: 1px solid rgba(191, 219, 254, 0.3);
 }
 
-.header-nav a {
+.header-nav a,
+.header-nav button {
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -74,29 +80,39 @@ body {
   text-decoration: none;
   border-radius: 0.375rem;
   transition: all 0.3s ease;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
 }
 
-.header-nav a:hover {
+.header-nav a:hover,
+.header-nav button:hover {
   color: #2563eb;
   background: rgba(255, 255, 255, 0.9);
   transform: scale(1.05);
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
 }
 
-.header-nav a.active {
+.header-nav a.active,
+.header-nav button.active {
   color: #2563eb;
   background: rgba(255, 255, 255, 0.9);
   border-bottom: 2px solid #2563eb;
 }
 
-.header-nav a svg {
+.header-nav a svg,
+.header-nav button svg {
   width: 1rem;
   height: 1rem;
 }
 
 .header-actions {
+  flex: 1;
+  min-width: 0;
   display: flex;
   align-items: center;
+  justify-content: flex-end;
   gap: 0.75rem;
 }
 

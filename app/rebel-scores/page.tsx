@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect, useMemo, useCallback } from 'react'
+import Header from '@/components/Header'
 import RebelScoresSidebar from '@/components/RebelScoresSidebar'
 import RebelScoresChart from '@/components/RebelScoresChart'
 import {
@@ -196,21 +197,26 @@ export default function RebelScoresPage() {
   if (!config) {
     return (
       <>
-        <aside className="sidebar">
-          <div className="sidebar-header">
-            <span className="sidebar-title">Loading...</span>
-          </div>
-        </aside>
-        <main className="main-content">
-          <div className="loading">Loading configuration...</div>
-        </main>
+        <Header />
+        <div className="app-container">
+          <aside className="sidebar">
+            <div className="sidebar-header">
+              <span className="sidebar-title">Loading...</span>
+            </div>
+          </aside>
+          <main className="main-content">
+            <div className="loading">Loading configuration...</div>
+          </main>
+        </div>
       </>
     )
   }
 
   return (
     <>
-      <RebelScoresSidebar
+      <Header />
+      <div className="app-container">
+        <RebelScoresSidebar
         collapsed={sidebarCollapsed}
         onToggle={() => setSidebarCollapsed(!sidebarCollapsed)}
         viewMode={viewMode}
@@ -247,6 +253,7 @@ export default function RebelScoresPage() {
           />
         )}
       </main>
+      </div>
     </>
   )
 }

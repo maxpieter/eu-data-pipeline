@@ -1,53 +1,17 @@
-'use client'
+"use client";
 
-import Link from 'next/link'
-import { usePathname } from 'next/navigation'
-
-interface NavItem {
-  href: string
-  label: string
-  icon: React.ReactNode
-}
-
-const navItems: NavItem[] = [
-  {
-    href: '/rebel-scores',
-    label: 'Rebel Scores',
-    icon: (
-      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth={2}
-          d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
-        />
-      </svg>
-    ),
-  },
-  {
-    href: '/',
-    label: 'Network Graph',
-    icon: (
-      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth={2}
-          d="M13 10V3L4 14h7v7l9-11h-7z"
-        />
-      </svg>
-    ),
-  },
-]
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const pageTitles: Record<string, { main: string; accent: string }> = {
-  '/': { main: 'EU', accent: ' Network' },
-  '/rebel-scores': { main: 'MEP', accent: ' voting' },
-}
+  "/mep-meetings": { main: "MEP", accent: " meetings" },
+  "/network": { main: "Meeting", accent: " network" },
+  "/rebel-scores": { main: "MEP", accent: " voting" },
+};
 
 export default function Header() {
-  const pathname = usePathname()
-  const title = pageTitles[pathname] || pageTitles['/']
+  const pathname = usePathname();
+  const title = pageTitles[pathname] || pageTitles["/mep-meetings"];
 
   return (
     <header className="header">
@@ -59,16 +23,50 @@ export default function Header() {
       </div>
 
       <nav className="header-nav">
-        {navItems.map((item) => (
-          <Link
-            key={item.href}
-            href={item.href}
-            className={pathname === item.href ? 'active' : ''}
-          >
-            {item.icon}
-            <span>{item.label}</span>
-          </Link>
-        ))}
+        <Link
+          href="/rebel-scores"
+          className={pathname === "/rebel-scores" ? "active" : ""}
+        >
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
+            />
+          </svg>
+          <span>Rebel Scores</span>
+        </Link>
+
+        <Link
+          href="/mep-meetings"
+          className={pathname === "/mep-meetings" ? "active" : ""}
+        >
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+            />
+          </svg>
+          <span>MEP Meetings</span>
+        </Link>
+
+        <Link
+          href="/network"
+          className={pathname === "/network" ? "active" : ""}
+        >
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M13 10V3L4 14h7v7l9-11h-7z"
+            />
+          </svg>
+          <span>Network Graph</span>
+        </Link>
       </nav>
 
       <div className="header-actions">
@@ -89,5 +87,5 @@ export default function Header() {
         </a>
       </div>
     </header>
-  )
+  );
 }
