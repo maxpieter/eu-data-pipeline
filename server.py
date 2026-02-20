@@ -12,6 +12,26 @@ import sys
 import json
 from flask import Flask, request, jsonify
 from flask_cors import CORS
+# Load .env file (no dependency needed)
+def _load_env_file():
+    from pathlib import Path
+    env_path = Path(__file__).parent / ".env"
+    if not env_path.exists():
+        return
+    with open(env_path) as f:
+        for line in f:
+            line = line.strip()
+            if not line or line.startswith("#"):
+                continue
+            if "=" in line:
+                key, _, value = line.partition("=")
+                key = key.strip()
+                value = value.strip()
+                if not os.environ.get(key):  # don't override existing env vars
+                    os.environ[key] = value
+    print(f"Loaded .env (LLM_PROVIDER={os.environ.get('LLM_PROVIDER', 'NOT SET')})")
+
+_load_env_file()
 
 # Add project root to path
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
@@ -333,17 +353,15 @@ def load_meps_lookup():
 def load_meetings_data():
     """Load and cache meetings data from CSV, enriched with MEP info.
 
-    COLLAPSING LOGIC: Meetings with the same (mep_id, title, date) are collapsed
-    into a single record with an attendees list ONLY if there are more than 3
-    attendees. This handles large stakeholder dialogues (50+ orgs) while keeping
-    small meetings (1-3 attendees) as separate rows for granularity.
+    Always collapses rows into one record per unique meeting (mep_id, title, date),
+    collecting all attendees into a list. Uses meeting_id from CSV if available.
     """
     global _meetings_cache, _meetings_csv_mtime
     _check_csv_freshness()
     if _meetings_cache is None:
         meps = load_meps_lookup()
 
-        # First pass: group all rows by unique meeting key
+        # Group all rows by unique meeting key
         meetings_grouped = {}
 
         with open(MEETINGS_CSV_PATH, 'r', encoding='utf-8') as f:
@@ -365,7 +383,7 @@ def load_meetings_data():
 
                 meetings_grouped[meeting_key].append(row)
 
-        # Second pass: collapse only if >5 attendees, otherwise keep separate
+        # Always collapse into one record per meeting
         _meetings_cache = []
 
         for meeting_key, rows in meetings_grouped.items():
@@ -373,54 +391,33 @@ def load_meetings_data():
             mep_info = meps.get(mep_id, {})
             committees = mep_info.get('committees', [])
 
-            if len(rows) > 3:
-                # Collapse into single meeting with attendees list
-                attendees = []
-                for row in rows:
-                    attendee = row.get('attendees', '').strip()
-                    lobbyist_id = row.get('lobbyist_id', '').strip()
-                    if attendee:
-                        attendees.append({
-                            'name': attendee,
-                            'lobbyist_id': lobbyist_id if lobbyist_id else None
-                        })
-
-                first_row = rows[0]
-                _meetings_cache.append({
-                    'mep_id': mep_id,
-                    'meeting_date': meeting_date,
-                    'title': title,
-                    'capacity': first_row.get('member_capacity', ''),
-                    'related_procedure': first_row.get('procedure_reference', '') or None,
-                    'committee_acronym': committees[0] if committees else None,
-                    'mep_committees': committees,
-                    'attendees': attendees,
-                    'source_data': {
-                        'mep_name': first_row.get('member_name', mep_info.get('name', '')),
-                        'mep_country': mep_info.get('country', ''),
-                        'mep_political_group': mep_info.get('political_group', ''),
-                    }
-                })
-            else:
-                # Keep as separate rows (1-5 attendees)
-                for row in rows:
-                    attendee = row.get('attendees', '').strip()
-                    lobbyist_id = row.get('lobbyist_id', '').strip()
-                    _meetings_cache.append({
-                        'mep_id': mep_id,
-                        'meeting_date': meeting_date,
-                        'title': title,
-                        'capacity': row.get('member_capacity', ''),
-                        'related_procedure': row.get('procedure_reference', '') or None,
-                        'committee_acronym': committees[0] if committees else None,
-                        'mep_committees': committees,
-                        'attendees': [{'name': attendee, 'lobbyist_id': lobbyist_id if lobbyist_id else None}] if attendee else [],
-                        'source_data': {
-                            'mep_name': row.get('member_name', mep_info.get('name', '')),
-                            'mep_country': mep_info.get('country', ''),
-                            'mep_political_group': mep_info.get('political_group', ''),
-                        }
+            attendees = []
+            for row in rows:
+                attendee = row.get('attendees', '').strip()
+                lobbyist_id = row.get('lobbyist_id', '').strip()
+                if attendee:
+                    attendees.append({
+                        'name': attendee,
+                        'lobbyist_id': lobbyist_id if lobbyist_id else None
                     })
+
+            first_row = rows[0]
+            _meetings_cache.append({
+                'meeting_id': first_row.get('meeting_id', ''),
+                'mep_id': mep_id,
+                'meeting_date': meeting_date,
+                'title': title,
+                'capacity': first_row.get('member_capacity', ''),
+                'related_procedure': first_row.get('procedure_reference', '') or None,
+                'committee_acronym': committees[0] if committees else None,
+                'mep_committees': committees,
+                'attendees': attendees,
+                'source_data': {
+                    'mep_name': first_row.get('member_name', mep_info.get('name', '')),
+                    'mep_country': mep_info.get('country', ''),
+                    'mep_political_group': mep_info.get('political_group', ''),
+                }
+            })
 
         try:
             _meetings_csv_mtime = os.path.getmtime(MEETINGS_CSV_PATH)
@@ -428,6 +425,7 @@ def load_meetings_data():
             pass
 
     return _meetings_cache
+
 
 
 @app.route('/api/meps')
@@ -439,7 +437,7 @@ def get_meps():
     try:
         meetings = load_meetings_data()
 
-        # Aggregate MEP info
+        # Aggregate MEP info — each record is one meeting (already collapsed)
         meps = {}
         for m in meetings:
             mep_id = m.get('mep_id')
@@ -542,7 +540,6 @@ def get_timeline():
             if date:
                 try:
                     dt = datetime.strptime(date, '%Y-%m-%d')
-                    # Get Monday of this week (for sorting and display)
                     monday = dt - timedelta(days=dt.weekday())
                     week_key = monday.strftime('%d-%m-%Y')
                 except:
@@ -550,6 +547,7 @@ def get_timeline():
 
                 if week_key not in weekly_data:
                     weekly_data[week_key] = {'count': 0, 'meetings': [], 'sort_date': monday}
+
                 weekly_data[week_key]['count'] += 1
                 weekly_data[week_key]['meetings'].append({
                     'date': date,
@@ -649,7 +647,6 @@ def get_mep_timeline(mep_id):
             if date:
                 try:
                     dt = datetime.strptime(date, '%Y-%m-%d')
-                    # Get Monday of this week (for sorting and display)
                     monday = dt - timedelta(days=dt.weekday())
                     week_key = monday.strftime('%d-%m-%Y')
                 except:
@@ -657,6 +654,7 @@ def get_mep_timeline(mep_id):
 
                 if week_key not in weekly_data:
                     weekly_data[week_key] = {'count': 0, 'meetings': [], 'sort_date': monday}
+
                 weekly_data[week_key]['count'] += 1
                 weekly_data[week_key]['meetings'].append({
                     'date': date,
@@ -938,7 +936,7 @@ def get_organization_timeline(org_name):
         if not org_meetings:
             return jsonify({'error': f'Organization "{org_name}" not found', 'timeline': []}), 404
 
-        # Aggregate by month
+        # Aggregate by month (deduplicated)
         monthly_counts = {}
         meps_involved = set()
         for m in org_meetings:
@@ -986,6 +984,46 @@ def get_procedure_events_endpoint():
 
     except Exception as e:
         return jsonify({'error': str(e), 'key_events': [], 'documentation_gateway': []}), 502
+
+
+@app.route('/api/analyze-document', methods=['POST'])
+def analyze_document_endpoint():
+    """
+    POST /api/analyze-document
+    Analyzes a legislative PDF document. Analysis strategy depends on document type.
+
+    JSON body:
+    - document_url: URL of the PDF document (required)
+    - mep_name: Full name of the MEP (required for amendment docs, optional otherwise)
+    - document_ref: Optional document reference string
+    - force: Force re-analysis, bypass cache (default: false)
+    """
+    try:
+        data = request.get_json()
+        if not data:
+            return jsonify({'error': 'JSON body required'}), 400
+
+        mep_name = data.get('mep_name', '')
+        document_url = data.get('document_url')
+        document_ref = data.get('document_ref', '')
+        force = data.get('force', False)
+
+        if not document_url:
+            return jsonify({'error': 'document_url is required'}), 400
+
+        from api.document_analyzer import analyze_document
+        result = analyze_document(
+            document_url=document_url,
+            mep_name=mep_name,
+            document_ref=document_ref,
+            force=force,
+        )
+
+        status = 200 if 'error' not in result else 422
+        return jsonify(result), status
+
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 
 if __name__ == '__main__':

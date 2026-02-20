@@ -5,10 +5,10 @@ echo "Starting EU Network Graph development environment..."
 echo ""
 
 # Check if Python dependencies are installed
-python3 -c "import flask, flask_cors, pandas, networkx" 2>/dev/null
+python3 -c "import flask, flask_cors, pandas, networkx, dotenv" 2>/dev/null
 if [ $? -ne 0 ]; then
     echo "Installing Python dependencies..."
-    pip3 install -r requirements.txt
+    pip3 install --break-system-packages -r requirements.txt
 fi
 
 # Start the Python backend in the background

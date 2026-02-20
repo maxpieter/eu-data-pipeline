@@ -13,7 +13,7 @@ Caching:
 Usage:
     python scrape_mep_meetings.py                    # pagination mode from page 1
     python scrape_mep_meetings.py 50 60              # pages 50-60 only
-    python scrape_mep_meetings.py dates              # date-range mode from 2019-07
+    python scrape_mep_meetings.py dates              # date-range mode from 2019-07 (daily)
     python scrape_mep_meetings.py dates 2023-01-01   # start from specific date
     python scrape_mep_meetings.py dates --force      # ignore cache, re-scrape all
     python scrape_mep_meetings.py dedup              # deduplicate existing CSV
@@ -222,17 +222,22 @@ def scrape_by_date_ranges(
     start_date: str = "2019-07-01",
     end_date: str = None,
     delay: float = 0.3,
-    interval: str = "week",
+    interval: str = "day",
     force: bool = False,
 ):
     """
     Scrape all meetings using date ranges to get complete historical data.
 
+    IMPORTANT: Use "day" interval (default) to avoid data loss. The EP API
+    returns max 1000 rows per request and pagination is broken (repeats page 1).
+    Busy weeks can exceed 1000 rows, causing meetings to be silently dropped.
+    Daily queries stay well under 1000 rows (~300-400 on busy days).
+
     Args:
         start_date: Start date in YYYY-MM-DD format (default: 2019-07-01 when obligation started)
         end_date: End date in YYYY-MM-DD (default: today + 1 year for future meetings)
         delay: Seconds between requests
-        interval: "week" or "month" - size of date chunks
+        interval: "day", "week", or "month" - size of date chunks (use "day" for completeness)
         force: If True, ignore cache and re-scrape all ranges
     """
     session = requests.Session()
@@ -262,106 +267,143 @@ def scrape_by_date_ranges(
     dup_count = 0
     skipped_ranges = 0
 
+    save_every = 50  # Save to disk every N date ranges
+    ranges_since_save = 0
+
+    def _save_progress(reason="periodic"):
+        """Save current data and cache to disk."""
+        if not header or not all_rows:
+            return
+        OUTPUT_DIR.mkdir(exist_ok=True)
+        with open(OUTPUT_CSV, "w", newline="", encoding="utf-8") as f:
+            writer = csv.writer(f)
+            writer.writerow(header)
+            writer.writerows(all_rows)
+        cache.save()
+        print(f"\n  [{reason}] Saved {len(all_rows)} meetings to disk\n", flush=True)
+
     print()
     print(f"Scraping MEP meetings from {start.date()} to {end.date()} ({interval}ly)")
     print(f"Output: {OUTPUT_CSV}")
+    print(f"Auto-saving every {save_every} date ranges")
     if force:
         print("FORCE mode: ignoring cache, re-scraping all ranges")
     print()
 
     # Iterate through intervals
     current = start
-    while current < end:
-        # Calculate interval end
-        if interval == "week":
-            interval_end = min(current + timedelta(days=7), end)
-        else:  # month
-            if current.month == 12:
-                interval_end = min(datetime(current.year + 1, 1, 1) - timedelta(days=1), end)
-            else:
-                interval_end = min(datetime(current.year, current.month + 1, 1) - timedelta(days=1), end)
+    try:
+        while current < end:
+            # Calculate interval end
+            if interval == "day":
+                interval_end = current  # same day
+            elif interval == "week":
+                interval_end = min(current + timedelta(days=6), end)
+            else:  # month
+                if current.month == 12:
+                    interval_end = min(datetime(current.year + 1, 1, 1) - timedelta(days=1), end)
+                else:
+                    interval_end = min(datetime(current.year, current.month + 1, 1) - timedelta(days=1), end)
 
-        from_str = current.strftime("%d/%m/%Y")
-        to_str = interval_end.strftime("%d/%m/%Y")
+            from_str = current.strftime("%d/%m/%Y")
+            to_str = interval_end.strftime("%d/%m/%Y")
 
-        # Check cache - skip if already scraped (unless forcing)
-        if not force and cache.is_date_range_scraped(from_str, to_str):
-            skipped_ranges += 1
+            # Check cache - skip if already scraped (unless forcing)
+            if not force and cache.is_date_range_scraped(from_str, to_str):
+                skipped_ranges += 1
+                current = interval_end + timedelta(days=1)
+                continue
+
+            # Paginate within this interval
+            page = 1
+            interval_new = 0
+            max_pages = 100  # Safety limit to prevent infinite loops
+
+            while page <= max_pages:
+                try:
+                    print(f"{current.strftime('%Y-%m-%d')} to {interval_end.strftime('%Y-%m-%d')} p{page}...", end=" ", flush=True)
+                    csv_text = fetch_csv_by_date(from_str, to_str, page, session)
+
+                    reader = csv.reader(io.StringIO(csv_text))
+                    rows = list(reader)
+
+                    if not rows or len(rows) <= 1:
+                        print("empty")
+                        break
+
+                    # Set header from first response
+                    if header is None:
+                        header = rows[0]
+                        print(f"Header: {header}")
+
+                    # Data rows (skip header)
+                    data_rows = rows[1:] if rows[0] == header else rows
+
+                    if not data_rows:
+                        print("no data")
+                        break
+
+                    # Deduplicate using full key (includes attendees)
+                    page_new = 0
+                    page_dup = 0
+                    for row in data_rows:
+                        key = make_meeting_key(row, header)
+                        if key not in seen_keys:
+                            seen_keys.add(key)
+                            all_rows.append(row)
+                            page_new += 1
+                        else:
+                            page_dup += 1
+
+                    new_count += page_new
+                    dup_count += page_dup
+                    interval_new += page_new
+                    print(f"{len(data_rows)} rows ({page_new} new, {page_dup} dup)")
+
+                    # Stop conditions:
+                    # 1. Less than expected rows per page (< 1000 suggests last page)
+                    # 2. All rows are duplicates (0 new) - pagination might be looping
+                    # 3. No data rows
+                    if len(data_rows) < 1000:
+                        break
+                    if page_new == 0:
+                        print(f"  -> All duplicates on page {page}, stopping pagination for this range")
+                        break
+
+                    page += 1
+                    time.sleep(delay)
+
+                except requests.exceptions.HTTPError as e:
+                    print(f"HTTP error: {e}")
+                    break
+                except Exception as e:
+                    print(f"Error: {e}")
+                    break
+
+            # Mark this range as scraped
+            cache.mark_date_range_scraped(from_str, to_str)
+
+            # Periodic save
+            ranges_since_save += 1
+            if ranges_since_save >= save_every:
+                _save_progress("periodic")
+                ranges_since_save = 0
+
+            # Move to next interval
             current = interval_end + timedelta(days=1)
-            continue
+            time.sleep(delay)
 
-        # Paginate within this interval
-        page = 1
-        interval_new = 0
-        max_pages = 100  # Safety limit to prevent infinite loops
-
-        while page <= max_pages:
-            try:
-                print(f"{current.strftime('%Y-%m-%d')} to {interval_end.strftime('%Y-%m-%d')} p{page}...", end=" ", flush=True)
-                csv_text = fetch_csv_by_date(from_str, to_str, page, session)
-
-                reader = csv.reader(io.StringIO(csv_text))
-                rows = list(reader)
-
-                if not rows or len(rows) <= 1:
-                    print("empty")
-                    break
-
-                # Set header from first response
-                if header is None:
-                    header = rows[0]
-                    print(f"Header: {header}")
-
-                # Data rows (skip header)
-                data_rows = rows[1:] if rows[0] == header else rows
-
-                if not data_rows:
-                    print("no data")
-                    break
-
-                # Deduplicate using full key (includes attendees)
-                page_new = 0
-                page_dup = 0
-                for row in data_rows:
-                    key = make_meeting_key(row, header)
-                    if key not in seen_keys:
-                        seen_keys.add(key)
-                        all_rows.append(row)
-                        page_new += 1
-                    else:
-                        page_dup += 1
-
-                new_count += page_new
-                dup_count += page_dup
-                interval_new += page_new
-                print(f"{len(data_rows)} rows ({page_new} new, {page_dup} dup)")
-
-                # Stop conditions:
-                # 1. Less than expected rows per page (< 1000 suggests last page)
-                # 2. All rows are duplicates (0 new) - pagination might be looping
-                # 3. No data rows
-                if len(data_rows) < 1000:
-                    break
-                if page_new == 0:
-                    print(f"  -> All duplicates on page {page}, stopping pagination for this range")
-                    break
-
-                page += 1
-                time.sleep(delay)
-
-            except requests.exceptions.HTTPError as e:
-                print(f"HTTP error: {e}")
-                break
-            except Exception as e:
-                print(f"Error: {e}")
-                break
-
-        # Mark this range as scraped
-        cache.mark_date_range_scraped(from_str, to_str)
-
-        # Move to next interval
-        current = interval_end + timedelta(days=1)
-        time.sleep(delay)
+    except KeyboardInterrupt:
+        print("\n\nInterrupted by user!")
+        _save_progress("interrupted")
+        print(f"Progress saved. New: {new_count}, Total: {len(all_rows)}")
+        print("Run again to resume (cached ranges will be skipped).")
+        return all_rows
+    except Exception as e:
+        print(f"\n\nUnexpected error: {e}")
+        _save_progress("error")
+        print(f"Progress saved. New: {new_count}, Total: {len(all_rows)}")
+        raise
 
     # Mark full scrape complete and save cache
     cache.mark_full_scrape_complete()
@@ -374,14 +416,8 @@ def scrape_by_date_ranges(
     if skipped_ranges > 0:
         print(f"Cached ranges skipped: {skipped_ranges}")
 
-    # Save
-    OUTPUT_DIR.mkdir(exist_ok=True)
-    with open(OUTPUT_CSV, "w", newline="", encoding="utf-8") as f:
-        writer = csv.writer(f)
-        writer.writerow(header)
-        writer.writerows(all_rows)
-
-    print(f"Saved to: {OUTPUT_CSV}")
+    # Final save
+    _save_progress("complete")
 
     # Date range summary
     if all_rows and header:
@@ -394,8 +430,21 @@ def scrape_by_date_ranges(
     return all_rows
 
 
+def make_meeting_id(member_id: str, title: str, meeting_date: str) -> str:
+    """Generate a deterministic meeting UUID from (member_id, title, date).
+
+    All attendee rows for the same meeting get the same ID.
+    Uses UUID5 with a fixed namespace so IDs are stable across runs.
+    """
+    import uuid
+
+    NAMESPACE = uuid.UUID("a1b2c3d4-e5f6-7890-abcd-ef1234567890")
+    key = f"{str(member_id).strip()}|{str(title).strip()}|{str(meeting_date).strip()}"
+    return str(uuid.uuid5(NAMESPACE, key))
+
+
 def deduplicate_existing():
-    """Deduplicate the existing CSV file."""
+    """Deduplicate the existing CSV file and add meeting_id column."""
     if not OUTPUT_CSV.exists():
         print("No CSV file to deduplicate")
         return
@@ -417,12 +466,39 @@ def deduplicate_existing():
     print(f"Unique rows: {len(unique_rows)}")
     print(f"Duplicates removed: {removed}")
 
-    if removed > 0:
-        with open(OUTPUT_CSV, "w", newline="", encoding="utf-8") as f:
-            writer = csv.writer(f)
-            writer.writerow(header)
-            writer.writerows(unique_rows)
-        print(f"Saved deduplicated file to: {OUTPUT_CSV}")
+    # Add meeting_id column
+    has_meeting_id = "meeting_id" in header
+    if not has_meeting_id:
+        header = ["meeting_id"] + header
+        mid_idx, tid_idx, did_idx = None, None, None
+        for i, h in enumerate(header):
+            if h == "member_id":
+                mid_idx = i
+            elif h == "title":
+                tid_idx = i
+            elif h == "meeting_date":
+                did_idx = i
+
+        new_rows = []
+        for row in unique_rows:
+            mid = row[mid_idx - 1] if mid_idx else ""
+            title = row[tid_idx - 1] if tid_idx else ""
+            date = row[did_idx - 1] if did_idx else ""
+            meeting_id = make_meeting_id(mid, title, date)
+            new_rows.append([meeting_id] + row)
+        unique_rows = new_rows
+        print(f"Added meeting_id column")
+
+    # Count unique meetings
+    mid_col = header.index("meeting_id")
+    unique_meetings = len(set(row[mid_col] for row in unique_rows))
+    print(f"Unique meetings: {unique_meetings}")
+
+    with open(OUTPUT_CSV, "w", newline="", encoding="utf-8") as f:
+        writer = csv.writer(f)
+        writer.writerow(header)
+        writer.writerows(unique_rows)
+    print(f"Saved to: {OUTPUT_CSV}")
 
 
 def test_single_page():
@@ -460,14 +536,14 @@ if __name__ == "__main__":
     elif len(sys.argv) > 1 and sys.argv[1] == "dates":
         # Usage: python playaround.py dates [start_date] [end_date] [interval] [--force]
         # Examples:
-        #   python playaround.py dates                           # scrape all weekly from 2019
+        #   python playaround.py dates                           # scrape all daily from 2019
         #   python playaround.py dates 2023-01-01                # start from 2023
         #   python playaround.py dates 2023-01-01 2024-01-01     # specific range
         #   python playaround.py dates 2019-07-01 2026-01-01 month  # monthly chunks
         #   python playaround.py dates --force                   # ignore cache, re-scrape all
         start_date = "2019-07-01"
         end_date = None
-        interval = "week"
+        interval = "day"
         force = "--force" in sys.argv
 
         args = [a for a in sys.argv[2:] if not a.startswith("--")]

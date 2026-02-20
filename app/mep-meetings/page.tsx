@@ -9,7 +9,7 @@ export default function MepMeetingsPage() {
       <Header />
       <div className="app-container">
         <main className="main-content collapsed">
-          <div style={{ height: 'calc(100vh - 64px)', background: 'rgb(250, 250, 255)' }}>
+          <div style={{ minHeight: 'calc(100vh - 64px)', background: 'rgb(250, 250, 255)' }}>
             <MepMeetingsGraph />
           </div>
         </main>
