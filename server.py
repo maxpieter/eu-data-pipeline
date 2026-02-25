@@ -10,13 +10,16 @@ Then access: http://localhost:5001/api/graph?mode=full
 import os
 import sys
 import json
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, Response
 from flask_cors import CORS
 import numpy as np
 from datetime import datetime
 
 from scipy.sparse import coo_matrix
 from sklearn.cluster import SpectralCoclustering
+
+from api.projections import project_politicians, project_organizations, apply_disparity_filter, detect_communities_louvain
+from api.backbone import idf_weighted_projection, apply_idf_percentile_filter, suggest_tau_for_singles, hybrid_filter_edges, hypergeom_fdr_backbone
 
 # Add project root to path
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
@@ -46,25 +49,28 @@ def determine_pruning_params(edge_count):
     """
     Automatically determine ALL filtering parameters based on edge count.
 
-    UPDATED RULES - Keep more edges for better network density:
-    - < 5k edges: org≥1, actor≥1, k=1, weight≥1 (minimal filtering)
-    - 5k-20k edges: org≥2, actor≥1, k=2, weight≥1 (light filtering)
-    - 20k-40k edges: org≥3, actor≥2, k=2, weight≥1 (medium filtering)
-    - 40k-70k edges: org≥4, actor≥2, k=3, weight≥1 (strong filtering)
-    - 70k+ edges: org≥5, actor≥3, k=3, weight≥2 (very strong filtering)
+    RULES:
+    - < 1k edges: keep all (org≥1, actor≥1, k=0, weight≥1)
+    - 1k-10k edges: minimal filtering
+    - 10k-30k edges: light filtering
+    - 30k-40k edges: medium filtering
+    - 40k-70k edges: strong filtering
+    - 70k+ edges: very strong filtering
 
     Returns: (org_min_degree, actor_min_degree, k_core, min_edge_weight)
     """
-    if edge_count < 5000:
-        return 1, 1, 1, 1  # Keep almost everything
+    if edge_count < 1000:
+        return 1, 1, 0, 1  # Keep all
+    elif edge_count < 10000:
+        return 4, 2, 3, 1  # Minimal filtering
     elif edge_count < 30000:
-        return 1, 1, 2, 2  # Light filtering - focus on node quality
+        return 1, 1, 2, 2  # Light filtering
     elif edge_count < 40000:
-        return 2, 2, 2, 2  # Medium filtering - remove low-degree nodes
+        return 2, 2, 2, 2  # Medium filtering
     elif edge_count < 70000:
-        return 2, 2, 2, 2  # Strong filtering - keep network core
+        return 2, 2, 2, 2  # Strong filtering
     else:
-        return 5, 5, 3, 2  # Very strong - only major players
+        return 5, 5, 3, 2  # Very strong filtering
 
 
 def parse_date_range(start_str, end_str):
@@ -163,6 +169,12 @@ def detect_communities(nodes, edges):
         node_to_community = {n["id"]: -1 for n in nodes}
         return node_to_community, []
 
+    # Skip community detection if graph is too small (n_clusters > n_samples)
+    if n_clusters > X.shape[0]:
+        print(f"Skipping community detection: n_clusters={n_clusters} > n_samples={X.shape[0]}")
+        node_to_community = {n["id"]: -1 for n in nodes}
+        return node_to_community, []
+
     model = SpectralCoclustering(n_clusters=n_clusters, random_state=42)
     model.fit(X)
 
@@ -206,7 +218,7 @@ def build_graph(
     keep_isolates=False,
     start=None,
     end=None,
-):
+    procedure=None,    graph_type="bipartite",):
     """Build graph data with fully automatic filtering based on initial edge count."""
 
     # Load data
@@ -237,6 +249,12 @@ def build_graph(
         meetings_df = filter_df_by_timerange(meetings_df, meetings_ts_col, start_ts, end_ts)
         commission_df = filter_df_by_timerange(commission_df, commission_ts_col, start_ts, end_ts)
         print(f"Timeline filter applied: {start or '…'} → {end or '…'}")
+
+    # Apply procedure filter for MEP mode (replaces timeline when selected)
+    if procedure and procedure != 'all' and 'related_procedure' in meetings_df.columns:
+        meetings_df = meetings_df[meetings_df['related_procedure'] == procedure].copy()
+        print(f"Procedure filter applied: {procedure}")
+        print(f"Meetings matching procedure: {len(meetings_df):,}")
 
     # Build nodes/edges per mode
     mep_nodes = pd.DataFrame()
@@ -325,9 +343,16 @@ def build_graph(
     initial_edge_count = len(edges)
     print(f"Initial edge count: {initial_edge_count:,}")
 
-    # Automatically determine ALL filtering parameters based on edge count
-    org_min_degree, actor_min_degree, bipartite_k_core, min_edge_weight = determine_pruning_params(initial_edge_count)
-    print(f"Auto-selected filtering: org_degree={org_min_degree}, actor_degree={actor_min_degree}, k-core={bipartite_k_core}, edge_weight={min_edge_weight}")
+    # For projections, skip bipartite-specific filtering (degree, k-core)
+    # For bipartite, apply automatic filtering based on edge count
+    if graph_type in ('politicians', 'organizations'):
+        print(f"Graph type is {graph_type} projection - skipping bipartite degree/k-core filters")
+        # Only light weight filtering for projections
+        org_min_degree, actor_min_degree, bipartite_k_core, min_edge_weight = 1, 1, 1, 1
+    else:
+        # Automatically determine ALL filtering parameters based on edge count
+        org_min_degree, actor_min_degree, bipartite_k_core, min_edge_weight = determine_pruning_params(initial_edge_count)
+        print(f"Auto-selected filtering: org_degree={org_min_degree}, actor_degree={actor_min_degree}, k-core={bipartite_k_core}, edge_weight={min_edge_weight}")
 
     # Edge weight filtering with automatic threshold
     edges_agg = filter_edges_by_weight(
@@ -337,18 +362,22 @@ def build_graph(
         verbose=False,
     )
 
-    # Apply structural filtering with automatic degree thresholds
-    edges = filter_bipartite_by_degree(
-        edges_agg,
-        org_min_degree=org_min_degree,
-        actor_min_degree=actor_min_degree,
-        verbose=False,
-        actor_label=actor_label,
-    )
+    # Apply structural filtering only for bipartite graphs
+    if graph_type == 'bipartite':
+        edges = filter_bipartite_by_degree(
+            edges_agg,
+            org_min_degree=org_min_degree,
+            actor_min_degree=actor_min_degree,
+            verbose=False,
+            actor_label=actor_label,
+        )
 
-    # Apply automatic k-core pruning
-    if bipartite_k_core > 1:
-        edges = bipartite_k_core_prune(edges, k=bipartite_k_core, verbose=False, actor_label=actor_label)
+        # Apply automatic k-core pruning
+        if bipartite_k_core > 1:
+            edges = bipartite_k_core_prune(edges, k=bipartite_k_core, verbose=False, actor_label=actor_label)
+    else:
+        # For projections, no degree-based filtering - disparity filter handles noise
+        edges = edges_agg
 
     # Build D3 graph
     graph = build_d3_bipartite(
@@ -377,9 +406,156 @@ def build_graph(
             'name': org_id,
         })
 
-    # Detect communities using native bipartite co-clustering
-    print(f"Running bipartite community detection on {len(graph['nodes'])} nodes...")
-    node_to_community, community_stats = detect_communities(graph['nodes'], graph['links'])
+    # Apply one-mode projection if requested
+    if graph_type in ('politicians', 'organizations'):
+        print(f"Computing {graph_type} one-mode projection...")
+        print(f"  Input: {len(graph['nodes'])} nodes, {len(graph['links'])} edges")
+        
+        # Convert D3 graph format to edge/node dicts for projection
+        nodes_for_proj = [
+            {
+                'id': str(n['id']),
+                'type': n.get('type', 'unknown'),
+                'label': n.get('label', ''),
+            }
+            for n in graph['nodes']
+        ]
+        
+        edges_for_proj = [
+            {
+                'source': str(link['source']),
+                'target': str(link['target']),
+                'value': link.get('value', 1),
+            }
+            for link in graph['links']
+        ]
+        
+        # Project to one-mode
+        if graph_type == 'politicians':
+            proj_nodes, proj_edges = project_politicians(nodes_for_proj, edges_for_proj)
+        else:  # organizations
+            proj_nodes, proj_edges = project_organizations(nodes_for_proj, edges_for_proj)
+        
+        print(f"  After projection: {len(proj_nodes)} nodes, {len(proj_edges)} edges")
+        
+        # Use backbone extraction for very large projections (>300k edges)
+        if len(proj_edges) > 300000:
+            print(f"  Very large projection ({len(proj_edges)} edges) - applying backbone extraction...")
+            
+            # Recompute with IDF weighting instead of simple shared-count weighting
+            actor_type = 'mep' if mode == 'mep' else 'commission_employee' if mode == 'commission' else 'mep'
+            proj_nodes, proj_edges = idf_weighted_projection(
+                nodes_for_proj, 
+                edges_for_proj,
+                actor_type_field=actor_type
+            )
+            print(f"  IDF projection: {len(proj_nodes)} nodes, {len(proj_edges)} edges")
+            
+            # Apply IDF percentile filter (98th percentile)
+            proj_nodes, proj_edges = apply_idf_percentile_filter(proj_edges, proj_nodes, percentile=98)
+            print(f"  After IDF 98th percentile filter: {len(proj_nodes)} nodes, {len(proj_edges)} edges")
+            
+            # Hybrid filtering - use data-driven tau (min weight of shared=2 edges)
+            tau = suggest_tau_for_singles(proj_edges)
+            proj_edges, proj_nodes = hybrid_filter_edges(proj_edges, proj_nodes, tau)
+            print(f"  After hybrid filter (data-driven tau={tau:.4f}): {len(proj_nodes)} nodes, {len(proj_edges)} edges")
+            
+            # Apply k-core=5 pruning to reduce node-to-edge ratio
+            print(f"  Applying k-core=5 pruning to backbone...")
+            edges_df = pd.DataFrame([
+                {'source': str(e['source']), 'target': str(e['target']), 'value': e.get('value', 1)}
+                for e in proj_edges
+            ])
+            edges_pruned = bipartite_k_core_prune(
+                edges_df,
+                k=5,
+                verbose=False,
+                actor_label='node'
+            )
+            
+            # Update proj_edges and proj_nodes
+            pruned_node_ids = set()
+            for _, row in edges_pruned.iterrows():
+                pruned_node_ids.add(str(row['source']))
+                pruned_node_ids.add(str(row['target']))
+            
+            proj_edges = [
+                {
+                    'source': str(e['source']),
+                    'target': str(e['target']),
+                    'value': e.get('value', 1),
+                }
+                for e in proj_edges
+                if str(e['source']) in pruned_node_ids and str(e['target']) in pruned_node_ids
+            ]
+            proj_nodes = [n for n in proj_nodes if str(n['id']) in pruned_node_ids]
+            print(f"  After k-core=5 pruning: {len(proj_nodes)} nodes, {len(proj_edges)} edges")
+        else:
+            # For smaller projections, use simpler filtering
+            # Determine filter aggressiveness based on edge count
+            if len(proj_edges) > 50000:
+                print(f"  Large projection detected ({len(proj_edges)} edges) - applying harsh filtering")
+                alpha_disp = 0.001  # Very strict disparity filter
+                min_degree_proj = 5  # High minimum degree
+            elif len(proj_edges) > 20000:
+                print(f"  Medium-large projection ({len(proj_edges)} edges) - applying moderate filtering")
+                alpha_disp = 0.01
+                min_degree_proj = 3
+            else:
+                alpha_disp = 0.02
+                min_degree_proj = 2
+            
+            # Apply disparity filter to remove noise (more aggressive than bipartite)
+            if proj_edges:
+                proj_edges, proj_nodes = apply_disparity_filter(proj_edges, proj_nodes, alpha=alpha_disp)
+                print(f"  After disparity filter (alpha={alpha_disp}): {len(proj_nodes)} nodes, {len(proj_edges)} edges")
+            
+            # Further prune by minimum degree for one-mode projections
+            if proj_edges:
+                degree_count = {}
+                for edge in proj_edges:
+                    degree_count[edge['source']] = degree_count.get(edge['source'], 0) + 1
+                    degree_count[edge['target']] = degree_count.get(edge['target'], 0) + 1
+                
+                # Filter out low-degree nodes
+                high_degree_nodes = {node_id for node_id, degree in degree_count.items() if degree >= min_degree_proj}
+                proj_edges = [e for e in proj_edges if e['source'] in high_degree_nodes and e['target'] in high_degree_nodes]
+                proj_nodes = [n for n in proj_nodes if n['id'] in high_degree_nodes]
+                print(f"  After degree filter (min_degree={min_degree_proj}): {len(proj_nodes)} nodes, {len(proj_edges)} edges")
+        
+        if not proj_nodes or not proj_edges:
+            print(f"  WARNING: Projection resulted in empty graph, keeping original bipartite")
+        else:
+            # Convert back to D3 format
+            graph['nodes'] = [
+                {
+                    'id': str(n['id']),
+                    'type': n.get('type', 'unknown'),
+                    'label': n.get('label', ''),
+                    'name': n.get('label', ''),
+                }
+                for n in proj_nodes
+            ]
+            
+            graph['links'] = [
+                {
+                    'source': str(e['source']),
+                    'target': str(e['target']),
+                    'value': e.get('value', 1),
+                }
+                for e in proj_edges
+            ]
+            print(f"  Projection complete: {len(graph['nodes'])} nodes, {len(graph['links'])} edges in final graph")
+
+    # Detect communities - use Louvain for projections, SpectralCoclustering for bipartite
+    if graph_type in ('politicians', 'organizations'):
+        print(f"Running Louvain community detection on {len(graph['nodes'])} nodes...")
+        node_to_community, community_stats = detect_communities_louvain(graph['nodes'], graph['links'], resolution=1.5)
+        community_method = 'louvain'
+    else:
+        print(f"Running community detection on {len(graph['nodes'])} nodes...")
+        node_to_community, community_stats = detect_communities(graph['nodes'], graph['links'])
+        community_method = 'spectral_coclustering'
 
     # Add community information to nodes
     for node in graph['nodes']:
@@ -399,7 +575,8 @@ def build_graph(
         'k_core_used': bipartite_k_core,
         'min_edge_weight_used': min_edge_weight,
         'communities': community_stats,
-        'community_method': 'spectral_coclustering',
+        'community_method': community_method,
+        'graph_type': graph_type,
         'timeline': {
             'start': start,
             'end': end,
@@ -419,9 +596,12 @@ def get_graph():
     - keep_isolates: bool (default: false)
     - start: YYYY-MM-DD (inclusive)
     - end: YYYY-MM-DD (inclusive)
+    - procedure: procedure code or 'all' (default: 'all')
+    - graphType: 'bipartite', 'politicians', or 'organizations' (default: 'bipartite')
 
     Note: ALL filtering parameters are now automatically determined
-    based on the initial edge count.
+    based on the initial edge count. One-mode projections are computed
+    before any pruning, ensuring accurate representation.
     """
     try:
         mode = request.args.get('mode', 'full')
@@ -432,15 +612,22 @@ def get_graph():
 
         start = request.args.get('start')
         end = request.args.get('end')
+        procedure = request.args.get('procedure', 'all')
+        graph_type = request.args.get('graphType', 'bipartite')
+        if graph_type not in ('bipartite', 'politicians', 'organizations'):
+            graph_type = 'bipartite'
 
         graph = build_graph(
             mode=mode,
             keep_isolates=keep_isolates,
             start=start,
             end=end,
+            procedure=procedure,
+            graph_type=graph_type,
         )
 
-        return jsonify(graph)
+        # Convert to proper JSON-serializable format
+        return Response(json.dumps(graph), mimetype='application/json')
 
     except Exception as e:
         import traceback
@@ -457,6 +644,29 @@ def health():
     return jsonify({'status': 'ok'})
 
 
+@app.route('/api/procedures')
+def get_procedures():
+    """Get list of procedures from MEP meetings data with >100 meetings."""
+    try:
+        meetings_df = pd.read_json(MEETINGS_JSON)
+        
+        # Extract procedures with >100 meetings
+        if 'related_procedure' in meetings_df.columns:
+            proc_counts = meetings_df[meetings_df['related_procedure'].notna()].groupby('related_procedure').size()
+            procedures = sorted(proc_counts[proc_counts > 100].index.tolist())
+            print(f"Loaded {len(procedures)} procedures with >100 meetings from MEP data")
+        else:
+            procedures = []
+            print("Warning: 'related_procedure' column not found in MEP data")
+        
+        return jsonify({'procedures': procedures})
+    except Exception as e:
+        print(f"Error loading procedures: {e}")
+        import traceback
+        traceback.print_exc()
+        return jsonify({'procedures': [], 'error': str(e)}), 500
+
+
 if __name__ == '__main__':
     print("Starting local development server with FULLY AUTOMATIC FILTERING...")
     print("API endpoint: http://localhost:5001/api/graph")
@@ -465,4 +675,4 @@ if __name__ == '__main__':
     print("  keep_isolates: true/false (default: false)")
     print("  start/end: YYYY-MM-DD date range (inclusive)")
     print("\nExample: http://localhost:5001/api/graph?mode=full&start=2024-03-01&end=2025-06-30")
-    app.run(host='0.0.0.0', port=5001, debug=True)
+    app.run(host='0.0.0.0', port=5001, debug=True, threaded=True)

@@ -1,9 +1,10 @@
 'use client'
 
-import { GraphFilters, defaultFilters, GraphMode } from '@/lib/data'
+import { GraphFilters, defaultFilters, GraphMode, fetchProcedures } from '@/lib/data'
+import { useEffect, useState } from 'react'
 
 const MIN_DATE = '2024-03-01'
-const MAX_DATE = '2025-06-30'
+const MAX_DATE = '2025-09-19'
 
 interface SidebarProps {
   collapsed: boolean
@@ -22,6 +23,22 @@ export default function Sidebar({
   filters,
   setFilters,
 }: SidebarProps) {
+
+  const [procedures, setProcedures] = useState<string[]>([])
+
+  useEffect(() => {
+    const loadProcedures = async () => {
+      try {
+        const procs = await fetchProcedures()
+        console.log('Loaded procedures:', procs.length, procs.slice(0, 3))
+        setProcedures(procs)
+      } catch (err) {
+        console.error('Failed to load procedures:', err)
+        setProcedures([])
+      }
+    }
+    loadProcedures()
+  }, [])
 
   const updateFilter = <K extends keyof GraphFilters>(key: K, value: GraphFilters[K]) => {
     setFilters({ ...filters, [key]: value })
@@ -72,85 +89,117 @@ const setEnd = (newEnd: string) => {
       <div className="sidebar-content">
 
 
-        {/* Graph Mode */}
+        {/* Institution */}
         <div className="filter-section">
-          <div className="filter-label">Graph Mode</div>
+          <div className="filter-label">Institution</div>
           <div className="filter-options">
             {(['full', 'mep', 'commission'] as GraphMode[]).map((mode) => (
               <button
                 key={mode}
                 className={`filter-option ${filters.mode === mode ? 'active' : ''}`}
-                onClick={() => updateFilter('mode', mode)}
+                onClick={() => {
+                  // Reset to timeline filter when switching away from MEP
+                  if (mode !== 'mep') {
+                    setFilters({ ...filters, mode, filterType: 'timeline', procedure: 'all' })
+                  } else {
+                    updateFilter('mode', mode)
+                  }
+                }}
               >
-                {mode === 'full' ? 'Full Network' : mode === 'mep' ? 'MEP — Orgs' : 'Commission — Orgs'}
+                {mode === 'full' ? 'All meetings' : mode === 'mep' ? 'Lobbyists meetings with Parliament' : 'Lobbyists meetings with Commission'}
               </button>
             ))}
           </div>
         </div>
 
-        {/* Timeline */}
-        <div className="filter-section">
-          <div className="filter-label">Timeline</div>
-          <div className="timeline-grid">
-            <label className="timeline-field">
-              <span>Start</span>
-              <input
-                type="date"
-                min={MIN_DATE}
-                max={MAX_DATE}
-                value={filters.start}
-                onChange={(e) => setStart(e.target.value)}
-              />
-            </label>
+        {/* Filter Type Selector - MEP only */}
+        {filters.mode === 'mep' && (
+          <div className="filter-section">
+            <div className="filter-label">Filter By</div>
+            <div className="filter-options">
+              <button
+                className={`filter-option ${filters.filterType === 'timeline' ? 'active' : ''}`}
+                onClick={() => setFilters({ ...filters, filterType: 'timeline', procedure: 'all' })}
+              >
+                Timeline
+              </button>
+              <button
+                className={`filter-option ${filters.filterType === 'procedure' ? 'active' : ''}`}
+                onClick={() => updateFilter('filterType', 'procedure')}
+              >
+                Procedure
+              </button>
+            </div>
+          </div>
+        )}
 
-            <label className="timeline-field">
-              <span>End</span>
-              <input
-                type="date"
-                min={MIN_DATE}
-                max={MAX_DATE}
-                value={filters.end}
-                onChange={(e) => setEnd(e.target.value)}
-              />
-            </label>
+        {/* Timeline - shown when filterType is timeline */}
+        {filters.filterType === 'timeline' && (
+          <div className="filter-section">
+            <div className="filter-label">Timeline</div>
+            <div className="timeline-grid">
+              <label className="timeline-field">
+                <span>Start</span>
+                <input
+                  type="date"
+                  min={MIN_DATE}
+                  max={MAX_DATE}
+                  value={filters.start}
+                  onChange={(e) => setStart(e.target.value)}
+                />
+              </label>
 
-            <button
-              className="filter-option"
-              onClick={() => setFilters({ ...filters, start: MIN_DATE, end: MAX_DATE })}
-              title="Reset timeline to full range"
+              <label className="timeline-field">
+                <span>End</span>
+                <input
+                  type="date"
+                  min={MIN_DATE}
+                  max={MAX_DATE}
+                  value={filters.end}
+                  onChange={(e) => setEnd(e.target.value)}
+                />
+              </label>
+            </div>
+
+            <div className="timeline-hint" style={{ marginTop: '0.5rem', fontSize: '0.75rem', color: '#64748b' }}>
+              Available: {MIN_DATE} → {MAX_DATE}
+            </div>
+          </div>
+        )}
+
+        {/* Procedure Filter - shown when filterType is procedure and mode is mep */}
+        {filters.filterType === 'procedure' && filters.mode === 'mep' && (
+          <div className="filter-section">
+            <div className="filter-label">Procedure</div>
+            <select
+              value={filters.procedure}
+              onChange={(e) => updateFilter('procedure', e.target.value)}
+              style={{
+                width: '100%',
+                padding: '0.5rem',
+                fontSize: '0.875rem',
+                borderRadius: '6px',
+                border: '1px solid #cbd5e1',
+                backgroundColor: '#fff',
+                color: '#1e293b',
+                cursor: 'pointer',
+              }}
             >
-              Reset
-            </button>
+              <option value="all">All Procedures</option>
+              {procedures.map((proc) => (
+                <option key={proc} value={proc}>
+                  {proc}
+                </option>
+              ))}
+            </select>
           </div>
-
-          <div className="timeline-hint">
-            Available: {MIN_DATE} → {MAX_DATE}
-          </div>
-        </div>
+        )}
         
-        {/* Charge Strength */}
-        <div className="filter-section">
-          <div className="filter-label">Layout</div>
-          <label className="slider">
-            <span>Charge</span>
-            <input
-              type="range"
-              min={-400}
-              max={-20}
-              step={10}
-              value={chargeStrength}
-              onChange={(e) => setChargeStrength(Number(e.target.value))}
-            />
-            <span>{chargeStrength}</span>
-          </label>
-        </div>
-
         {/* Reset */}
         <div className="filter-section">
           <button
             className="reset-button"
             onClick={() => {
-              setChargeStrength(-150)
               setFilters(defaultFilters)
             }}
           >

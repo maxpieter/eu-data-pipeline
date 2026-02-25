@@ -36,3 +36,6 @@ next-env.d.ts
 
 # Python
 api/__pycache__/
+debug_*.py
+test_graph.py
+venv/

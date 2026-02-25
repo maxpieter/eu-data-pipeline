@@ -58,12 +58,17 @@ export interface GraphData {
 
 // Graph mode types
 export type GraphMode = 'mep' | 'commission' | 'full'
+export type FilterType = 'timeline' | 'procedure'
+export type GraphType = 'bipartite' | 'politicians' | 'organizations'
 
 // Filter settings
 export interface GraphFilters {
   mode: GraphMode
+  filterType: FilterType  // Choose between timeline or procedure filtering
+  graphType: GraphType    // Choose between bipartite or one-mode projections
   start: string           // YYYY-MM-DD (inclusive)
   end: string             // YYYY-MM-DD (inclusive)
+  procedure: string       // Related procedure code (e.g., '2025/0045(COD)') or 'all'
   // Removed ALL filtering parameters:
   // - orgMinDegree (automatic)
   // - actorMinDegree (automatic)
@@ -73,8 +78,11 @@ export interface GraphFilters {
 
 export const defaultFilters: GraphFilters = {
   mode: 'full',
-  start: '2024-03-01',
-  end: '2025-06-30',
+  filterType: 'timeline',
+  graphType: 'bipartite',
+  start: '2025-01-01',
+  end: '2025-09-01',
+  procedure: 'all',
 }
 
 // Node type colors
@@ -112,16 +120,33 @@ export async function fetchGraphData(filters: Partial<GraphFilters> = {}): Promi
 
   const params = new URLSearchParams()
   params.set('mode', f.mode)
+  params.set('graphType', f.graphType)
   params.set('start', f.start)
   params.set('end', f.end)
+  params.set('procedure', f.procedure)
   // All filtering parameters are handled automatically by backend
 
   // Next.js rewrites will proxy to Python backend in development
-  const url = `/api/graph?${params}`
+  // In development, fetch directly from Python backend to avoid Next.js timeout issues
+  const apiUrl = typeof window !== 'undefined' && window.location.hostname === 'localhost' 
+    ? `http://localhost:5001/api/graph?${params}`
+    : `/api/graph?${params}`
 
   try {
-    const response = await fetch(url)
+    // Set 300-second timeout for large graph requests (5 minutes)
+    const controller = new AbortController()
+    const timeoutId = setTimeout(() => controller.abort(), 300000)
+    
+    const response = await fetch(apiUrl, {
+      signal: controller.signal,
+    })
+    clearTimeout(timeoutId)
+    
+    console.log(`API Response status: ${response.status}`)
+    
     if (!response.ok) {
+      const errorText = await response.text()
+      console.error(`HTTP error! status: ${response.status}, body:`, errorText)
       throw new Error(`HTTP error! status: ${response.status}`)
     }
     const data = await response.json()
@@ -144,5 +169,22 @@ export async function fetchGraphData(filters: Partial<GraphFilters> = {}): Promi
   } catch (error) {
     console.error('Failed to fetch graph data:', error)
     return { nodes: [], links: [] }
+  }
+}
+
+/**
+ * Fetch list of available procedures
+ */
+export async function fetchProcedures(): Promise<string[]> {
+  try {
+    const response = await fetch('/api/procedures')
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`)
+    }
+    const data = await response.json()
+    return data.procedures || []
+  } catch (error) {
+    console.error('Failed to fetch procedures:', error)
+    return []
   }
 }

@@ -113,6 +113,7 @@ export default function Home() {
             <NetworkGraph
               chargeStrength={chargeStrength}
               filters={filters}
+              setFilters={setFilters}
               onDataLoad={setGraphData}
             />
             <div className="graph-byline">

@@ -23,6 +23,7 @@ interface SimLink extends d3.SimulationLinkDatum<SimNode> {
 interface NetworkGraphProps {
   chargeStrength: number
   filters: GraphFilters
+  setFilters: (filters: GraphFilters | ((prev: GraphFilters) => GraphFilters)) => void
   onDataLoad?: (data: GraphData) => void
 }
 
@@ -72,6 +73,7 @@ function computeAuthority(orgId: string, nodes: Node[], links: Link[]): number {
 export default function NetworkGraph({
   chargeStrength,
   filters,
+  setFilters,
   onDataLoad,
 }: NetworkGraphProps) {
   const svgRef = useRef<SVGSVGElement>(null)
@@ -143,18 +145,21 @@ export default function NetworkGraph({
 
     if (orgNodes.length === 0) return
 
+    // Limit to first 100 orgs to avoid computing expensive stats on thousands of nodes
+    const orgNodesToAnalyze = orgNodes.slice(0, 100)
+
     // Compute stats for each org
-    const weightedDegreeArr = orgNodes.map(n => ({
+    const weightedDegreeArr = orgNodesToAnalyze.map(n => ({
       id: n.id,
       value: computeWeightedDegree(n.id, links),
       label: n.label || n.id,
     }))
-    const closenessArr = orgNodes.map(n => ({
+    const closenessArr = orgNodesToAnalyze.map(n => ({
       id: n.id,
       value: computeCloseness(n.id, graphData.nodes, links),
       label: n.label || n.id,
     }))
-    const authorityArr = orgNodes.map(n => ({
+    const authorityArr = orgNodesToAnalyze.map(n => ({
       id: n.id,
       value: computeAuthority(n.id, graphData.nodes, links),
       label: n.label || n.id,
@@ -221,8 +226,9 @@ export default function NetworkGraph({
       .force('collision', d3.forceCollide<SimNode>().radius(d => (d.nodeSize || NODE_SIZE) + 4))
       .stop()
 
-    // Run simulation synchronously (300 ticks is usually enough)
-    for (let i = 0; i < 300; i++) {
+    // Run simulation - fewer ticks for large graphs to avoid blocking
+    const ticks = nodes.length > 2000 ? 50 : 300
+    for (let i = 0; i < ticks; i++) {
       preSimulation.tick()
     }
 
@@ -293,9 +299,9 @@ export default function NetworkGraph({
       .join('circle')
       .attr('r', d => d.nodeSize || NODE_SIZE)
       .attr('fill', d => {
-        // Use community colors if community is assigned
-        if (d.community !== undefined && d.community >= 0 && d.community < 6) {
-          return communityColors[d.community]
+        // Use community colors if community is assigned (cycle through colors using modulo)
+        if (d.community !== undefined && d.community >= 0) {
+          return communityColors[d.community % communityColors.length]
         }
         // Fallback to default community color for others
         return defaultCommunityColor
@@ -411,8 +417,8 @@ export default function NetworkGraph({
 
       // Show tooltip
       if (tooltipRef.current) {
-        const communityInfo = d.community !== undefined && d.community >= 0 && d.community < 6
-          ? `<div style="color: ${communityColors[d.community]}; font-size: 0.6875rem; margin-top: 0.125rem; font-weight: 600;">Community ${d.community + 1}</div>`
+        const communityInfo = d.community !== undefined && d.community >= 0
+          ? `<div style="color: ${communityColors[d.community % communityColors.length]}; font-size: 0.6875rem; margin-top: 0.125rem; font-weight: 600;">Community ${d.community}</div>`
           : d.community === -1
           ? `<div style="color: #9CA3AF; font-size: 0.6875rem; margin-top: 0.125rem;">Minor community</div>`
           : ''
@@ -504,6 +510,50 @@ export default function NetworkGraph({
         </div>
       )}
 
+      {/* Graph Type Selector */}
+      <div
+        style={{
+          position: 'absolute',
+          top: '1rem',
+          left: '50%',
+          transform: 'translateX(-50%)',
+          background: 'rgba(255, 255, 255, 0.95)',
+          backdropFilter: 'blur(8px)',
+          borderRadius: '8px',
+          padding: '0.5rem',
+          border: '1px solid #e2e8f0',
+          boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
+          display: 'flex',
+          gap: '0.5rem',
+          zIndex: 100,
+        }}
+      >
+        {(['bipartite', 'politicians', 'organizations'] as const).map((type) => (
+          <button
+            key={type}
+            onClick={() => {
+              setFilters((prev) => ({
+                ...prev,
+                graphType: type,
+              }))
+            }}
+            style={{
+              padding: '0.5rem 1rem',
+              border: filters.graphType === type ? '2px solid #3b82f6' : '1px solid #cbd5e1',
+              background: filters.graphType === type ? '#dbeafe' : 'white',
+              borderRadius: '6px',
+              fontSize: '0.875rem',
+              fontWeight: filters.graphType === type ? 600 : 400,
+              color: filters.graphType === type ? '#1e40af' : '#475569',
+              cursor: 'pointer',
+              transition: 'all 0.2s',
+            }}
+          >
+            {type === 'bipartite' ? 'ALL' : type === 'politicians' ? 'POLITICIANS' : 'ORGANISATIONS'}
+          </button>
+        ))}
+      </div>
+
       <svg
         ref={svgRef}
         style={{
@@ -546,12 +596,12 @@ export default function NetworkGraph({
                       width: '10px',
                       height: '10px',
                       borderRadius: '50%',
-                      backgroundColor: communityColors[community.id],
+                      backgroundColor: communityColors[community.id % communityColors.length],
                       flexShrink: 0,
                     }}
                   />
                   <span style={{ fontSize: '0.8125rem', color: '#475569' }}>
-                    Community {community.id + 1} ({community.size} nodes, {community.percentage}%)
+                    Community {community.id} ({community.size} nodes, {community.percentage}%)
                   </span>
                 </div>
               ))}
