@@ -120,9 +120,9 @@ def detect_communities(nodes, edges):
 
     Returns: dict mapping node_id -> community_id (0-5 for top 6, -1 for others)
     """
-    # Split bipartite sets
-    org_ids = [n["id"] for n in nodes if n.get("type") == "org"]
-    actor_ids = [n["id"] for n in nodes if n.get("type") != "org"]
+    # Split bipartite sets (deduplicate to avoid phantom zero-sum columns in the matrix)
+    org_ids = list(dict.fromkeys(n["id"] for n in nodes if n.get("type") == "org"))
+    actor_ids = list(dict.fromkeys(n["id"] for n in nodes if n.get("type") != "org"))
 
     # If one side is empty, we can't do bipartite community detection.
     if len(org_ids) == 0 or len(actor_ids) == 0:
@@ -176,7 +176,12 @@ def detect_communities(nodes, edges):
         return node_to_community, []
 
     model = SpectralCoclustering(n_clusters=n_clusters, random_state=42)
-    model.fit(X)
+    try:
+        model.fit(X)
+    except (ValueError, np.linalg.LinAlgError):
+        print(f"SpectralCoclustering failed, skipping community detection")
+        node_to_community = {n["id"]: -1 for n in nodes}
+        return node_to_community, []
 
     actor_labels = model.row_labels_
     org_labels = model.column_labels_
