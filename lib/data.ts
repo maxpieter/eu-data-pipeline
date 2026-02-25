@@ -81,110 +81,110 @@ export const defaultFilters: GraphFilters = {
   procedure: 'all',
 }
 
-// Node type labels for the legend
-export const typeLabels: Record<string, string> = {
-  org: 'Organization',
-  mep: 'MEP',
-  commission_employee: 'Commission',
+// Re-export color/label constants from the shared module
+export { typeLabels, typeColors, communityColors, defaultCommunityColor } from '@/lib/constants'
+
+// ── Cluster types (used by ClusterGraph and ClusterHeader) ──
+
+export interface ClusterNode {
+  id: string
+  cluster_id: number
+  type: 'cluster'
+  label: string
+  size: number
+  density: number
+  top_members: Array<{ id: string; label: string; degree: number }>
+  top_interests: Array<{ interest: string; count: number }>
 }
 
-// Node type colors
-export const typeColors: Record<string, string> = {
-  org: '#64b5f6',                  // Light blue
-  mep: '#ffb74d',                  // Orange
-  commission_employee: '#81c784',  // Green
+export interface ClusterLink {
+  source: string
+  target: string
+  weight: number
+  edge_count: number
 }
 
-// Community colors (top 6)
-export const communityColors: string[] = [
-  '#e57373', // Red
-  '#64b5f6', // Blue
-  '#81c784', // Green
-  '#ffb74d', // Orange
-  '#ba68c8', // Purple
-  '#4db6ac', // Teal
-]
-export const defaultCommunityColor = '#9e9e9e' // Gray for other communities
+export interface ClusterOverviewData {
+  nodes: ClusterNode[]
+  links: ClusterLink[]
+  metadata: {
+    total_clusters: number
+    total_nodes: number
+    total_edges: number
+  }
+}
+
+export interface ClusterDetailNode {
+  id: string
+  type: 'org'
+  label: string
+  name: string
+  interests_represented?: string
+  register_id?: string
+  degree: number
+}
+
+export interface ClusterDetailLink {
+  source: string
+  target: string
+  weight: number
+  shared: number
+}
+
+export interface ClusterDetailData {
+  cluster_id: number
+  cluster_label: string
+  nodes: ClusterDetailNode[]
+  links: ClusterDetailLink[]
+  external_connections: Array<{
+    cluster_id: number
+    cluster_label: string
+    edge_count: number
+  }>
+  metadata: {
+    node_count: number
+    edge_count: number
+    density: number
+  }
+}
+
+import { communityColors, defaultCommunityColor } from '@/lib/constants'
+
+export function getClusterColor(clusterId: number): string {
+  if (clusterId >= 0 && clusterId < communityColors.length) {
+    return communityColors[clusterId]
+  }
+  return defaultCommunityColor
+}
+
+export async function fetchClusterOverview(): Promise<ClusterOverviewData> {
+  const { apiFetch } = await import('@/lib/api')
+  return apiFetch<ClusterOverviewData>('/api/clusters')
+}
+
+export async function fetchClusterDetail(clusterId: number): Promise<ClusterDetailData> {
+  const { apiFetch } = await import('@/lib/api')
+  return apiFetch<ClusterDetailData>(`/api/clusters/${clusterId}`)
+}
 
 /**
- * Fetch graph data from the API with filters
+ * Fetch graph data from the API with filters.
  * Note: ALL filtering (degrees, k-core, edge weight) is automatically
- * determined by the backend based on the initial edge count
+ * determined by the backend based on the initial edge count.
  * @param filters - Graph filters (mode, start, end)
  */
 export async function fetchGraphData(
   filters: Partial<GraphFilters> = {},
 ): Promise<GraphData> {
-  const f = { ...defaultFilters, ...filters };
-
-  const params = new URLSearchParams()
-  params.set('mode', f.mode)
-  params.set('graphType', f.graphType)
-  params.set('start', f.start)
-  params.set('end', f.end)
-  params.set('procedure', f.procedure)
-  // All filtering parameters are handled automatically by backend
-
-  // Next.js rewrites will proxy to Python backend in development
-  // In development, fetch directly from Python backend to avoid Next.js timeout issues
-  const apiUrl = typeof window !== 'undefined' && window.location.hostname === 'localhost'
-    ? `http://localhost:5001/api/graph?${params}`
-    : `/api/graph?${params}`
-
-  try {
-    // Set 300-second timeout for large graph requests (5 minutes)
-    const controller = new AbortController()
-    const timeoutId = setTimeout(() => controller.abort(), 300000)
-
-    const response = await fetch(apiUrl, {
-      signal: controller.signal,
-    })
-    clearTimeout(timeoutId)
-
-    console.log(`API Response status: ${response.status}`)
-
-    if (!response.ok) {
-      const errorText = await response.text()
-      console.error(`HTTP error! status: ${response.status}, body:`, errorText)
-      throw new Error(`HTTP error! status: ${response.status}`)
-    }
-    const data = await response.json()
-
-    // Log the automatic filtering info if available
-    if (data.metadata) {
-      console.log('Graph filtering applied:', {
-        'Initial edges': data.metadata.initial_edge_count?.toLocaleString(),
-        'Final edges': data.metadata.final_edge_count?.toLocaleString(),
-        'Final nodes': data.metadata.final_node_count?.toLocaleString(),
-        'Org min degree': data.metadata.org_min_degree_used,
-        'Actor min degree': data.metadata.actor_min_degree_used,
-        'K-core': data.metadata.k_core_used,
-        'Min edge weight': data.metadata.min_edge_weight_used,
-        'Timeline': data.metadata.timeline,
-      })
-    }
-
-    return data
-  } catch (error) {
-    console.error("Failed to fetch graph data:", error);
-    return { nodes: [], links: [] };
-  }
+  const { fetchGraphData: _fetchGraphData } = await import('@/lib/api')
+  return _fetchGraphData(filters)
 }
 
 /**
- * Fetch list of available procedures for graph filtering
- * Uses the graph-procedures endpoint which returns procedures with >100 meetings
+ * Fetch list of available procedures for graph filtering.
+ * Uses the graph-procedures endpoint which returns procedures with >100 meetings.
  */
 export async function fetchProcedures(): Promise<string[]> {
-  try {
-    const response = await fetch('/api/graph-procedures')
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`)
-    }
-    const data = await response.json()
-    return data.procedures || []
-  } catch (error) {
-    console.error('Failed to fetch procedures:', error)
-    return []
-  }
+  const { fetchGraphProcedures } = await import('@/lib/api')
+  return fetchGraphProcedures()
 }

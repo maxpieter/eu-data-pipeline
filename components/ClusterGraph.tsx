@@ -1,21 +1,21 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import * as d3 from "d3";
 import {
   ClusterOverviewData,
   ClusterDetailData,
-  ClusterNode,
-  ClusterLink,
-  ClusterDetailNode,
-  ClusterDetailLink,
   fetchClusterOverview,
   fetchClusterDetail,
   getClusterColor,
 } from "@/lib/data";
 import ClusterHeader from "./ClusterHeader";
+import { useForceGraph } from "@/hooks/useForceGraph";
 
-// Types for simulation
+// ── Simulation node / link types ─────────────────────────────────────────────
+// These extend d3.SimulationNodeDatum (adds x/y/vx/vy) while keeping the
+// domain fields available for accessors.
+
 interface SimClusterNode extends d3.SimulationNodeDatum {
   id: string;
   cluster_id: number;
@@ -49,13 +49,14 @@ interface SimDetailLink extends d3.SimulationLinkDatum<SimDetailNode> {
 
 type ViewLevel = "overview" | "detail";
 
-// Fixed values
+// ── Layout constants ──────────────────────────────────────────────────────────
 const MIN_NODE_SIZE = 10;
 const MAX_NODE_SIZE = 50;
 const DETAIL_NODE_SIZE = 8;
 const LINK_DISTANCE_OVERVIEW = 150;
 const LINK_DISTANCE_DETAIL = 80;
 
+// ── Component ─────────────────────────────────────────────────────────────────
 export default function ClusterGraph() {
   const svgRef = useRef<SVGSVGElement>(null);
   const tooltipRef = useRef<HTMLDivElement>(null);
@@ -71,7 +72,7 @@ export default function ClusterGraph() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  // Fetch overview data on mount
+  // ── Data fetching ────────────────────────────────────────────────────────────
   useEffect(() => {
     async function loadOverview() {
       setLoading(true);
@@ -94,7 +95,6 @@ export default function ClusterGraph() {
     loadOverview();
   }, []);
 
-  // Fetch detail data when a cluster is selected
   useEffect(() => {
     if (selectedClusterId === null) return;
 
@@ -115,269 +115,92 @@ export default function ClusterGraph() {
     loadDetail();
   }, [selectedClusterId]);
 
-  // Handle back navigation
   const handleBack = () => {
     setViewLevel("overview");
     setSelectedClusterId(null);
     setDetailData(null);
   };
 
-  // Render overview (Level 1)
-  useEffect(() => {
-    if (!svgRef.current || loading || viewLevel !== "overview" || !overviewData)
-      return;
+  // ── Overview graph (Level 1) ──────────────────────────────────────────────────
+  // Build config only when overviewData is available; otherwise pass empty arrays
+  // and disable the hook via `enabled`.
+  const overviewEnabled =
+    !loading && viewLevel === "overview" && overviewData !== null;
 
-    const svg = d3.select(svgRef.current);
-    const container = svgRef.current.parentElement!;
-    const width = container.clientWidth;
-    const height = container.clientHeight;
+  const overviewNodes: SimClusterNode[] = overviewData
+    ? (overviewData.nodes as SimClusterNode[])
+    : [];
+  const overviewLinks: SimClusterLink[] = overviewData
+    ? (overviewData.links as SimClusterLink[])
+    : [];
 
-    svg.selectAll("*").remove();
+  const sizeScale = d3
+    .scaleSqrt()
+    .domain([0, d3.max(overviewNodes, (d) => d.size) || 1])
+    .range([MIN_NODE_SIZE, MAX_NODE_SIZE]);
 
-    const nodes: SimClusterNode[] = overviewData.nodes.map((d) => ({ ...d }));
-    const links: SimClusterLink[] = overviewData.links.map((d) => ({ ...d }));
+  useForceGraph<SimClusterNode, SimClusterLink>(
+    svgRef,
+    tooltipRef,
+    overviewNodes,
+    overviewLinks,
+    {
+      // Forces
+      linkForce: d3
+        .forceLink<SimClusterNode, SimClusterLink>()
+        .id((d) => d.id)
+        .distance(LINK_DISTANCE_OVERVIEW),
+      chargeForce: d3.forceManyBody<SimClusterNode>().strength(-30),
+      extraForces: [
+        ["x", d3.forceX<SimClusterNode>(0).strength(0.05)],
+        ["y", d3.forceY<SimClusterNode>(0).strength(0.05)],
+      ],
+      collisionRadius: (d) => sizeScale(d.size) + 10,
 
-    // Scale node size based on member count
-    const sizeScale = d3
-      .scaleSqrt()
-      .domain([0, d3.max(nodes, (d) => d.size) || 1])
-      .range([MIN_NODE_SIZE, MAX_NODE_SIZE]);
+      // Layout
+      preTicks: 300,
+      boundingRadius: (d) => sizeScale(d.size),
+      fitPadding: 80,
+      maxFitScale: 1.5,
 
-    // Pre-run simulation
-    const preSimulation = d3
-      .forceSimulation<SimClusterNode>(nodes)
-      .force(
-        "link",
-        d3
-          .forceLink<SimClusterNode, SimClusterLink>(links)
-          .id((d) => d.id)
-          .distance(LINK_DISTANCE_OVERVIEW),
-      )
-      .force("charge", d3.forceManyBody<SimClusterNode>().strength(-30))
-      .force("center", d3.forceCenter(width / 2, height / 2))
-      .force("x", d3.forceX<SimClusterNode>(width / 2).strength(0.05))
-      .force("y", d3.forceY<SimClusterNode>(height / 2).strength(0.05))
-      .force(
-        "collision",
-        d3.forceCollide<SimClusterNode>().radius((d) => sizeScale(d.size) + 10),
-      )
-      .stop();
+      // Nodes
+      nodeColor: (d) => getClusterColor(d.cluster_id),
+      nodeRadius: (d) => sizeScale(d.size),
+      nodeStrokeWidth: 3,
+      nodeCursor: "pointer",
+      nodeFilter: "drop-shadow(0 2px 4px rgba(0,0,0,0.15))",
 
-    for (let i = 0; i < 300; i++) {
-      preSimulation.tick();
-    }
+      // Links
+      linkStroke: "#94a3b8",
+      linkStrokeOpacity: 0.6,
+      linkStrokeWidth: (d) => Math.sqrt(d.edge_count) * 1.5,
 
-    // Calculate initial transform
-    const padding = 80;
-    let minX = Infinity,
-      maxX = -Infinity,
-      minY = Infinity,
-      maxY = -Infinity;
-    nodes.forEach((n) => {
-      if (n.x !== undefined && n.y !== undefined) {
-        const r = sizeScale(n.size);
-        minX = Math.min(minX, n.x - r);
-        maxX = Math.max(maxX, n.x + r);
-        minY = Math.min(minY, n.y - r);
-        maxY = Math.max(maxY, n.y + r);
-      }
-    });
-
-    let initialTransform = d3.zoomIdentity;
-    if (isFinite(minX) && nodes.length > 0) {
-      const boundsWidth = maxX - minX;
-      const boundsHeight = maxY - minY;
-      const centerX = (minX + maxX) / 2;
-      const centerY = (minY + maxY) / 2;
-      const scale = Math.min(
-        (width - padding * 2) / (boundsWidth || 1),
-        (height - padding * 2) / (boundsHeight || 1),
-        1.5,
-      );
-      initialTransform = d3.zoomIdentity
-        .translate(width / 2, height / 2)
-        .scale(scale)
-        .translate(-centerX, -centerY);
-    }
-
-    const g = svg.append("g");
-
-    const zoom = d3
-      .zoom<SVGSVGElement, unknown>()
-      .scaleExtent([0.1, 10])
-      .on("zoom", (event) => {
-        g.attr("transform", event.transform);
-      });
-
-    svg.call(zoom);
-    svg.call(zoom.transform, initialTransform);
-
-    // Links
-    const linkGroup = g.append("g").attr("class", "links");
-    const link = linkGroup
-      .selectAll<SVGLineElement, SimClusterLink>("line")
-      .data(links)
-      .join("line")
-      .attr("stroke", "#94a3b8")
-      .attr("stroke-opacity", 0.6)
-      .attr("stroke-width", (d) => Math.sqrt(d.edge_count) * 1.5)
-      .attr("x1", (d) => (d.source as SimClusterNode).x!)
-      .attr("y1", (d) => (d.source as SimClusterNode).y!)
-      .attr("x2", (d) => (d.target as SimClusterNode).x!)
-      .attr("y2", (d) => (d.target as SimClusterNode).y!);
-
-    // Nodes
-    const nodeGroup = g.append("g").attr("class", "nodes");
-    const node = nodeGroup
-      .selectAll<SVGCircleElement, SimClusterNode>("circle")
-      .data(nodes)
-      .join("circle")
-      .attr("r", (d) => sizeScale(d.size))
-      .attr("fill", (d) => getClusterColor(d.cluster_id))
-      .attr("stroke", "#fff")
-      .attr("stroke-width", 3)
-      .attr("cx", (d) => d.x!)
-      .attr("cy", (d) => d.y!)
-      .style("cursor", "pointer")
-      .style("filter", "drop-shadow(0 2px 4px rgba(0,0,0,0.15))");
-
-    // Name labels (inside nodes)
-    const labelGroup = g.append("g").attr("class", "labels");
-    const labels = labelGroup
-      .selectAll<SVGTextElement, SimClusterNode>("text")
-      .data(nodes)
-      .join("text")
-      .attr(
-        "font-size",
-        (d) => Math.max(8, Math.min(12, sizeScale(d.size) / 4)) + "px",
-      )
-      .attr("font-weight", "700")
-      .attr("fill", "#fff")
-      .attr("text-anchor", "middle")
-      .attr("dy", "0.35em")
-      .attr("x", (d) => d.x!)
-      .attr("y", (d) => d.y!)
-      .attr("pointer-events", "none")
-      .text((d) => {
-        // Truncate based on node size
+      // Labels — truncate based on node radius
+      labelText: (d) => {
         const radius = sizeScale(d.size);
         const maxChars = Math.floor(radius / 4);
         return d.label.length > maxChars
-          ? d.label.slice(0, maxChars) + "…"
+          ? d.label.slice(0, maxChars) + "\u2026"
           : d.label;
-      });
+      },
+      labelFontSize: (d) =>
+        Math.max(8, Math.min(12, sizeScale(d.size) / 4)) + "px",
+      labelFontWeight: "700",
+      labelColor: "#fff",
+      labelDy: "0.35em",
+      labelInitialOpacity: 1,
 
-    // Simulation for drag
-    const simulation = d3
-      .forceSimulation<SimClusterNode>(nodes)
-      .force(
-        "link",
-        d3
-          .forceLink<SimClusterNode, SimClusterLink>(links)
-          .id((d) => d.id)
-          .distance(LINK_DISTANCE_OVERVIEW),
-      )
-      .force("charge", d3.forceManyBody<SimClusterNode>().strength(-30))
-      .force("center", d3.forceCenter(width / 2, height / 2))
-      .force("x", d3.forceX<SimClusterNode>(width / 2).strength(0.05))
-      .force("y", d3.forceY<SimClusterNode>(height / 2).strength(0.05))
-      .force(
-        "collision",
-        d3.forceCollide<SimClusterNode>().radius((d) => sizeScale(d.size) + 10),
-      )
-      .alpha(0.1)
-      .alphaDecay(0.02);
-
-    simulation.on("tick", () => {
-      link
-        .attr("x1", (d) => (d.source as SimClusterNode).x!)
-        .attr("y1", (d) => (d.source as SimClusterNode).y!)
-        .attr("x2", (d) => (d.target as SimClusterNode).x!)
-        .attr("y2", (d) => (d.target as SimClusterNode).y!);
-
-      node.attr("cx", (d) => d.x!).attr("cy", (d) => d.y!);
-
-      labels.attr("x", (d) => d.x!).attr("y", (d) => d.y!);
-    });
-
-    // Drag
-    const drag = d3
-      .drag<SVGCircleElement, SimClusterNode>()
-      .on("start", (event, d) => {
-        if (!event.active) simulation.alphaTarget(0.3).restart();
-        d.fx = d.x;
-        d.fy = d.y;
-      })
-      .on("drag", (event, d) => {
-        d.fx = event.x;
-        d.fy = event.y;
-      })
-      .on("end", (event, d) => {
-        if (!event.active) simulation.alphaTarget(0);
-        d.fx = null;
-        d.fy = null;
-      });
-
-    node.call(drag);
-
-    // Click handler for drill-down
-    node.on("click", (event, d) => {
-      event.stopPropagation();
-      setSelectedClusterId(d.cluster_id);
-    });
-
-    // Hover effects
-    node.on("mouseover", function (event, d) {
-      const connectedIds = new Set<string>();
-      links.forEach((l) => {
-        const sourceId =
-          typeof l.source === "object"
-            ? (l.source as SimClusterNode).id
-            : String(l.source);
-        const targetId =
-          typeof l.target === "object"
-            ? (l.target as SimClusterNode).id
-            : String(l.target);
-        if (sourceId === d.id) connectedIds.add(targetId);
-        if (targetId === d.id) connectedIds.add(sourceId);
-      });
-
-      node.attr("opacity", (n) =>
-        n.id === d.id || connectedIds.has(n.id) ? 1 : 0.2,
-      );
-
-      link
-        .attr("opacity", (l) => {
-          const sourceId =
-            typeof l.source === "object"
-              ? (l.source as SimClusterNode).id
-              : String(l.source);
-          const targetId =
-            typeof l.target === "object"
-              ? (l.target as SimClusterNode).id
-              : String(l.target);
-          return sourceId === d.id || targetId === d.id ? 1 : 0.1;
-        })
-        .attr("stroke", (l) => {
-          const sourceId =
-            typeof l.source === "object"
-              ? (l.source as SimClusterNode).id
-              : String(l.source);
-          const targetId =
-            typeof l.target === "object"
-              ? (l.target as SimClusterNode).id
-              : String(l.target);
-          return sourceId === d.id || targetId === d.id
-            ? getClusterColor(d.cluster_id)
-            : "#94a3b8";
-        });
-
-      labels.attr("opacity", (n) =>
-        n.id === d.id || connectedIds.has(n.id) ? 1 : 0.2,
-      );
+      // Hover
+      dimNodeOpacity: 0.2,
+      dimLinkOpacity: 0.1,
+      highlightLinkOpacity: 1,
+      highlightLinkStroke: (d) => getClusterColor(d.cluster_id),
+      highlightLabelOpacity: 1,
+      dimLabelOpacity: 0.2,
+      hoverRadiusScale: 1,
 
       // Tooltip
-      if (tooltipRef.current) {
+      tooltipContent: (d, _connectedIds) => {
         const topMembers = d.top_members
           .slice(0, 3)
           .map((m) => m.label)
@@ -386,8 +209,7 @@ export default function ClusterGraph() {
           .slice(0, 2)
           .map((i) => i.interest)
           .join(", ");
-
-        tooltipRef.current.innerHTML = `
+        return `
           <div style="font-weight: 700; color: ${getClusterColor(d.cluster_id)}; margin-bottom: 0.25rem;">
             ${d.label}
           </div>
@@ -400,445 +222,145 @@ export default function ClusterGraph() {
             Click to explore
           </div>
         `;
-        tooltipRef.current.style.opacity = "1";
-        tooltipRef.current.style.left = `${event.pageX + 12}px`;
-        tooltipRef.current.style.top = `${event.pageY + 12}px`;
-      }
-    });
+      },
 
-    node.on("mouseout", function () {
-      node.attr("opacity", 1);
-      link.attr("opacity", 0.6).attr("stroke", "#94a3b8");
-      labels.attr("opacity", 1);
+      // Click → drill down
+      onNodeClick: (_event, d) => setSelectedClusterId(d.cluster_id),
 
-      if (tooltipRef.current) {
-        tooltipRef.current.style.opacity = "0";
-      }
-    });
+      // Resize: update center + x/y forces
+      onResize: (simulation, w, h) => {
+        simulation.force("center", d3.forceCenter(w / 2, h / 2));
+        simulation.force("x", d3.forceX<SimClusterNode>(w / 2).strength(0.05));
+        simulation.force("y", d3.forceY<SimClusterNode>(h / 2).strength(0.05));
+        simulation.alpha(0.3).restart();
+      },
+    },
+    overviewEnabled,
+  );
 
-    // Handle resize
-    const handleResize = () => {
-      const newWidth = container.clientWidth;
-      const newHeight = container.clientHeight;
-      simulation.force("center", d3.forceCenter(newWidth / 2, newHeight / 2));
-      simulation.force(
-        "x",
-        d3.forceX<SimClusterNode>(newWidth / 2).strength(0.05),
-      );
-      simulation.force(
-        "y",
-        d3.forceY<SimClusterNode>(newHeight / 2).strength(0.05),
-      );
-      simulation.alpha(0.3).restart();
-    };
+  // ── Detail graph (Level 2) ────────────────────────────────────────────────────
+  const detailEnabled =
+    !loading && viewLevel === "detail" && detailData !== null;
 
-    window.addEventListener("resize", handleResize);
+  const detailNodes: SimDetailNode[] = detailData
+    ? (detailData.nodes as SimDetailNode[])
+    : [];
+  const detailLinks: SimDetailLink[] = detailData
+    ? (detailData.links as SimDetailLink[])
+    : [];
 
-    return () => {
-      simulation.stop();
-      window.removeEventListener("resize", handleResize);
-    };
-  }, [overviewData, loading, viewLevel]);
+  const clusterColor = detailData
+    ? getClusterColor(detailData.cluster_id)
+    : "#94a3b8";
 
-  // Render detail (Level 2)
-  useEffect(() => {
-    if (!svgRef.current || loading || viewLevel !== "detail" || !detailData)
-      return;
+  useForceGraph<SimDetailNode, SimDetailLink>(
+    svgRef,
+    tooltipRef,
+    detailNodes,
+    detailLinks,
+    {
+      // Forces
+      linkForce: d3
+        .forceLink<SimDetailNode, SimDetailLink>()
+        .id((d) => d.id)
+        .distance(LINK_DISTANCE_DETAIL),
+      chargeForce: d3.forceManyBody<SimDetailNode>().strength(-150),
+      collisionRadius: DETAIL_NODE_SIZE + 4,
 
-    const svg = d3.select(svgRef.current);
-    const container = svgRef.current.parentElement!;
-    const width = container.clientWidth;
-    const height = container.clientHeight;
+      // Layout
+      preTicks: 300,
+      boundingRadius: () => 0,
+      fitPadding: 100,
+      maxFitScale: 1.5,
 
-    svg.selectAll("*").remove();
+      // Nodes
+      nodeColor: clusterColor,
+      nodeRadius: DETAIL_NODE_SIZE,
+      nodeStrokeWidth: 2,
+      nodeCursor: "grab",
+      nodeFilter: "drop-shadow(0 1px 2px rgba(0,0,0,0.1))",
 
-    const nodes: SimDetailNode[] = detailData.nodes.map((d) => ({ ...d }));
-    const links: SimDetailLink[] = detailData.links.map((d) => ({ ...d }));
+      // Links
+      linkStroke: "#cbd5e1",
+      linkStrokeOpacity: 0.6,
+      linkStrokeWidth: (d) => Math.sqrt(d.weight) * 1.5,
 
-    const clusterColor = getClusterColor(detailData.cluster_id);
+      // Labels — hidden by default, shown on hover
+      labelText: (d) => d.label || d.id,
+      labelFontSize: "11px",
+      labelFontWeight: "600",
+      labelColor: "#374151",
+      labelDy: -(DETAIL_NODE_SIZE + 6),
+      labelInitialOpacity: 0,
 
-    // Pre-run simulation
-    const preSimulation = d3
-      .forceSimulation<SimDetailNode>(nodes)
-      .force(
-        "link",
-        d3
-          .forceLink<SimDetailNode, SimDetailLink>(links)
-          .id((d) => d.id)
-          .distance(LINK_DISTANCE_DETAIL),
-      )
-      .force("charge", d3.forceManyBody<SimDetailNode>().strength(-150))
-      .force("center", d3.forceCenter(width / 2, height / 2))
-      .force(
-        "collision",
-        d3.forceCollide<SimDetailNode>().radius(DETAIL_NODE_SIZE + 4),
-      )
-      .stop();
-
-    for (let i = 0; i < 300; i++) {
-      preSimulation.tick();
-    }
-
-    // Calculate initial transform
-    const padding = 100; // Extra padding for header
-    let minX = Infinity,
-      maxX = -Infinity,
-      minY = Infinity,
-      maxY = -Infinity;
-    nodes.forEach((n) => {
-      if (n.x !== undefined && n.y !== undefined) {
-        minX = Math.min(minX, n.x);
-        maxX = Math.max(maxX, n.x);
-        minY = Math.min(minY, n.y);
-        maxY = Math.max(maxY, n.y);
-      }
-    });
-
-    let initialTransform = d3.zoomIdentity;
-    if (isFinite(minX) && nodes.length > 0) {
-      const boundsWidth = maxX - minX;
-      const boundsHeight = maxY - minY;
-      const centerX = (minX + maxX) / 2;
-      const centerY = (minY + maxY) / 2;
-      const scale = Math.min(
-        (width - padding * 2) / (boundsWidth || 1),
-        (height - padding * 2) / (boundsHeight || 1),
-        1.5,
-      );
-      initialTransform = d3.zoomIdentity
-        .translate(width / 2, height / 2)
-        .scale(scale)
-        .translate(-centerX, -centerY);
-    }
-
-    const g = svg.append("g");
-
-    const zoom = d3
-      .zoom<SVGSVGElement, unknown>()
-      .scaleExtent([0.1, 10])
-      .on("zoom", (event) => {
-        g.attr("transform", event.transform);
-      });
-
-    svg.call(zoom);
-    svg.call(zoom.transform, initialTransform);
-
-    // Links
-    const linkGroup = g.append("g").attr("class", "links");
-    const link = linkGroup
-      .selectAll<SVGLineElement, SimDetailLink>("line")
-      .data(links)
-      .join("line")
-      .attr("stroke", "#cbd5e1")
-      .attr("stroke-opacity", 0.6)
-      .attr("stroke-width", (d) => Math.sqrt(d.weight) * 1.5)
-      .attr("x1", (d) => (d.source as SimDetailNode).x!)
-      .attr("y1", (d) => (d.source as SimDetailNode).y!)
-      .attr("x2", (d) => (d.target as SimDetailNode).x!)
-      .attr("y2", (d) => (d.target as SimDetailNode).y!);
-
-    // Nodes
-    const nodeGroup = g.append("g").attr("class", "nodes");
-    const node = nodeGroup
-      .selectAll<SVGCircleElement, SimDetailNode>("circle")
-      .data(nodes)
-      .join("circle")
-      .attr("r", DETAIL_NODE_SIZE)
-      .attr("fill", clusterColor)
-      .attr("stroke", "#fff")
-      .attr("stroke-width", 2)
-      .attr("cx", (d) => d.x!)
-      .attr("cy", (d) => d.y!)
-      .style("cursor", "grab")
-      .style("filter", "drop-shadow(0 1px 2px rgba(0,0,0,0.1))");
-
-    // Labels (hidden by default)
-    const labelGroup = g.append("g").attr("class", "labels");
-    const labels = labelGroup
-      .selectAll<SVGTextElement, SimDetailNode>("text")
-      .data(nodes)
-      .join("text")
-      .attr("font-size", "11px")
-      .attr("font-weight", "600")
-      .attr("fill", "#374151")
-      .attr("text-anchor", "middle")
-      .attr("dy", -DETAIL_NODE_SIZE - 6)
-      .attr("x", (d) => d.x!)
-      .attr("y", (d) => d.y!)
-      .attr("opacity", 0)
-      .attr("pointer-events", "none")
-      .text((d) => d.label || d.id);
-
-    // Simulation for drag
-    const simulation = d3
-      .forceSimulation<SimDetailNode>(nodes)
-      .force(
-        "link",
-        d3
-          .forceLink<SimDetailNode, SimDetailLink>(links)
-          .id((d) => d.id)
-          .distance(LINK_DISTANCE_DETAIL),
-      )
-      .force("charge", d3.forceManyBody<SimDetailNode>().strength(-150))
-      .force("center", d3.forceCenter(width / 2, height / 2))
-      .force(
-        "collision",
-        d3.forceCollide<SimDetailNode>().radius(DETAIL_NODE_SIZE + 4),
-      )
-      .alpha(0.1)
-      .alphaDecay(0.02);
-
-    simulation.on("tick", () => {
-      link
-        .attr("x1", (d) => (d.source as SimDetailNode).x!)
-        .attr("y1", (d) => (d.source as SimDetailNode).y!)
-        .attr("x2", (d) => (d.target as SimDetailNode).x!)
-        .attr("y2", (d) => (d.target as SimDetailNode).y!);
-
-      node.attr("cx", (d) => d.x!).attr("cy", (d) => d.y!);
-
-      labels.attr("x", (d) => d.x!).attr("y", (d) => d.y!);
-    });
-
-    // Drag
-    const drag = d3
-      .drag<SVGCircleElement, SimDetailNode>()
-      .on("start", (event, d) => {
-        if (!event.active) simulation.alphaTarget(0.3).restart();
-        d.fx = d.x;
-        d.fy = d.y;
-      })
-      .on("drag", (event, d) => {
-        d.fx = event.x;
-        d.fy = event.y;
-      })
-      .on("end", (event, d) => {
-        if (!event.active) simulation.alphaTarget(0);
-        d.fx = null;
-        d.fy = null;
-      });
-
-    node.call(drag);
-
-    // Hover effects
-    node.on("mouseover", function (event, d) {
-      const connectedIds = new Set<string>();
-      links.forEach((l) => {
-        const sourceId =
-          typeof l.source === "object"
-            ? (l.source as SimDetailNode).id
-            : String(l.source);
-        const targetId =
-          typeof l.target === "object"
-            ? (l.target as SimDetailNode).id
-            : String(l.target);
-        if (sourceId === d.id) connectedIds.add(targetId);
-        if (targetId === d.id) connectedIds.add(sourceId);
-      });
-
-      node
-        .attr("opacity", (n) =>
-          n.id === d.id || connectedIds.has(n.id) ? 1 : 0.15,
-        )
-        .attr("r", (n) =>
-          n.id === d.id ? DETAIL_NODE_SIZE * 1.3 : DETAIL_NODE_SIZE,
-        );
-
-      link
-        .attr("opacity", (l) => {
-          const sourceId =
-            typeof l.source === "object"
-              ? (l.source as SimDetailNode).id
-              : String(l.source);
-          const targetId =
-            typeof l.target === "object"
-              ? (l.target as SimDetailNode).id
-              : String(l.target);
-          return sourceId === d.id || targetId === d.id ? 1 : 0.05;
-        })
-        .attr("stroke", (l) => {
-          const sourceId =
-            typeof l.source === "object"
-              ? (l.source as SimDetailNode).id
-              : String(l.source);
-          const targetId =
-            typeof l.target === "object"
-              ? (l.target as SimDetailNode).id
-              : String(l.target);
-          return sourceId === d.id || targetId === d.id
-            ? clusterColor
-            : "#cbd5e1";
-        })
-        .attr("stroke-width", (l) => {
-          const sourceId =
-            typeof l.source === "object"
-              ? (l.source as SimDetailNode).id
-              : String(l.source);
-          const targetId =
-            typeof l.target === "object"
-              ? (l.target as SimDetailNode).id
-              : String(l.target);
-          return sourceId === d.id || targetId === d.id
-            ? Math.sqrt(l.weight) * 2.5
-            : Math.sqrt(l.weight) * 1.5;
-        });
-
-      labels.attr("opacity", (n) =>
-        n.id === d.id || connectedIds.has(n.id) ? 1 : 0,
-      );
+      // Hover
+      dimNodeOpacity: 0.15,
+      dimLinkOpacity: 0.05,
+      highlightLinkOpacity: 1,
+      highlightLinkStroke: () => clusterColor,
+      highlightLinkStrokeWidth: (d) => Math.sqrt(d.weight) * 2.5,
+      highlightLabelOpacity: 1,
+      dimLabelOpacity: 0,
+      hoverRadiusScale: 1.3,
 
       // Tooltip
-      if (tooltipRef.current) {
-        tooltipRef.current.innerHTML = `
-          <div style="font-weight: 700; color: #1e293b;">${d.label || d.id}</div>
-          <div style="color: #64748b; font-size: 0.75rem; margin-top: 0.25rem;">Organization</div>
-          <div style="color: #64748b; font-size: 0.75rem;">${connectedIds.size} connections</div>
-          ${d.interests_represented ? `<div style="margin-top: 0.5rem; font-size: 0.75rem; color: #475569;"><strong>Interest:</strong> ${d.interests_represented}</div>` : ""}
-        `;
-        tooltipRef.current.style.opacity = "1";
-        tooltipRef.current.style.left = `${event.pageX + 12}px`;
-        tooltipRef.current.style.top = `${event.pageY + 12}px`;
-      }
-    });
+      tooltipContent: (d, connectedIds) => `
+        <div style="font-weight: 700; color: #1e293b;">${d.label || d.id}</div>
+        <div style="color: #64748b; font-size: 0.75rem; margin-top: 0.25rem;">Organization</div>
+        <div style="color: #64748b; font-size: 0.75rem;">${connectedIds.size} connections</div>
+        ${d.interests_represented ? `<div style="margin-top: 0.5rem; font-size: 0.75rem; color: #475569;"><strong>Interest:</strong> ${d.interests_represented}</div>` : ""}
+      `,
 
-    node.on("mouseout", function () {
-      node.attr("opacity", 1).attr("r", DETAIL_NODE_SIZE);
-      link
-        .attr("opacity", 0.6)
-        .attr("stroke", "#cbd5e1")
-        .attr("stroke-width", (d) => Math.sqrt(d.weight) * 1.5);
-      labels.attr("opacity", 0);
+      // Resize: only re-center (no x/y forces in detail mode)
+      onResize: (simulation, w, h) => {
+        simulation.force("center", d3.forceCenter(w / 2, h / 2));
+        simulation.alpha(0.3).restart();
+      },
+    },
+    detailEnabled,
+  );
 
-      if (tooltipRef.current) {
-        tooltipRef.current.style.opacity = "0";
-      }
-    });
-
-    // Handle resize
-    const handleResize = () => {
-      const newWidth = container.clientWidth;
-      const newHeight = container.clientHeight;
-      simulation.force("center", d3.forceCenter(newWidth / 2, newHeight / 2));
-      simulation.alpha(0.3).restart();
-    };
-
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      simulation.stop();
-      window.removeEventListener("resize", handleResize);
-    };
-  }, [detailData, loading, viewLevel]);
-
+  // ── Render ────────────────────────────────────────────────────────────────────
   return (
-    <div style={{ position: "relative", width: "100%", height: "100%" }}>
+    <div className="relative w-full h-full">
       {loading && (
-        <div
-          style={{
-            position: "absolute",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            color: "#64748b",
-            fontSize: "0.875rem",
-          }}
-        >
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-slate-500 text-sm">
           Loading...
         </div>
       )}
 
       {error && (
-        <div
-          style={{
-            position: "absolute",
-            top: "1rem",
-            left: "50%",
-            transform: "translateX(-50%)",
-            background: "#fef2f2",
-            color: "#dc2626",
-            padding: "0.5rem 1rem",
-            borderRadius: "8px",
-            fontSize: "0.875rem",
-            zIndex: 200,
-          }}
-        >
+        <div className="absolute top-4 left-1/2 -translate-x-1/2 bg-red-50 text-red-600 px-4 py-2 rounded-lg text-sm z-[200]">
           {error}
         </div>
       )}
 
-      {/* Detail view header */}
       {viewLevel === "detail" && detailData && !loading && (
         <ClusterHeader cluster={detailData} onBack={handleBack} />
       )}
 
       <svg
         ref={svgRef}
-        style={{
-          width: "100%",
-          height: "100%",
-          background: "rgb(250, 250, 255)",
-          opacity: loading ? 0.5 : 1,
-          transition: "opacity 0.2s",
-        }}
+        className="w-full h-full bg-[rgb(250,250,255)] transition-opacity duration-200"
+        style={{ opacity: loading ? 0.5 : 1 }}
       />
 
       {/* Overview Legend */}
       {viewLevel === "overview" && !loading && overviewData && (
-        <div
-          style={{
-            position: "absolute",
-            bottom: "1rem",
-            right: "1rem",
-            background: "rgba(255, 255, 255, 0.95)",
-            backdropFilter: "blur(8px)",
-            borderRadius: "12px",
-            padding: "1rem",
-            border: "1px solid #e2e8f0",
-            boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1)",
-          }}
-        >
-          <div
-            style={{
-              fontSize: "0.75rem",
-              fontWeight: 700,
-              color: "#1e293b",
-              marginBottom: "0.75rem",
-              textTransform: "uppercase",
-              letterSpacing: "0.05em",
-            }}
-          >
+        <div className="absolute bottom-4 right-4 bg-white/95 backdrop-blur-sm rounded-xl p-4 border border-slate-200 shadow-md">
+          <div className="text-xs font-bold text-slate-900 mb-3 uppercase tracking-[0.05em]">
             Cluster Overview
           </div>
-          <div
-            style={{
-              fontSize: "0.8125rem",
-              color: "#475569",
-              marginBottom: "0.5rem",
-            }}
-          >
+          <div className="text-[0.8125rem] text-slate-600 mb-2">
             {overviewData.metadata.total_clusters} clusters
           </div>
-          <div
-            style={{
-              fontSize: "0.8125rem",
-              color: "#475569",
-              marginBottom: "0.5rem",
-            }}
-          >
+          <div className="text-[0.8125rem] text-slate-600 mb-2">
             {overviewData.metadata.total_nodes} organizations
           </div>
-          <div style={{ fontSize: "0.8125rem", color: "#475569" }}>
+          <div className="text-[0.8125rem] text-slate-600">
             {overviewData.metadata.total_edges} connections
           </div>
-          <div
-            style={{
-              marginTop: "0.75rem",
-              paddingTop: "0.75rem",
-              borderTop: "1px solid #e2e8f0",
-              fontSize: "0.75rem",
-              color: "#64748b",
-            }}
-          >
+          <div className="mt-3 pt-3 border-t border-slate-200 text-xs text-slate-500">
             Click a cluster to explore
           </div>
         </div>
@@ -846,42 +368,16 @@ export default function ClusterGraph() {
 
       {/* Detail Legend */}
       {viewLevel === "detail" && !loading && detailData && (
-        <div
-          style={{
-            position: "absolute",
-            bottom: "1rem",
-            right: "1rem",
-            background: "rgba(255, 255, 255, 0.95)",
-            backdropFilter: "blur(8px)",
-            borderRadius: "12px",
-            padding: "1rem",
-            border: "1px solid #e2e8f0",
-            boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1)",
-          }}
-        >
-          <div
-            style={{
-              fontSize: "0.75rem",
-              fontWeight: 700,
-              color: "#1e293b",
-              marginBottom: "0.75rem",
-              textTransform: "uppercase",
-              letterSpacing: "0.05em",
-            }}
-          >
+        <div className="absolute bottom-4 right-4 bg-white/95 backdrop-blur-sm rounded-xl p-4 border border-slate-200 shadow-md">
+          <div className="text-xs font-bold text-slate-900 mb-3 uppercase tracking-[0.05em]">
             Legend
           </div>
-          <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+          <div className="flex items-center gap-2">
             <div
-              style={{
-                width: "10px",
-                height: "10px",
-                borderRadius: "50%",
-                backgroundColor: getClusterColor(detailData.cluster_id),
-                flexShrink: 0,
-              }}
+              className="w-[10px] h-[10px] rounded-full shrink-0"
+              style={{ backgroundColor: getClusterColor(detailData.cluster_id) }}
             />
-            <span style={{ fontSize: "0.8125rem", color: "#475569" }}>
+            <span className="text-[0.8125rem] text-slate-600">
               Organizations
             </span>
           </div>
@@ -891,21 +387,8 @@ export default function ClusterGraph() {
       {/* Tooltip */}
       <div
         ref={tooltipRef}
-        style={{
-          position: "fixed",
-          zIndex: 1000,
-          padding: "0.5rem 0.75rem",
-          background: "white",
-          borderRadius: "8px",
-          boxShadow:
-            "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)",
-          border: "1px solid #e2e8f0",
-          fontSize: "0.875rem",
-          pointerEvents: "none",
-          opacity: 0,
-          transition: "opacity 0.15s ease",
-          maxWidth: "280px",
-        }}
+        className="fixed z-[1000] px-3 py-2 bg-white rounded-lg shadow-md border border-slate-200 text-sm pointer-events-none max-w-[280px] transition-opacity duration-[150ms] ease-linear"
+        style={{ opacity: 0 }}
       />
     </div>
   );

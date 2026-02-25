@@ -45,6 +45,13 @@ app = Flask(__name__)
 CORS(app)
 
 
+@app.after_request
+def add_no_cache_headers(response):
+    """Prevent browsers from caching API responses with stale data."""
+    response.headers['Cache-Control'] = 'no-store, no-cache, must-revalidate, max-age=0'
+    return response
+
+
 def determine_pruning_params(edge_count):
     """
     Automatically determine ALL filtering parameters based on edge count.
@@ -690,16 +697,31 @@ import csv
 MEETINGS_CSV_PATH = os.path.join(PROJECT_ROOT, 'data', 'ep_meetings_all.csv')
 MEPS_CSV_PATH = os.path.join(PROJECT_ROOT, 'data', 'ep_meps.csv')
 
-# Cache for data — automatically invalidated when CSV files change
+# Cache for data — automatically invalidated when CSV files or server code change
 _meetings_cache = None
 _meps_cache = None
 _meetings_csv_mtime = None
 _meps_csv_mtime = None
+_server_mtime = None
+
+SERVER_PY_PATH = os.path.abspath(__file__)
 
 
 def _check_csv_freshness():
-    """Invalidate in-memory caches if CSV files have been modified."""
-    global _meetings_cache, _meps_cache, _meetings_csv_mtime, _meps_csv_mtime
+    """Invalidate in-memory caches if CSV files or server.py have been modified."""
+    global _meetings_cache, _meps_cache, _meetings_csv_mtime, _meps_csv_mtime, _server_mtime
+
+    # Invalidate everything if server code changed (e.g., collapsing logic)
+    try:
+        server_mtime = os.path.getmtime(SERVER_PY_PATH)
+        if _server_mtime is not None and server_mtime != _server_mtime:
+            _meetings_cache = None
+            _meetings_csv_mtime = None
+            _meps_cache = None
+            _meps_csv_mtime = None
+        _server_mtime = server_mtime
+    except OSError:
+        pass
 
     try:
         meetings_mtime = os.path.getmtime(MEETINGS_CSV_PATH)

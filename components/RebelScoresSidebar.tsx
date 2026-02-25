@@ -2,6 +2,7 @@
 
 import { useState, useMemo } from 'react'
 import { ViewMode, ConfigPeriod, ConfigTopic } from '@/lib/rebel-scores-types'
+import { fuzzyMatch } from '@/lib/search'
 
 interface RebelScoresSidebarProps {
   collapsed: boolean
@@ -20,38 +21,6 @@ interface RebelScoresSidebarProps {
   countrySearchQuery: string
   onCountrySearchChange: (query: string) => void
   countrySearchInfo: string
-}
-
-// Fuzzy search function - returns score (lower is better match, -1 is no match)
-function fuzzyMatch(pattern: string, str: string): number {
-  pattern = pattern.toLowerCase()
-  str = str.toLowerCase()
-
-  // Exact substring match gets best score
-  if (str.includes(pattern)) {
-    return str.indexOf(pattern)
-  }
-
-  // Fuzzy match - all characters must appear in order
-  let patternIdx = 0
-  let score = 0
-  let lastMatchIdx = -1
-
-  for (let i = 0; i < str.length && patternIdx < pattern.length; i++) {
-    if (str[i] === pattern[patternIdx]) {
-      if (lastMatchIdx !== -1) {
-        score += (i - lastMatchIdx - 1) * 10
-      }
-      lastMatchIdx = i
-      patternIdx++
-    }
-  }
-
-  if (patternIdx === pattern.length) {
-    return score + 100
-  }
-
-  return -1
 }
 
 export default function RebelScoresSidebar({

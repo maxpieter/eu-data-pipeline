@@ -1,6 +1,7 @@
 'use client'
 
-import { GraphFilters, defaultFilters, GraphMode, fetchProcedures } from '@/lib/data'
+import { GraphFilters, defaultFilters, GraphMode } from '@/lib/data'
+import { fetchGraphProcedures as fetchProcedures } from '@/lib/api'
 import { useEffect, useState } from 'react'
 
 const MIN_DATE = '2024-03-01'
@@ -161,7 +162,7 @@ const setEnd = (newEnd: string) => {
               </label>
             </div>
 
-            <div className="timeline-hint" style={{ marginTop: '0.5rem', fontSize: '0.75rem', color: '#64748b' }}>
+            <div className="timeline-hint mt-2 text-xs text-[#64748b]">
               Available: {MIN_DATE} → {MAX_DATE}
             </div>
           </div>
@@ -174,16 +175,7 @@ const setEnd = (newEnd: string) => {
             <select
               value={filters.procedure}
               onChange={(e) => updateFilter('procedure', e.target.value)}
-              style={{
-                width: '100%',
-                padding: '0.5rem',
-                fontSize: '0.875rem',
-                borderRadius: '6px',
-                border: '1px solid #cbd5e1',
-                backgroundColor: '#fff',
-                color: '#1e293b',
-                cursor: 'pointer',
-              }}
+              className="w-full p-2 text-sm rounded-[6px] border border-[#cbd5e1] bg-white text-[#1e293b] cursor-pointer"
             >
               <option value="all">All Procedures</option>
               {procedures.map((proc) => (

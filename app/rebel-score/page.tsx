@@ -11,36 +11,7 @@ import {
   ViewMode,
   COUNTRY_NAMES,
 } from '@/lib/rebel-scores-types'
-
-// Fuzzy search function
-function fuzzyMatch(pattern: string, str: string): number {
-  pattern = pattern.toLowerCase()
-  str = str.toLowerCase()
-
-  if (str.includes(pattern)) {
-    return str.indexOf(pattern)
-  }
-
-  let patternIdx = 0
-  let score = 0
-  let lastMatchIdx = -1
-
-  for (let i = 0; i < str.length && patternIdx < pattern.length; i++) {
-    if (str[i] === pattern[patternIdx]) {
-      if (lastMatchIdx !== -1) {
-        score += (i - lastMatchIdx - 1) * 10
-      }
-      lastMatchIdx = i
-      patternIdx++
-    }
-  }
-
-  if (patternIdx === pattern.length) {
-    return score + 100
-  }
-
-  return -1
-}
+import { fuzzyMatch } from '@/lib/search'
 
 export default function RebelScoresPage() {
   // UI state

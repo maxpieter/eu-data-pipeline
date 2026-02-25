@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react'
 import * as d3 from 'd3'
 import { typeColors, typeLabels, communityColors, defaultCommunityColor, fetchGraphData, GraphData, GraphFilters, Node, Link } from '@/lib/data'
+import { computeWeightedDegree, computeCloseness, computeAuthority } from '@/lib/graph-metrics'
 
 interface SimNode extends d3.SimulationNodeDatum {
   id: string
@@ -31,44 +32,6 @@ interface NetworkGraphProps {
 const LINK_DISTANCE = 80
 const NODE_SIZE = 15
 
-// Utility functions for statistics
-function computeWeightedDegree(orgId: string, links: Link[]): number {
-  return links
-    .filter(l => l.source === orgId || l.target === orgId)
-    .reduce((sum, l) => sum + l.weight, 0)
-}
-
-function computeCloseness(orgId: string, nodes: Node[], links: Link[]): number {
-  // Simple BFS for shortest paths (unweighted)
-  const orgIds = nodes.filter(n => n.type === 'org').map(n => n.id)
-  const visited = new Set<string>()
-  const queue: { id: string; dist: number }[] = [{ id: orgId, dist: 0 }]
-  let totalDist = 0
-  let reachable = 0
-
-  while (queue.length) {
-    const { id, dist } = queue.shift()!
-    if (visited.has(id)) continue
-    visited.add(id)
-    if (id !== orgId && orgIds.includes(id)) {
-      totalDist += dist
-      reachable += 1
-    }
-    links.forEach(l => {
-      if (l.source === id && !visited.has(l.target)) queue.push({ id: l.target, dist: dist + 1 })
-      if (l.target === id && !visited.has(l.source)) queue.push({ id: l.source, dist: dist + 1 })
-    })
-  }
-  return reachable > 0 ? reachable / totalDist : 0
-}
-
-function computeAuthority(orgId: string, nodes: Node[], links: Link[]): number {
-  // Authority: number of incoming edges from MEPs or Commission
-  return links.filter(l =>
-    l.target === orgId &&
-    nodes.find(n => n.id === l.source && (n.type === 'mep' || n.type === 'commission_employee'))
-  ).length
-}
 
 export default function NetworkGraph({
   chargeStrength,
@@ -480,54 +443,21 @@ export default function NetworkGraph({
   }, [chargeStrength])
 
   return (
-    <div style={{ position: 'relative', width: '100%', height: '100%' }}>
+    <div className="relative w-full h-full">
       {loading && (
-        <div style={{
-          position: 'absolute',
-          top: '50%',
-          left: '50%',
-          transform: 'translate(-50%, -50%)',
-          color: '#64748b',
-          fontSize: '0.875rem',
-        }}>
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-slate-500 text-sm">
           Loading...
         </div>
       )}
 
       {error && (
-        <div style={{
-          position: 'absolute',
-          top: '1rem',
-          left: '50%',
-          transform: 'translateX(-50%)',
-          background: '#fef2f2',
-          color: '#dc2626',
-          padding: '0.5rem 1rem',
-          borderRadius: '8px',
-          fontSize: '0.875rem',
-        }}>
+        <div className="absolute top-4 left-1/2 -translate-x-1/2 bg-red-50 text-red-600 px-4 py-2 rounded-lg text-sm">
           {error} - showing fallback data
         </div>
       )}
 
       {/* Graph Type Selector */}
-      <div
-        style={{
-          position: 'absolute',
-          top: '1rem',
-          left: '50%',
-          transform: 'translateX(-50%)',
-          background: 'rgba(255, 255, 255, 0.95)',
-          backdropFilter: 'blur(8px)',
-          borderRadius: '8px',
-          padding: '0.5rem',
-          border: '1px solid #e2e8f0',
-          boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
-          display: 'flex',
-          gap: '0.5rem',
-          zIndex: 100,
-        }}
-      >
+      <div className="absolute top-4 left-1/2 -translate-x-1/2 bg-white/95 backdrop-blur-sm rounded-lg p-2 border border-slate-200 shadow-md flex gap-2 z-[100]">
         {(['bipartite', 'politicians', 'organizations'] as const).map((type) => (
           <button
             key={type}
@@ -537,16 +467,12 @@ export default function NetworkGraph({
                 graphType: type,
               }))
             }}
+            className="px-4 py-2 rounded-[6px] text-sm transition-all duration-200 cursor-pointer"
             style={{
-              padding: '0.5rem 1rem',
               border: filters.graphType === type ? '2px solid #3b82f6' : '1px solid #cbd5e1',
               background: filters.graphType === type ? '#dbeafe' : 'white',
-              borderRadius: '6px',
-              fontSize: '0.875rem',
               fontWeight: filters.graphType === type ? 600 : 400,
               color: filters.graphType === type ? '#1e40af' : '#475569',
-              cursor: 'pointer',
-              transition: 'all 0.2s',
             }}
           >
             {type === 'bipartite' ? 'ALL' : type === 'politicians' ? 'POLITICIANS' : 'ORGANISATIONS'}
@@ -556,67 +482,37 @@ export default function NetworkGraph({
 
       <svg
         ref={svgRef}
-        style={{
-          width: '100%',
-          height: '100%',
-          background: 'rgb(250, 250, 255)',
-          opacity: loading ? 0.5 : 1,
-          transition: 'opacity 0.2s',
-        }}
+        className="w-full h-full bg-[rgb(250,250,255)] transition-opacity duration-200"
+        style={{ opacity: loading ? 0.5 : 1 }}
       />
 
       {/* Legend overlay - Top 6 Communities and Organization Statistics */}
       {graphData.metadata?.communities && (
-        <div
-          style={{
-            position: 'absolute',
-            bottom: '1rem',
-            right: '1rem',
-            background: 'rgba(255, 255, 255, 0.95)',
-            backdropFilter: 'blur(8px)',
-            borderRadius: '12px',
-            padding: '1rem',
-            border: '1px solid #e2e8f0',
-            boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
-            maxWidth: '320px',
-            maxHeight: '70vh',
-            overflowY: 'auto',
-          }}
-        >
+        <div className="absolute bottom-4 right-4 bg-white/95 backdrop-blur-sm rounded-[12px] p-4 border border-slate-200 shadow-md max-w-[320px] max-h-[70vh] overflow-y-auto">
           {/* Communities Section */}
-          <div style={{ marginBottom: '1rem' }}>
-            <div style={{ fontSize: '0.75rem', fontWeight: 700, color: '#1e293b', marginBottom: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+          <div className="mb-4">
+            <div className="text-xs font-bold text-slate-900 mb-3 uppercase tracking-[0.05em]">
               Top 6 Communities
             </div>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+            <div className="flex flex-col gap-2">
               {graphData.metadata.communities.map((community) => (
-                <div key={community.id} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                <div key={community.id} className="flex items-center gap-2">
                   <div
-                    style={{
-                      width: '10px',
-                      height: '10px',
-                      borderRadius: '50%',
-                      backgroundColor: communityColors[community.id % communityColors.length],
-                      flexShrink: 0,
-                    }}
+                    className="w-[10px] h-[10px] rounded-full shrink-0"
+                    style={{ backgroundColor: communityColors[community.id % communityColors.length] }}
                   />
-                  <span style={{ fontSize: '0.8125rem', color: '#475569' }}>
+                  <span className="text-[0.8125rem] text-slate-600">
                     Community {community.id} ({community.size} nodes, {community.percentage}%)
                   </span>
                 </div>
               ))}
               {/* Other communities */}
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginTop: '0.25rem', paddingTop: '0.5rem', borderTop: '1px solid #e2e8f0' }}>
+              <div className="flex items-center gap-2 mt-1 pt-2 border-t border-slate-200">
                 <div
-                  style={{
-                    width: '10px',
-                    height: '10px',
-                    borderRadius: '50%',
-                    backgroundColor: defaultCommunityColor,
-                    flexShrink: 0,
-                  }}
+                  className="w-[10px] h-[10px] rounded-full shrink-0"
+                  style={{ backgroundColor: defaultCommunityColor }}
                 />
-                <span style={{ fontSize: '0.75rem', color: '#64748b' }}>
+                <span className="text-xs text-slate-500">
                   Other communities
                 </span>
               </div>
@@ -625,27 +521,17 @@ export default function NetworkGraph({
 
           {/* Organization Statistics Section */}
           {orgStats.weightedDegree.length > 0 && (
-            <div style={{ borderTop: '1px solid #e2e8f0', paddingTop: '1rem' }}>
-              <div style={{ fontSize: '0.75rem', fontWeight: 700, color: '#1e293b', marginBottom: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+            <div className="border-t border-slate-200 pt-4">
+              <div className="text-xs font-bold text-slate-900 mb-3 uppercase tracking-[0.05em]">
                 Top 8 Organizations
               </div>
 
               {/* Metric Dropdown */}
-              <div style={{ marginBottom: '0.75rem' }}>
+              <div className="mb-3">
                 <select
                   value={selectedMetric}
                   onChange={(e) => setSelectedMetric(e.target.value as 'authority' | 'weightedDegree' | 'closeness')}
-                  style={{
-                    width: '100%',
-                    padding: '0.375rem 0.5rem',
-                    fontSize: '0.75rem',
-                    fontWeight: 600,
-                    color: '#334155',
-                    border: '1px solid #cbd5e1',
-                    borderRadius: '6px',
-                    backgroundColor: '#fff',
-                    cursor: 'pointer',
-                  }}
+                  className="w-full py-[0.375rem] px-2 text-xs font-semibold text-slate-700 border border-slate-300 rounded-[6px] bg-white cursor-pointer"
                 >
                   <option value="authority">Authority</option>
                   <option value="weightedDegree">Weighted Degree</option>
@@ -656,9 +542,9 @@ export default function NetworkGraph({
               {/* Display selected metric */}
               {selectedMetric === 'authority' && (
                 <div>
-                  <ul style={{ margin: 0, paddingLeft: '1rem', listStyle: 'none' }}>
+                  <ul className="m-0 pl-4 list-none">
                     {orgStats.authority.map((stat, idx) => (
-                      <li key={stat.id} style={{ fontSize: '0.75rem', color: '#475569', lineHeight: '1.4' }}>
+                      <li key={stat.id} className="text-xs text-slate-600 leading-[1.4]">
                         {idx + 1}. {stat.label}: <strong>{stat.value}</strong>
                       </li>
                     ))}
@@ -668,9 +554,9 @@ export default function NetworkGraph({
 
               {selectedMetric === 'weightedDegree' && (
                 <div>
-                  <ul style={{ margin: 0, paddingLeft: '1rem', listStyle: 'none' }}>
+                  <ul className="m-0 pl-4 list-none">
                     {orgStats.weightedDegree.map((stat, idx) => (
-                      <li key={stat.id} style={{ fontSize: '0.75rem', color: '#475569', lineHeight: '1.4' }}>
+                      <li key={stat.id} className="text-xs text-slate-600 leading-[1.4]">
                         {idx + 1}. {stat.label}: <strong>{stat.value.toFixed(2)}</strong>
                       </li>
                     ))}
@@ -680,9 +566,9 @@ export default function NetworkGraph({
 
               {selectedMetric === 'closeness' && (
                 <div>
-                  <ul style={{ margin: 0, paddingLeft: '1rem', listStyle: 'none' }}>
+                  <ul className="m-0 pl-4 list-none">
                     {orgStats.closeness.map((stat, idx) => (
-                      <li key={stat.id} style={{ fontSize: '0.75rem', color: '#475569', lineHeight: '1.4' }}>
+                      <li key={stat.id} className="text-xs text-slate-600 leading-[1.4]">
                         {idx + 1}. {stat.label}: <strong>{stat.value.toFixed(4)}</strong>
                       </li>
                     ))}
@@ -694,22 +580,10 @@ export default function NetworkGraph({
         </div>
       )}
 
-      {/* Tooltip */}
+      {/* Tooltip — positioned and shown/hidden by D3 via tooltipRef.current.style.* */}
       <div
         ref={tooltipRef}
-        style={{
-          position: 'fixed',
-          zIndex: 1000,
-          padding: '0.5rem 0.75rem',
-          background: 'white',
-          borderRadius: '8px',
-          boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
-          border: '1px solid #e2e8f0',
-          fontSize: '0.875rem',
-          pointerEvents: 'none',
-          opacity: 0,
-          transition: 'opacity 0.15s ease',
-        }}
+        className="fixed z-[1000] px-3 py-2 bg-white rounded-lg shadow-md border border-slate-200 text-sm pointer-events-none opacity-0 transition-opacity duration-[150ms] ease-in-out"
       />
     </div>
   )

@@ -329,7 +329,7 @@ export default function RebelScoresChart({
             modeBarButtonsToRemove: ['lasso2d', 'select2d'],
             displaylogo: false,
           }}
-          style={{ width: '100%', height: '600px' }}
+          className="w-full h-[600px]"
           onClick={handleClick}
         />
       </div>

@@ -34,7 +34,7 @@ export default function NetworkPage() {
         />
 
         <main className={`main-content ${sidebarCollapsed ? 'collapsed' : ''}`}>
-          <div className="chart-container" style={{ height: 'calc(100vh - 64px - 3rem)' }}>
+          <div className="chart-container h-[calc(100vh-64px-3rem)]">
             <NetworkGraph
               chargeStrength={chargeStrength}
               filters={filters}
