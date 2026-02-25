@@ -1,0 +1,59 @@
+{
+  "cluster_id": 16,
+  "cluster_label": "Ambassade d'Egypte a & Ambassade de Jordani",
+  "nodes": [
+    {
+      "id": "org_c5299db80d5b25bc",
+      "type": "org",
+      "label": "Ambassade d'Egypte aupr\u00e8s de l'UE",
+      "name": "Ambassade d'Egypte aupr\u00e8s de l'UE",
+      "interests": "",
+      "register_id": null,
+      "degree": 2
+    },
+    {
+      "id": "org_de0568b9b0a1b8b9",
+      "type": "org",
+      "label": "Ambassade de Jordanie aupr\u00e8s de l'UE",
+      "name": "Ambassade de Jordanie aupr\u00e8s de l'UE",
+      "interests": "",
+      "register_id": null,
+      "degree": 2
+    },
+    {
+      "id": "org_e37751cac30531ba",
+      "type": "org",
+      "label": "Ambassade du Liban aupr\u00e8s de l'UE",
+      "name": "Ambassade du Liban aupr\u00e8s de l'UE",
+      "interests": "",
+      "register_id": null,
+      "degree": 2
+    }
+  ],
+  "links": [
+    {
+      "source": "org_c5299db80d5b25bc",
+      "target": "org_de0568b9b0a1b8b9",
+      "weight": 11.32,
+      "shared": 2
+    },
+    {
+      "source": "org_c5299db80d5b25bc",
+      "target": "org_e37751cac30531ba",
+      "weight": 11.32,
+      "shared": 2
+    },
+    {
+      "source": "org_de0568b9b0a1b8b9",
+      "target": "org_e37751cac30531ba",
+      "weight": 11.32,
+      "shared": 2
+    }
+  ],
+  "external_connections": [],
+  "metadata": {
+    "node_count": 3,
+    "edge_count": 3,
+    "density": 1.0
+  }
+}

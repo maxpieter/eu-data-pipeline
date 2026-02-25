@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: 'EU Network Graph',
+  title: 'EU Parliament Data',
   description: 'Visualizing MEPs, Commissioners, and their meetings',
 }
 

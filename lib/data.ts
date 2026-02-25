@@ -5,9 +5,9 @@ export interface Node {
   label: string
   community?: number  // Community ID (0-5 for top 6, -1 for others)
   // MEP-specific fields
-  party?: string
-  country?: string
-  mep_name?: string
+  party?: string;
+  country?: string;
+  mep_name?: string;
   // Org-specific fields
   name?: string
   interests_represented?: string
@@ -28,6 +28,7 @@ export interface Link {
   source: string
   target: string
   weight: number
+  timestamps?: string[]
 }
 
 export interface GraphMetadata {
@@ -69,11 +70,6 @@ export interface GraphFilters {
   start: string           // YYYY-MM-DD (inclusive)
   end: string             // YYYY-MM-DD (inclusive)
   procedure: string       // Related procedure code (e.g., '2025/0045(COD)') or 'all'
-  // Removed ALL filtering parameters:
-  // - orgMinDegree (automatic)
-  // - actorMinDegree (automatic)
-  // - bipartiteKCore (automatic)
-  // - minEdgeWeight (automatic)
 }
 
 export const defaultFilters: GraphFilters = {
@@ -85,17 +81,18 @@ export const defaultFilters: GraphFilters = {
   procedure: 'all',
 }
 
+// Node type labels for the legend
+export const typeLabels: Record<string, string> = {
+  org: 'Organization',
+  mep: 'MEP',
+  commission_employee: 'Commission',
+}
+
 // Node type colors
 export const typeColors: Record<string, string> = {
   org: '#64b5f6',                  // Light blue
   mep: '#ffb74d',                  // Orange
   commission_employee: '#81c784',  // Green
-}
-
-export const typeLabels: Record<string, string> = {
-  org: 'Organization',
-  mep: 'MEP',
-  commission_employee: 'Commission',
 }
 
 // Community colors (top 6)
@@ -115,8 +112,10 @@ export const defaultCommunityColor = '#9e9e9e' // Gray for other communities
  * determined by the backend based on the initial edge count
  * @param filters - Graph filters (mode, start, end)
  */
-export async function fetchGraphData(filters: Partial<GraphFilters> = {}): Promise<GraphData> {
-  const f = { ...defaultFilters, ...filters }
+export async function fetchGraphData(
+  filters: Partial<GraphFilters> = {},
+): Promise<GraphData> {
+  const f = { ...defaultFilters, ...filters };
 
   const params = new URLSearchParams()
   params.set('mode', f.mode)
@@ -128,7 +127,7 @@ export async function fetchGraphData(filters: Partial<GraphFilters> = {}): Promi
 
   // Next.js rewrites will proxy to Python backend in development
   // In development, fetch directly from Python backend to avoid Next.js timeout issues
-  const apiUrl = typeof window !== 'undefined' && window.location.hostname === 'localhost' 
+  const apiUrl = typeof window !== 'undefined' && window.location.hostname === 'localhost'
     ? `http://localhost:5001/api/graph?${params}`
     : `/api/graph?${params}`
 
@@ -136,14 +135,14 @@ export async function fetchGraphData(filters: Partial<GraphFilters> = {}): Promi
     // Set 300-second timeout for large graph requests (5 minutes)
     const controller = new AbortController()
     const timeoutId = setTimeout(() => controller.abort(), 300000)
-    
+
     const response = await fetch(apiUrl, {
       signal: controller.signal,
     })
     clearTimeout(timeoutId)
-    
+
     console.log(`API Response status: ${response.status}`)
-    
+
     if (!response.ok) {
       const errorText = await response.text()
       console.error(`HTTP error! status: ${response.status}, body:`, errorText)
@@ -153,7 +152,7 @@ export async function fetchGraphData(filters: Partial<GraphFilters> = {}): Promi
 
     // Log the automatic filtering info if available
     if (data.metadata) {
-      console.log('🔍 Graph filtering applied:', {
+      console.log('Graph filtering applied:', {
         'Initial edges': data.metadata.initial_edge_count?.toLocaleString(),
         'Final edges': data.metadata.final_edge_count?.toLocaleString(),
         'Final nodes': data.metadata.final_node_count?.toLocaleString(),
@@ -167,17 +166,18 @@ export async function fetchGraphData(filters: Partial<GraphFilters> = {}): Promi
 
     return data
   } catch (error) {
-    console.error('Failed to fetch graph data:', error)
-    return { nodes: [], links: [] }
+    console.error("Failed to fetch graph data:", error);
+    return { nodes: [], links: [] };
   }
 }
 
 /**
- * Fetch list of available procedures
+ * Fetch list of available procedures for graph filtering
+ * Uses the graph-procedures endpoint which returns procedures with >100 meetings
  */
 export async function fetchProcedures(): Promise<string[]> {
   try {
-    const response = await fetch('/api/procedures')
+    const response = await fetch('/api/graph-procedures')
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`)
     }

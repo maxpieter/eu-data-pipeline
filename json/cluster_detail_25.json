@@ -1,0 +1,38 @@
+{
+  "cluster_id": 25,
+  "cluster_label": "Representatives from the Shura",
+  "nodes": [
+    {
+      "id": "org_b8d75184fb32ce49",
+      "type": "org",
+      "label": "Representatives from the Shura Council of Saudi Arabia",
+      "name": "Representatives from the Shura Council of Saudi Arabia",
+      "interests": "",
+      "register_id": null,
+      "degree": 1
+    },
+    {
+      "id": "org_5463b01f6fa254c0",
+      "type": "org",
+      "label": "GCC representatives",
+      "name": "GCC representatives",
+      "interests": "",
+      "register_id": null,
+      "degree": 1
+    }
+  ],
+  "links": [
+    {
+      "source": "org_b8d75184fb32ce49",
+      "target": "org_5463b01f6fa254c0",
+      "weight": 11.9,
+      "shared": 2
+    }
+  ],
+  "external_connections": [],
+  "metadata": {
+    "node_count": 2,
+    "edge_count": 1,
+    "density": 1.0
+  }
+}

@@ -1,0 +1,1693 @@
+{
+  "nodes": [
+    {
+      "id": "cluster_0",
+      "cluster_id": 0,
+      "type": "cluster",
+      "label": "Tech & Digital",
+      "size": 436,
+      "density": 0.029,
+      "top_members": [
+        {
+          "id": "479468313744-50",
+          "label": "Ibec",
+          "degree": 73
+        },
+        {
+          "id": "933102147733-91",
+          "label": "Irish Farmers' Association",
+          "degree": 71
+        },
+        {
+          "id": "0801162959-21",
+          "label": "Microsoft Corporation",
+          "degree": 67
+        },
+        {
+          "id": "03181945560-59",
+          "label": "Google",
+          "degree": 67
+        },
+        {
+          "id": "95201401713-39",
+          "label": "Motion Picture Association EMEA",
+          "degree": 60
+        }
+      ],
+      "top_interests": [
+        {
+          "interest": "Promotes their own interests or the collective interests of their members",
+          "count": 234
+        },
+        {
+          "interest": "Does not represent commercial interests",
+          "count": 72
+        },
+        {
+          "interest": "Advances interests of their clients",
+          "count": 10
+        }
+      ]
+    },
+    {
+      "id": "cluster_1",
+      "cluster_id": 1,
+      "type": "cluster",
+      "label": "German",
+      "size": 434,
+      "density": 0.078,
+      "top_members": [
+        {
+          "id": "1771817758-48",
+          "label": "Bundesverband der Deutschen Industrie e.V.",
+          "degree": 219
+        },
+        {
+          "id": "15423437054-40",
+          "label": "Verband der Chemischen Industrie e.V.",
+          "degree": 175
+        },
+        {
+          "id": "95574664768-90",
+          "label": "Verband der Automobilindustrie",
+          "degree": 169
+        },
+        {
+          "id": "2349218828-41",
+          "label": "Mercedes-Benz Group AG",
+          "degree": 162
+        },
+        {
+          "id": "20457441380-38",
+          "label": "BDEW Bundesverband der Energie- und Wasserwirtschaft e. V.",
+          "degree": 155
+        }
+      ],
+      "top_interests": [
+        {
+          "interest": "Promotes their own interests or the collective interests of their members",
+          "count": 290
+        },
+        {
+          "interest": "Does not represent commercial interests",
+          "count": 48
+        },
+        {
+          "interest": "Advances interests of their clients",
+          "count": 5
+        }
+      ]
+    },
+    {
+      "id": "cluster_2",
+      "cluster_id": 2,
+      "type": "cluster",
+      "label": "Tech & Digital / Human Rights & NGO",
+      "size": 422,
+      "density": 0.015,
+      "top_members": [
+        {
+          "id": "org_aab8c49034845d55",
+          "label": "UNHCR",
+          "degree": 43
+        },
+        {
+          "id": "336765244362-96",
+          "label": "International Rescue Committee Inc",
+          "degree": 42
+        },
+        {
+          "id": "11063928073-34",
+          "label": "Amnesty International Limited",
+          "degree": 42
+        },
+        {
+          "id": "07595112423-87",
+          "label": "Deutscher Gewerkschaftsbund",
+          "degree": 40
+        },
+        {
+          "id": "org_b425f9e558baafdf",
+          "label": "UNRWA",
+          "degree": 36
+        }
+      ],
+      "top_interests": [
+        {
+          "interest": "Does not represent commercial interests",
+          "count": 165
+        },
+        {
+          "interest": "Promotes their own interests or the collective interests of their members",
+          "count": 85
+        }
+      ]
+    },
+    {
+      "id": "cluster_3",
+      "cluster_id": 3,
+      "type": "cluster",
+      "label": "Energy & Climate / Tech & Digital",
+      "size": 378,
+      "density": 0.033,
+      "top_members": [
+        {
+          "id": "06798511314-27",
+          "label": "European Environmental Bureau",
+          "degree": 90
+        },
+        {
+          "id": "2680046412-48",
+          "label": "EPIA SolarPower Europe",
+          "degree": 82
+        },
+        {
+          "id": "19920706471-21",
+          "label": "WindEurope",
+          "degree": 79
+        },
+        {
+          "id": "55888811123-49",
+          "label": "Climate Action Network Europe",
+          "degree": 74
+        },
+        {
+          "id": "90947457424-20",
+          "label": "ENGIE",
+          "degree": 74
+        }
+      ],
+      "top_interests": [
+        {
+          "interest": "Promotes their own interests or the collective interests of their members",
+          "count": 169
+        },
+        {
+          "interest": "Does not represent commercial interests",
+          "count": 97
+        },
+        {
+          "interest": "Advances interests of their clients",
+          "count": 9
+        }
+      ]
+    },
+    {
+      "id": "cluster_4",
+      "cluster_id": 4,
+      "type": "cluster",
+      "label": "Tech & Digital / Transport & Aviation",
+      "size": 347,
+      "density": 0.028,
+      "top_members": [
+        {
+          "id": "92545571128-74",
+          "label": "European Transport Workers' Federation",
+          "degree": 58
+        },
+        {
+          "id": "064616126640-05",
+          "label": "Air France-KLM",
+          "degree": 56
+        },
+        {
+          "id": "23527541824-60",
+          "label": "ArcelorMittal",
+          "degree": 55
+        },
+        {
+          "id": "43284012043-03",
+          "label": "Alstom",
+          "degree": 54
+        },
+        {
+          "id": "69240395197-02",
+          "label": "Repsol, S.A.",
+          "degree": 53
+        }
+      ],
+      "top_interests": [
+        {
+          "interest": "Promotes their own interests or the collective interests of their members",
+          "count": 186
+        },
+        {
+          "interest": "Does not represent commercial interests",
+          "count": 27
+        },
+        {
+          "interest": "Advances interests of their clients",
+          "count": 9
+        }
+      ]
+    },
+    {
+      "id": "cluster_5",
+      "cluster_id": 5,
+      "type": "cluster",
+      "label": "Pharma & Health",
+      "size": 252,
+      "density": 0.118,
+      "top_members": [
+        {
+          "id": "030031840349-92",
+          "label": "CSL Behring",
+          "degree": 129
+        },
+        {
+          "id": "04657143399-39",
+          "label": "Eli Lilly and Company",
+          "degree": 125
+        },
+        {
+          "id": "509882515669-01",
+          "label": "Affordable Medicines Europe",
+          "degree": 125
+        },
+        {
+          "id": "947929324977-41",
+          "label": "European Society for Medical Oncology (ESMO)",
+          "degree": 112
+        },
+        {
+          "id": "934069612666-51",
+          "label": "AbbVie",
+          "degree": 110
+        }
+      ],
+      "top_interests": [
+        {
+          "interest": "Promotes their own interests or the collective interests of their members",
+          "count": 133
+        },
+        {
+          "interest": "Does not represent commercial interests",
+          "count": 48
+        },
+        {
+          "interest": "Advances interests of their clients",
+          "count": 11
+        }
+      ]
+    },
+    {
+      "id": "cluster_6",
+      "cluster_id": 6,
+      "type": "cluster",
+      "label": "Nordic / Tech & Digital",
+      "size": 237,
+      "density": 0.229,
+      "top_members": [
+        {
+          "id": "39705603497-38",
+          "label": "Technology Industries of Finland (Teknologiateollisuus ry)",
+          "degree": 196
+        },
+        {
+          "id": "39671713910-36",
+          "label": "Finnish Forest Industries Federation (Mets\u00e4teollisuus ry)",
+          "degree": 192
+        },
+        {
+          "id": "7328496842-09",
+          "label": "Finanssiala ry - Finance Finland",
+          "degree": 190
+        },
+        {
+          "id": "68861821910-84",
+          "label": "Finnish Energy - Energiateollisuus ry",
+          "degree": 183
+        },
+        {
+          "id": "1274604847-34",
+          "label": "Confederation of Finnish Industries EK",
+          "degree": 180
+        }
+      ],
+      "top_interests": [
+        {
+          "interest": "Promotes their own interests or the collective interests of their members",
+          "count": 101
+        },
+        {
+          "interest": "Does not represent commercial interests",
+          "count": 28
+        },
+        {
+          "interest": "Advances interests of their clients",
+          "count": 5
+        }
+      ]
+    },
+    {
+      "id": "cluster_7",
+      "cluster_id": 7,
+      "type": "cluster",
+      "label": "Agriculture & Food / Trade & Business",
+      "size": 223,
+      "density": 0.072,
+      "top_members": [
+        {
+          "id": "45338982456-46",
+          "label": "European Milk Board",
+          "degree": 100
+        },
+        {
+          "id": "org_c3c1ded191b08c7a",
+          "label": "org_c3c1ded191b08c7a",
+          "degree": 98
+        },
+        {
+          "id": "28418016649-41",
+          "label": "EURODOM",
+          "degree": 81
+        },
+        {
+          "id": "424179021711-46",
+          "label": "Conf\u00e9d\u00e9ration Europ\u00e9enne des Vignerons Ind\u00e9pendants",
+          "degree": 74
+        },
+        {
+          "id": "5235485727-61",
+          "label": "European Rural Poultry Association",
+          "degree": 61
+        }
+      ],
+      "top_interests": [
+        {
+          "interest": "Promotes their own interests or the collective interests of their members",
+          "count": 119
+        },
+        {
+          "interest": "Does not represent commercial interests",
+          "count": 20
+        },
+        {
+          "interest": "Advances interests of their clients",
+          "count": 5
+        }
+      ]
+    },
+    {
+      "id": "cluster_8",
+      "cluster_id": 8,
+      "type": "cluster",
+      "label": "ENEL SpA & A2A",
+      "size": 190,
+      "density": 0.074,
+      "top_members": [
+        {
+          "id": "6256831207-27",
+          "label": "ENEL SpA",
+          "degree": 76
+        },
+        {
+          "id": "409032241540-04",
+          "label": "A2A",
+          "degree": 70
+        },
+        {
+          "id": "org_2a6b1b37fea60f99",
+          "label": "Confindustria",
+          "degree": 60
+        },
+        {
+          "id": "02550382403-01",
+          "label": "Leonardo S.p.A.",
+          "degree": 60
+        },
+        {
+          "id": "965428625484-18",
+          "label": "Open Fiber",
+          "degree": 58
+        }
+      ],
+      "top_interests": [
+        {
+          "interest": "Promotes their own interests or the collective interests of their members",
+          "count": 103
+        },
+        {
+          "interest": "Does not represent commercial interests",
+          "count": 18
+        },
+        {
+          "interest": "Advances interests of their clients",
+          "count": 4
+        }
+      ]
+    },
+    {
+      "id": "cluster_9",
+      "cluster_id": 9,
+      "type": "cluster",
+      "label": "Finance & Banking / Tech & Digital",
+      "size": 181,
+      "density": 0.082,
+      "top_members": [
+        {
+          "id": "60975211600-74",
+          "label": "Invest Europe",
+          "degree": 78
+        },
+        {
+          "id": "37943526882-24",
+          "label": "Finance Watch",
+          "degree": 76
+        },
+        {
+          "id": "65110063986-76",
+          "label": "Association for Financial Markets in Europe",
+          "degree": 70
+        },
+        {
+          "id": "78787381113-69",
+          "label": "BNP PARIBAS",
+          "degree": 64
+        },
+        {
+          "id": "17804464809-28",
+          "label": "Euronext",
+          "degree": 58
+        }
+      ],
+      "top_interests": [
+        {
+          "interest": "Promotes their own interests or the collective interests of their members",
+          "count": 105
+        },
+        {
+          "interest": "Does not represent commercial interests",
+          "count": 14
+        },
+        {
+          "interest": "Advances interests of their clients",
+          "count": 5
+        }
+      ]
+    },
+    {
+      "id": "cluster_10",
+      "cluster_id": 10,
+      "type": "cluster",
+      "label": "Dutch / Tech & Digital",
+      "size": 134,
+      "density": 0.101,
+      "top_members": [
+        {
+          "id": "13255254129-80",
+          "label": "Vereniging VNO-NCW",
+          "degree": 93
+        },
+        {
+          "id": "385192846585-87",
+          "label": "Glastuinbouw Nederland",
+          "degree": 50
+        },
+        {
+          "id": "793300922868-60",
+          "label": "Zero Emissions Platform",
+          "degree": 47
+        },
+        {
+          "id": "85606455727-29",
+          "label": "Publyon",
+          "degree": 47
+        },
+        {
+          "id": "38392131923-05",
+          "label": "KPN",
+          "degree": 47
+        }
+      ],
+      "top_interests": [
+        {
+          "interest": "Promotes their own interests or the collective interests of their members",
+          "count": 67
+        },
+        {
+          "interest": "Does not represent commercial interests",
+          "count": 22
+        },
+        {
+          "interest": "Advances interests of their clients",
+          "count": 2
+        }
+      ]
+    },
+    {
+      "id": "cluster_11",
+      "cluster_id": 11,
+      "type": "cluster",
+      "label": "Nordic",
+      "size": 96,
+      "density": 0.208,
+      "top_members": [
+        {
+          "id": "5749958415-41",
+          "label": "Confederation of Danish Industry",
+          "degree": 75
+        },
+        {
+          "id": "39456841401-09",
+          "label": "Forbrugerr\u00e5det T\u00e6nk (the Danish Consumer Council)",
+          "degree": 59
+        },
+        {
+          "id": "1733114388-50",
+          "label": "Green Power Denmark",
+          "degree": 59
+        },
+        {
+          "id": "11503381325-76",
+          "label": "Confederation of Danish Employers",
+          "degree": 53
+        },
+        {
+          "id": "358435338994-90",
+          "label": "R\u00e5det for Gr\u00f8n Omstilling",
+          "degree": 52
+        }
+      ],
+      "top_interests": [
+        {
+          "interest": "Promotes their own interests or the collective interests of their members",
+          "count": 44
+        },
+        {
+          "interest": "Does not represent commercial interests",
+          "count": 18
+        },
+        {
+          "interest": "Advances interests of their clients",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": "cluster_12",
+      "cluster_id": 12,
+      "type": "cluster",
+      "label": "Nordic",
+      "size": 88,
+      "density": 0.137,
+      "top_members": [
+        {
+          "id": "39912257528-48",
+          "label": "Confederation of Swedish Enterprise",
+          "degree": 78
+        },
+        {
+          "id": "79239225070-38",
+          "label": "Lantbrukarnas Riksf\u00f6rbund",
+          "degree": 59
+        },
+        {
+          "id": "13073098010-57",
+          "label": "Energif\u00f6retagen / Swedenergy",
+          "degree": 38
+        },
+        {
+          "id": "781914737871-44",
+          "label": "IKEM - Innovations- och kemiindustrierna i Sverige AB (556865-4650)",
+          "degree": 37
+        },
+        {
+          "id": "69927546143-06",
+          "label": "Brussels Office of the Swedish Trade Unions",
+          "degree": 34
+        }
+      ],
+      "top_interests": [
+        {
+          "interest": "Promotes their own interests or the collective interests of their members",
+          "count": 47
+        },
+        {
+          "interest": "Does not represent commercial interests",
+          "count": 7
+        }
+      ]
+    },
+    {
+      "id": "cluster_13",
+      "cluster_id": 13,
+      "type": "cluster",
+      "label": "Austrian",
+      "size": 62,
+      "density": 0.102,
+      "top_members": [
+        {
+          "id": "10405322962-08",
+          "label": "Wirtschaftskammer \u00d6sterreich",
+          "degree": 28
+        },
+        {
+          "id": "org_cab42addfbb5d338",
+          "label": "\u00d6sterreichischer Gemeindebund",
+          "degree": 23
+        },
+        {
+          "id": "89093924456-06",
+          "label": "Vereinigung der \u00f6sterreichischen Industrie - Industriellenvereinigung",
+          "degree": 20
+        },
+        {
+          "id": "107033410802-19",
+          "label": "WIENER STADTWERKE GmbH",
+          "degree": 18
+        },
+        {
+          "id": "36636102190-34",
+          "label": "\u00d6BB-Holding AG",
+          "degree": 16
+        }
+      ],
+      "top_interests": [
+        {
+          "interest": "Promotes their own interests or the collective interests of their members",
+          "count": 34
+        },
+        {
+          "interest": "Does not represent commercial interests",
+          "count": 7
+        }
+      ]
+    },
+    {
+      "id": "cluster_14",
+      "cluster_id": 14,
+      "type": "cluster",
+      "label": "Tech & Digital / Chemicals & Industry",
+      "size": 33,
+      "density": 0.152,
+      "top_members": [
+        {
+          "id": "08569166274-90",
+          "label": "MOL Hungarian Oil and Gas Company",
+          "degree": 16
+        },
+        {
+          "id": "org_12c5af9f0a278285",
+          "label": "K\u00e1rp\u00e1taljai Magyar Kultur\u00e1lis Sz\u00f6vets\u00e9g",
+          "degree": 13
+        },
+        {
+          "id": "org_2a1525c74902a1d0",
+          "label": "Tett \u00e9s V\u00e9delem Alap\u00edtv\u00e1ny",
+          "degree": 11
+        },
+        {
+          "id": "444713544475-78",
+          "label": "Sz\u00f6vets\u00e9g a Polg\u00e1ri Magyarorsz\u00e1g\u00e9rt Alap\u00edtv\u00e1ny",
+          "degree": 11
+        },
+        {
+          "id": "696666910201-20",
+          "label": "Hungarian Chemical Industry Association",
+          "degree": 10
+        }
+      ],
+      "top_interests": [
+        {
+          "interest": "Promotes their own interests or the collective interests of their members",
+          "count": 17
+        },
+        {
+          "interest": "Does not represent commercial interests",
+          "count": 4
+        },
+        {
+          "interest": "Advances interests of their clients",
+          "count": 3
+        }
+      ]
+    },
+    {
+      "id": "cluster_15",
+      "cluster_id": 15,
+      "type": "cluster",
+      "label": "Repr\u00e9sentant du Parl & Ambassade du Koweit",
+      "size": 7,
+      "density": 1.0,
+      "top_members": [
+        {
+          "id": "org_4c8b62a18a5dbb75",
+          "label": "Repr\u00e9sentant du Parlement de Serbie",
+          "degree": 6
+        },
+        {
+          "id": "org_b601df205d2c13a9",
+          "label": "Ambassade du Koweit",
+          "degree": 6
+        },
+        {
+          "id": "org_9501b94dc3e1b690",
+          "label": "Chambre de commerce et d'industrie France Serbie",
+          "degree": 6
+        },
+        {
+          "id": "org_f977c7cf168836e4",
+          "label": "Repr\u00e9sentation de la Chine aupr\u00e8s de l'UE",
+          "degree": 6
+        },
+        {
+          "id": "org_d732538f389d162a",
+          "label": "Repr\u00e9sentant du bureau de coordination dans le cadre du processus de n\u00e9gociation avec Pristina",
+          "degree": 6
+        }
+      ],
+      "top_interests": []
+    },
+    {
+      "id": "cluster_16",
+      "cluster_id": 16,
+      "type": "cluster",
+      "label": "Ambassade d'Egypte a & Ambassade de Jordani",
+      "size": 3,
+      "density": 1.0,
+      "top_members": [
+        {
+          "id": "org_c5299db80d5b25bc",
+          "label": "Ambassade d'Egypte aupr\u00e8s de l'UE",
+          "degree": 2
+        },
+        {
+          "id": "org_de0568b9b0a1b8b9",
+          "label": "Ambassade de Jordanie aupr\u00e8s de l'UE",
+          "degree": 2
+        },
+        {
+          "id": "org_e37751cac30531ba",
+          "label": "Ambassade du Liban aupr\u00e8s de l'UE",
+          "degree": 2
+        }
+      ],
+      "top_interests": []
+    },
+    {
+      "id": "cluster_17",
+      "cluster_id": 17,
+      "type": "cluster",
+      "label": "Can Europe & Costas Kadis",
+      "size": 3,
+      "density": 1.0,
+      "top_members": [
+        {
+          "id": "org_a8002ccd885915f4",
+          "label": "Can Europe",
+          "degree": 2
+        },
+        {
+          "id": "org_1ebde004506b642e",
+          "label": "Costas Kadis",
+          "degree": 2
+        },
+        {
+          "id": "org_d369d3a51a6ef5be",
+          "label": "Oliv\u00e9r V\u00e1rhelyi",
+          "degree": 2
+        }
+      ],
+      "top_interests": []
+    },
+    {
+      "id": "cluster_18",
+      "cluster_id": 18,
+      "type": "cluster",
+      "label": "Permanent Mission of & Mission of the Peopl",
+      "size": 3,
+      "density": 0.667,
+      "top_members": [
+        {
+          "id": "org_672625d838f6b4dc",
+          "label": "Permanent Mission of the Russian Federation to the European Union and the Euratom",
+          "degree": 2
+        },
+        {
+          "id": "org_0c58a88348ec4017",
+          "label": "Mission of the Peoples\u00b4s Republic of China",
+          "degree": 1
+        },
+        {
+          "id": "org_ebc54dec20fdc638",
+          "label": "Embassy of the Republic of Belarus in the Kingdom of Belgium",
+          "degree": 1
+        }
+      ],
+      "top_interests": []
+    },
+    {
+      "id": "cluster_19",
+      "cluster_id": 19,
+      "type": "cluster",
+      "label": "Bristol Myers Squibb & European Brain Counc",
+      "size": 3,
+      "density": 1.0,
+      "top_members": [
+        {
+          "id": "org_57ea6c829df4f9f5",
+          "label": "Bristol Myers Squibb",
+          "degree": 2
+        },
+        {
+          "id": "org_27f1f6d1a8872a9b",
+          "label": "European Brain Council (EBC)",
+          "degree": 2
+        },
+        {
+          "id": "org_2b712b42152e3670",
+          "label": "Permanent Representation of the Czech Republic to the European Union",
+          "degree": 2
+        }
+      ],
+      "top_interests": []
+    },
+    {
+      "id": "cluster_20",
+      "cluster_id": 20,
+      "type": "cluster",
+      "label": "Forum r\u00e9fugi\u00e9s",
+      "size": 2,
+      "density": 1.0,
+      "top_members": [
+        {
+          "id": "475947931780-87",
+          "label": "Forum r\u00e9fugi\u00e9s",
+          "degree": 1
+        },
+        {
+          "id": "org_47488227d70fa21d",
+          "label": "Utopia 56",
+          "degree": 1
+        }
+      ],
+      "top_interests": [
+        {
+          "interest": "Does not represent commercial interests",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": "cluster_21",
+      "cluster_id": 21,
+      "type": "cluster",
+      "label": "SDG Watch Europe",
+      "size": 2,
+      "density": 1.0,
+      "top_members": [
+        {
+          "id": "037833727533-45",
+          "label": "SDG Watch Europe",
+          "degree": 1
+        },
+        {
+          "id": "org_0fde6694bb961cbf",
+          "label": "UN/UNDP Representation Office in Brussels",
+          "degree": 1
+        }
+      ],
+      "top_interests": [
+        {
+          "interest": "Does not represent commercial interests",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": "cluster_22",
+      "cluster_id": 22,
+      "type": "cluster",
+      "label": "Aerospace, Security and Defenc",
+      "size": 2,
+      "density": 1.0,
+      "top_members": [
+        {
+          "id": "72699997886-57",
+          "label": "Aerospace, Security and Defence Industries Association of Europe",
+          "degree": 1
+        },
+        {
+          "id": "666636798087-06",
+          "label": "Agentur f\u00fcr Innovation in der Cybersicherheit GmbH",
+          "degree": 1
+        }
+      ],
+      "top_interests": [
+        {
+          "interest": "Promotes their own interests or the collective interests of their members",
+          "count": 2
+        }
+      ]
+    },
+    {
+      "id": "cluster_23",
+      "cluster_id": 23,
+      "type": "cluster",
+      "label": "Embajada de Panam\u00e1",
+      "size": 2,
+      "density": 1.0,
+      "top_members": [
+        {
+          "id": "org_94703a2d50ef8191",
+          "label": "Embajada de Panam\u00e1",
+          "degree": 1
+        },
+        {
+          "id": "org_fab1e845b5273310",
+          "label": "SEDRA",
+          "degree": 1
+        }
+      ],
+      "top_interests": []
+    },
+    {
+      "id": "cluster_24",
+      "cluster_id": 24,
+      "type": "cluster",
+      "label": "Ministre des affaires \u00e9trang\u00e8r",
+      "size": 2,
+      "density": 1.0,
+      "top_members": [
+        {
+          "id": "org_f56563b907725ffb",
+          "label": "Ministre des affaires \u00e9trang\u00e8res du Panama",
+          "degree": 1
+        },
+        {
+          "id": "org_78a7106fd2a5e1c0",
+          "label": "Observatoire de l'immigration et de la d\u00e9mographie",
+          "degree": 1
+        }
+      ],
+      "top_interests": []
+    },
+    {
+      "id": "cluster_25",
+      "cluster_id": 25,
+      "type": "cluster",
+      "label": "Representatives from the Shura",
+      "size": 2,
+      "density": 1.0,
+      "top_members": [
+        {
+          "id": "org_b8d75184fb32ce49",
+          "label": "Representatives from the Shura Council of Saudi Arabia",
+          "degree": 1
+        },
+        {
+          "id": "org_5463b01f6fa254c0",
+          "label": "GCC representatives",
+          "degree": 1
+        }
+      ],
+      "top_interests": []
+    },
+    {
+      "id": "cluster_26",
+      "cluster_id": 26,
+      "type": "cluster",
+      "label": "National People's Congress of ",
+      "size": 2,
+      "density": 1.0,
+      "top_members": [
+        {
+          "id": "org_9dd2eb931d5ac9c2",
+          "label": "National People's Congress of China",
+          "degree": 1
+        },
+        {
+          "id": "org_a48cdc36fcf68378",
+          "label": "Ambassador of Mexico",
+          "degree": 1
+        }
+      ],
+      "top_interests": []
+    },
+    {
+      "id": "cluster_27",
+      "cluster_id": 27,
+      "type": "cluster",
+      "label": "Permanent Representation of La",
+      "size": 2,
+      "density": 1.0,
+      "top_members": [
+        {
+          "id": "org_9948b52a4a3645fa",
+          "label": "Permanent Representation of Latvia to the EU",
+          "degree": 1
+        },
+        {
+          "id": "org_6c81420ff7640f50",
+          "label": "Permanent Representation of the Czech Republic to the EU",
+          "degree": 1
+        }
+      ],
+      "top_interests": []
+    },
+    {
+      "id": "cluster_28",
+      "cluster_id": 28,
+      "type": "cluster",
+      "label": "Biljana Djordjevic",
+      "size": 2,
+      "density": 1.0,
+      "top_members": [
+        {
+          "id": "org_32c52aa6fa1104c4",
+          "label": "Biljana Djordjevic",
+          "degree": 1
+        },
+        {
+          "id": "org_7e0143a3fb9250b0",
+          "label": "Stefan Janji\u0107",
+          "degree": 1
+        }
+      ],
+      "top_interests": []
+    },
+    {
+      "id": "cluster_29",
+      "cluster_id": 29,
+      "type": "cluster",
+      "label": "ZRZESZENIE MI\u0118DZYNARODOWYCH PR",
+      "size": 2,
+      "density": 1.0,
+      "top_members": [
+        {
+          "id": "org_c8e37c7768366f34",
+          "label": "ZRZESZENIE MI\u0118DZYNARODOWYCH PRZEWO\u0179NIK\u00d3W DROGOWYCH W POLSCE",
+          "degree": 1
+        },
+        {
+          "id": "org_985a486c253856b7",
+          "label": "National Assembly of Vietnam",
+          "degree": 1
+        }
+      ],
+      "top_interests": []
+    }
+  ],
+  "links": [
+    {
+      "source": "cluster_0",
+      "target": "cluster_7",
+      "weight": 1483.34,
+      "edge_count": 100
+    },
+    {
+      "source": "cluster_0",
+      "target": "cluster_3",
+      "weight": 4300.65,
+      "edge_count": 257
+    },
+    {
+      "source": "cluster_1",
+      "target": "cluster_12",
+      "weight": 703.22,
+      "edge_count": 59
+    },
+    {
+      "source": "cluster_3",
+      "target": "cluster_12",
+      "weight": 896.77,
+      "edge_count": 73
+    },
+    {
+      "source": "cluster_1",
+      "target": "cluster_9",
+      "weight": 3724.64,
+      "edge_count": 273
+    },
+    {
+      "source": "cluster_0",
+      "target": "cluster_1",
+      "weight": 8513.14,
+      "edge_count": 483
+    },
+    {
+      "source": "cluster_1",
+      "target": "cluster_2",
+      "weight": 4312.32,
+      "edge_count": 300
+    },
+    {
+      "source": "cluster_1",
+      "target": "cluster_6",
+      "weight": 2610.73,
+      "edge_count": 185
+    },
+    {
+      "source": "cluster_1",
+      "target": "cluster_5",
+      "weight": 10800.45,
+      "edge_count": 703
+    },
+    {
+      "source": "cluster_1",
+      "target": "cluster_7",
+      "weight": 6138.17,
+      "edge_count": 409
+    },
+    {
+      "source": "cluster_3",
+      "target": "cluster_8",
+      "weight": 4427.29,
+      "edge_count": 250
+    },
+    {
+      "source": "cluster_3",
+      "target": "cluster_11",
+      "weight": 2847.24,
+      "edge_count": 189
+    },
+    {
+      "source": "cluster_1",
+      "target": "cluster_3",
+      "weight": 26761.38,
+      "edge_count": 1542
+    },
+    {
+      "source": "cluster_3",
+      "target": "cluster_4",
+      "weight": 6334.61,
+      "edge_count": 422
+    },
+    {
+      "source": "cluster_3",
+      "target": "cluster_9",
+      "weight": 2766.09,
+      "edge_count": 197
+    },
+    {
+      "source": "cluster_6",
+      "target": "cluster_10",
+      "weight": 292.72,
+      "edge_count": 24
+    },
+    {
+      "source": "cluster_4",
+      "target": "cluster_10",
+      "weight": 594.75,
+      "edge_count": 49
+    },
+    {
+      "source": "cluster_1",
+      "target": "cluster_10",
+      "weight": 2403.43,
+      "edge_count": 191
+    },
+    {
+      "source": "cluster_0",
+      "target": "cluster_2",
+      "weight": 5861.89,
+      "edge_count": 369
+    },
+    {
+      "source": "cluster_0",
+      "target": "cluster_6",
+      "weight": 5940.48,
+      "edge_count": 436
+    },
+    {
+      "source": "cluster_3",
+      "target": "cluster_5",
+      "weight": 5054.44,
+      "edge_count": 316
+    },
+    {
+      "source": "cluster_3",
+      "target": "cluster_6",
+      "weight": 3572.37,
+      "edge_count": 238
+    },
+    {
+      "source": "cluster_0",
+      "target": "cluster_12",
+      "weight": 812.9,
+      "edge_count": 55
+    },
+    {
+      "source": "cluster_0",
+      "target": "cluster_4",
+      "weight": 4223.17,
+      "edge_count": 258
+    },
+    {
+      "source": "cluster_0",
+      "target": "cluster_8",
+      "weight": 1696.37,
+      "edge_count": 80
+    },
+    {
+      "source": "cluster_0",
+      "target": "cluster_5",
+      "weight": 3745.38,
+      "edge_count": 242
+    },
+    {
+      "source": "cluster_2",
+      "target": "cluster_5",
+      "weight": 982.34,
+      "edge_count": 77
+    },
+    {
+      "source": "cluster_2",
+      "target": "cluster_3",
+      "weight": 3287.8,
+      "edge_count": 203
+    },
+    {
+      "source": "cluster_2",
+      "target": "cluster_11",
+      "weight": 477.97,
+      "edge_count": 35
+    },
+    {
+      "source": "cluster_2",
+      "target": "cluster_6",
+      "weight": 1557.19,
+      "edge_count": 120
+    },
+    {
+      "source": "cluster_2",
+      "target": "cluster_7",
+      "weight": 426.27,
+      "edge_count": 30
+    },
+    {
+      "source": "cluster_2",
+      "target": "cluster_8",
+      "weight": 342.81,
+      "edge_count": 23
+    },
+    {
+      "source": "cluster_10",
+      "target": "cluster_11",
+      "weight": 93.68,
+      "edge_count": 5
+    },
+    {
+      "source": "cluster_7",
+      "target": "cluster_11",
+      "weight": 698.1,
+      "edge_count": 52
+    },
+    {
+      "source": "cluster_6",
+      "target": "cluster_11",
+      "weight": 750.83,
+      "edge_count": 53
+    },
+    {
+      "source": "cluster_0",
+      "target": "cluster_11",
+      "weight": 847.17,
+      "edge_count": 45
+    },
+    {
+      "source": "cluster_9",
+      "target": "cluster_11",
+      "weight": 456.25,
+      "edge_count": 35
+    },
+    {
+      "source": "cluster_6",
+      "target": "cluster_12",
+      "weight": 1774.76,
+      "edge_count": 120
+    },
+    {
+      "source": "cluster_6",
+      "target": "cluster_7",
+      "weight": 1109.32,
+      "edge_count": 86
+    },
+    {
+      "source": "cluster_5",
+      "target": "cluster_6",
+      "weight": 2400.02,
+      "edge_count": 174
+    },
+    {
+      "source": "cluster_6",
+      "target": "cluster_9",
+      "weight": 1942.45,
+      "edge_count": 166
+    },
+    {
+      "source": "cluster_1",
+      "target": "cluster_4",
+      "weight": 13726.98,
+      "edge_count": 847
+    },
+    {
+      "source": "cluster_5",
+      "target": "cluster_9",
+      "weight": 859.51,
+      "edge_count": 55
+    },
+    {
+      "source": "cluster_4",
+      "target": "cluster_8",
+      "weight": 1722.43,
+      "edge_count": 101
+    },
+    {
+      "source": "cluster_4",
+      "target": "cluster_7",
+      "weight": 3585.65,
+      "edge_count": 281
+    },
+    {
+      "source": "cluster_4",
+      "target": "cluster_13",
+      "weight": 273.38,
+      "edge_count": 21
+    },
+    {
+      "source": "cluster_4",
+      "target": "cluster_12",
+      "weight": 91.17,
+      "edge_count": 7
+    },
+    {
+      "source": "cluster_0",
+      "target": "cluster_10",
+      "weight": 1089.23,
+      "edge_count": 86
+    },
+    {
+      "source": "cluster_3",
+      "target": "cluster_10",
+      "weight": 2319.02,
+      "edge_count": 166
+    },
+    {
+      "source": "cluster_2",
+      "target": "cluster_10",
+      "weight": 331.76,
+      "edge_count": 24
+    },
+    {
+      "source": "cluster_9",
+      "target": "cluster_10",
+      "weight": 504.14,
+      "edge_count": 42
+    },
+    {
+      "source": "cluster_0",
+      "target": "cluster_9",
+      "weight": 5688.92,
+      "edge_count": 326
+    },
+    {
+      "source": "cluster_3",
+      "target": "cluster_7",
+      "weight": 6541.12,
+      "edge_count": 400
+    },
+    {
+      "source": "cluster_3",
+      "target": "cluster_13",
+      "weight": 407.43,
+      "edge_count": 32
+    },
+    {
+      "source": "cluster_2",
+      "target": "cluster_9",
+      "weight": 1014.75,
+      "edge_count": 69
+    },
+    {
+      "source": "cluster_8",
+      "target": "cluster_9",
+      "weight": 649.94,
+      "edge_count": 45
+    },
+    {
+      "source": "cluster_5",
+      "target": "cluster_11",
+      "weight": 1325.91,
+      "edge_count": 90
+    },
+    {
+      "source": "cluster_0",
+      "target": "cluster_14",
+      "weight": 112.5,
+      "edge_count": 7
+    },
+    {
+      "source": "cluster_5",
+      "target": "cluster_7",
+      "weight": 2997.88,
+      "edge_count": 191
+    },
+    {
+      "source": "cluster_5",
+      "target": "cluster_10",
+      "weight": 585.47,
+      "edge_count": 43
+    },
+    {
+      "source": "cluster_5",
+      "target": "cluster_8",
+      "weight": 1293.82,
+      "edge_count": 82
+    },
+    {
+      "source": "cluster_1",
+      "target": "cluster_8",
+      "weight": 5185.47,
+      "edge_count": 257
+    },
+    {
+      "source": "cluster_1",
+      "target": "cluster_13",
+      "weight": 1495.23,
+      "edge_count": 116
+    },
+    {
+      "source": "cluster_2",
+      "target": "cluster_12",
+      "weight": 331.35,
+      "edge_count": 22
+    },
+    {
+      "source": "cluster_4",
+      "target": "cluster_6",
+      "weight": 626.11,
+      "edge_count": 47
+    },
+    {
+      "source": "cluster_4",
+      "target": "cluster_9",
+      "weight": 2629.38,
+      "edge_count": 191
+    },
+    {
+      "source": "cluster_7",
+      "target": "cluster_12",
+      "weight": 226.56,
+      "edge_count": 15
+    },
+    {
+      "source": "cluster_9",
+      "target": "cluster_12",
+      "weight": 336.92,
+      "edge_count": 28
+    },
+    {
+      "source": "cluster_2",
+      "target": "cluster_4",
+      "weight": 1485.72,
+      "edge_count": 98
+    },
+    {
+      "source": "cluster_4",
+      "target": "cluster_5",
+      "weight": 1202.65,
+      "edge_count": 89
+    },
+    {
+      "source": "cluster_8",
+      "target": "cluster_10",
+      "weight": 57.54,
+      "edge_count": 4
+    },
+    {
+      "source": "cluster_4",
+      "target": "cluster_11",
+      "weight": 69.02,
+      "edge_count": 6
+    },
+    {
+      "source": "cluster_7",
+      "target": "cluster_10",
+      "weight": 383.39,
+      "edge_count": 29
+    },
+    {
+      "source": "cluster_3",
+      "target": "cluster_14",
+      "weight": 48.78,
+      "edge_count": 4
+    },
+    {
+      "source": "cluster_7",
+      "target": "cluster_9",
+      "weight": 620.17,
+      "edge_count": 50
+    },
+    {
+      "source": "cluster_7",
+      "target": "cluster_8",
+      "weight": 1636.67,
+      "edge_count": 89
+    },
+    {
+      "source": "cluster_1",
+      "target": "cluster_11",
+      "weight": 1003.66,
+      "edge_count": 69
+    },
+    {
+      "source": "cluster_8",
+      "target": "cluster_13",
+      "weight": 122.35,
+      "edge_count": 9
+    },
+    {
+      "source": "cluster_12",
+      "target": "cluster_13",
+      "weight": 41.73,
+      "edge_count": 3
+    },
+    {
+      "source": "cluster_7",
+      "target": "cluster_13",
+      "weight": 172.28,
+      "edge_count": 14
+    },
+    {
+      "source": "cluster_2",
+      "target": "cluster_13",
+      "weight": 231.72,
+      "edge_count": 17
+    },
+    {
+      "source": "cluster_5",
+      "target": "cluster_12",
+      "weight": 224.93,
+      "edge_count": 16
+    },
+    {
+      "source": "cluster_5",
+      "target": "cluster_14",
+      "weight": 182.26,
+      "edge_count": 13
+    },
+    {
+      "source": "cluster_1",
+      "target": "cluster_14",
+      "weight": 196.26,
+      "edge_count": 15
+    },
+    {
+      "source": "cluster_11",
+      "target": "cluster_12",
+      "weight": 460.68,
+      "edge_count": 33
+    },
+    {
+      "source": "cluster_8",
+      "target": "cluster_11",
+      "weight": 26.34,
+      "edge_count": 2
+    },
+    {
+      "source": "cluster_6",
+      "target": "cluster_8",
+      "weight": 205.68,
+      "edge_count": 16
+    },
+    {
+      "source": "cluster_5",
+      "target": "cluster_15",
+      "weight": 14.01,
+      "edge_count": 1
+    },
+    {
+      "source": "cluster_0",
+      "target": "cluster_13",
+      "weight": 413.94,
+      "edge_count": 25
+    },
+    {
+      "source": "cluster_7",
+      "target": "cluster_14",
+      "weight": 70.94,
+      "edge_count": 5
+    },
+    {
+      "source": "cluster_5",
+      "target": "cluster_13",
+      "weight": 129.44,
+      "edge_count": 8
+    },
+    {
+      "source": "cluster_10",
+      "target": "cluster_12",
+      "weight": 48.65,
+      "edge_count": 4
+    },
+    {
+      "source": "cluster_8",
+      "target": "cluster_12",
+      "weight": 33.98,
+      "edge_count": 3
+    },
+    {
+      "source": "cluster_9",
+      "target": "cluster_13",
+      "weight": 46.17,
+      "edge_count": 2
+    },
+    {
+      "source": "cluster_10",
+      "target": "cluster_13",
+      "weight": 35.53,
+      "edge_count": 3
+    },
+    {
+      "source": "cluster_8",
+      "target": "cluster_14",
+      "weight": 25.75,
+      "edge_count": 2
+    },
+    {
+      "source": "cluster_4",
+      "target": "cluster_15",
+      "weight": 14.01,
+      "edge_count": 1
+    },
+    {
+      "source": "cluster_3",
+      "target": "cluster_15",
+      "weight": 21.25,
+      "edge_count": 1
+    },
+    {
+      "source": "cluster_9",
+      "target": "cluster_14",
+      "weight": 27.09,
+      "edge_count": 2
+    }
+  ],
+  "metadata": {
+    "total_clusters": 30,
+    "total_nodes": 3552,
+    "total_edges": 45773
+  }
+}

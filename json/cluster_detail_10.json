@@ -1,0 +1,6681 @@
+{
+  "cluster_id": 10,
+  "cluster_label": "Dutch / Tech & Digital",
+  "nodes": [
+    {
+      "id": "390331424747-18",
+      "type": "org",
+      "label": "IPC International, Inc.",
+      "name": "IPC International, Inc.",
+      "interests": "Promotes their own interests or the collective interests of their members",
+      "register_id": "390331424747-18",
+      "degree": 1
+    },
+    {
+      "id": "org_75e71c584e0a70a4",
+      "type": "org",
+      "label": "Impact-se",
+      "name": "Impact-se",
+      "interests": "",
+      "register_id": null,
+      "degree": 2
+    },
+    {
+      "id": "org_49d958adfa1dfbc3",
+      "type": "org",
+      "label": "Vogelbescherming",
+      "name": "Vogelbescherming",
+      "interests": "",
+      "register_id": null,
+      "degree": 2
+    },
+    {
+      "id": "org_dc7ff4351eee066b",
+      "type": "org",
+      "label": "LTO",
+      "name": "LTO",
+      "interests": "",
+      "register_id": null,
+      "degree": 4
+    },
+    {
+      "id": "793300922868-60",
+      "type": "org",
+      "label": "Zero Emissions Platform",
+      "name": "Zero Emissions Platform",
+      "interests": "Promotes their own interests or the collective interests of their members",
+      "register_id": "793300922868-60",
+      "degree": 47
+    },
+    {
+      "id": "113240451776-42",
+      "type": "org",
+      "label": "BOVAG",
+      "name": "BOVAG",
+      "interests": "Promotes their own interests or the collective interests of their members",
+      "register_id": "113240451776-42",
+      "degree": 10
+    },
+    {
+      "id": "606644737858-48",
+      "type": "org",
+      "label": "LyondellBasell Industries N.V.",
+      "name": "LyondellBasell Industries N.V.",
+      "interests": "Promotes their own interests or the collective interests of their members",
+      "register_id": "606644737858-48",
+      "degree": 11
+    },
+    {
+      "id": "70699309784-62",
+      "type": "org",
+      "label": "Stichting Wageningen Research",
+      "name": "Stichting Wageningen Research",
+      "interests": "Does not represent commercial interests",
+      "register_id": "70699309784-62",
+      "degree": 6
+    },
+    {
+      "id": "77926494338-54",
+      "type": "org",
+      "label": "Natuurmonumenten",
+      "name": "Natuurmonumenten",
+      "interests": "Does not represent commercial interests",
+      "register_id": "77926494338-54",
+      "degree": 13
+    },
+    {
+      "id": "20620934484-91",
+      "type": "org",
+      "label": "Huis van de Nederlandse Provincies",
+      "name": "Huis van de Nederlandse Provincies",
+      "interests": "Does not represent commercial interests",
+      "register_id": "20620934484-91",
+      "degree": 35
+    },
+    {
+      "id": "385192846585-87",
+      "type": "org",
+      "label": "Glastuinbouw Nederland",
+      "name": "Glastuinbouw Nederland",
+      "interests": "Promotes their own interests or the collective interests of their members",
+      "register_id": "385192846585-87",
+      "degree": 50
+    },
+    {
+      "id": "org_b770335575e467d0",
+      "type": "org",
+      "label": "Malta Business Bureau (MBB)",
+      "name": "Malta Business Bureau (MBB)",
+      "interests": "",
+      "register_id": null,
+      "degree": 1
+    },
+    {
+      "id": "738140415497-66",
+      "type": "org",
+      "label": "SABIC International Holdings B.V.",
+      "name": "SABIC International Holdings B.V.",
+      "interests": "Promotes their own interests or the collective interests of their members",
+      "register_id": "738140415497-66",
+      "degree": 3
+    },
+    {
+      "id": "914893310703-33",
+      "type": "org",
+      "label": "Ahold Delhaize",
+      "name": "Ahold Delhaize",
+      "interests": "Promotes their own interests or the collective interests of their members",
+      "register_id": "914893310703-33",
+      "degree": 15
+    },
+    {
+      "id": "org_ba873683e14cd4f7",
+      "type": "org",
+      "label": "Taipei Representative Office",
+      "name": "Taipei Representative Office",
+      "interests": "",
+      "register_id": null,
+      "degree": 1
+    },
+    {
+      "id": "org_c8bb0e11a251f956",
+      "type": "org",
+      "label": "BP",
+      "name": "BP",
+      "interests": "",
+      "register_id": null,
+      "degree": 16
+    },
+    {
+      "id": "779809814433-48",
+      "type": "org",
+      "label": "Plantum",
+      "name": "Plantum",
+      "interests": "Promotes their own interests or the collective interests of their members",
+      "register_id": "779809814433-48",
+      "degree": 35
+    },
+    {
+      "id": "05032108616-26",
+      "type": "org",
+      "label": "Shell Companies",
+      "name": "Shell Companies",
+      "interests": "Promotes their own interests or the collective interests of their members",
+      "register_id": "05032108616-26",
+      "degree": 34
+    },
+    {
+      "id": "450109092006-03",
+      "type": "org",
+      "label": "The Netherlands Institute of International Relations Clingendael",
+      "name": "The Netherlands Institute of International Relations Clingendael",
+      "interests": "Does not represent commercial interests",
+      "register_id": "450109092006-03",
+      "degree": 3
+    },
+    {
+      "id": "508823592253-86",
+      "type": "org",
+      "label": "Verbond van Verzekeraars",
+      "name": "Verbond van Verzekeraars",
+      "interests": "Promotes their own interests or the collective interests of their members",
+      "register_id": "508823592253-86",
+      "degree": 8
+    },
+    {
+      "id": "org_5f5a8df52ef059dc",
+      "type": "org",
+      "label": "Embassy of Canada",
+      "name": "Embassy of Canada",
+      "interests": "",
+      "register_id": null,
+      "degree": 1
+    },
+    {
+      "id": "org_c0f0e385d12d4c15",
+      "type": "org",
+      "label": "CCS Europe",
+      "name": "CCS Europe",
+      "interests": "",
+      "register_id": null,
+      "degree": 34
+    },
+    {
+      "id": "65780747925-05",
+      "type": "org",
+      "label": "Aedes vereniging van woningcorporaties",
+      "name": "Aedes vereniging van woningcorporaties",
+      "interests": "Promotes their own interests or the collective interests of their members",
+      "register_id": "65780747925-05",
+      "degree": 44
+    },
+    {
+      "id": "265233751161-18",
+      "type": "org",
+      "label": "Foreign Policy Council \"Ukrainian Prism\"",
+      "name": "Foreign Policy Council \"Ukrainian Prism\"",
+      "interests": "Does not represent commercial interests",
+      "register_id": "265233751161-18",
+      "degree": 1
+    },
+    {
+      "id": "4656646862-72",
+      "type": "org",
+      "label": "Land- en Tuinbouw Organisatie Nederland",
+      "name": "Land- en Tuinbouw Organisatie Nederland",
+      "interests": "Promotes their own interests or the collective interests of their members",
+      "register_id": "4656646862-72",
+      "degree": 18
+    },
+    {
+      "id": "455557951034-97",
+      "type": "org",
+      "label": "European Liberal Forum",
+      "name": "European Liberal Forum",
+      "interests": "Does not represent commercial interests",
+      "register_id": "455557951034-97",
+      "degree": 17
+    },
+    {
+      "id": "592872451677-29",
+      "type": "org",
+      "label": "UAP Coalitie Nederland",
+      "name": "UAP Coalitie Nederland",
+      "interests": "Does not represent commercial interests",
+      "register_id": "592872451677-29",
+      "degree": 1
+    },
+    {
+      "id": "118453295368-28",
+      "type": "org",
+      "label": "Stichting Sustainable Finance Lab",
+      "name": "Stichting Sustainable Finance Lab",
+      "interests": "Promotes their own interests or the collective interests of their members",
+      "register_id": "118453295368-28",
+      "degree": 1
+    },
+    {
+      "id": "org_cdc9040b96148f0f",
+      "type": "org",
+      "label": "Asocia\u021bia Energia Inteligent\u0103",
+      "name": "Asocia\u021bia Energia Inteligent\u0103",
+      "interests": "",
+      "register_id": null,
+      "degree": 1
+    },
+    {
+      "id": "org_56e08a80269f4fb0",
+      "type": "org",
+      "label": "ASD",
+      "name": "ASD",
+      "interests": "",
+      "register_id": null,
+      "degree": 1
+    },
+    {
+      "id": "org_25675d551dc4a03f",
+      "type": "org",
+      "label": "Ebay",
+      "name": "Ebay",
+      "interests": "",
+      "register_id": null,
+      "degree": 1
+    },
+    {
+      "id": "org_b48f2a0e53ca468e",
+      "type": "org",
+      "label": "Sustainable Finance Lab",
+      "name": "Sustainable Finance Lab",
+      "interests": "",
+      "register_id": null,
+      "degree": 11
+    },
+    {
+      "id": "726924727096-27",
+      "type": "org",
+      "label": "MBO Raad",
+      "name": "MBO Raad",
+      "interests": "Does not represent commercial interests",
+      "register_id": "726924727096-27",
+      "degree": 3
+    },
+    {
+      "id": "604742116836-08",
+      "type": "org",
+      "label": "DAF Trucks N.V.",
+      "name": "DAF Trucks N.V.",
+      "interests": "Promotes their own interests or the collective interests of their members",
+      "register_id": "604742116836-08",
+      "degree": 23
+    },
+    {
+      "id": "20210641335-88",
+      "type": "org",
+      "label": "Orgalim \u2013 Europe's Technology Industries",
+      "name": "Orgalim \u2013 Europe's Technology Industries",
+      "interests": "Promotes their own interests or the collective interests of their members",
+      "register_id": "20210641335-88",
+      "degree": 19
+    },
+    {
+      "id": "334674912578-83",
+      "type": "org",
+      "label": "Methanol Institute",
+      "name": "Methanol Institute",
+      "interests": "Promotes their own interests or the collective interests of their members",
+      "register_id": "334674912578-83",
+      "degree": 2
+    },
+    {
+      "id": "85606455727-29",
+      "type": "org",
+      "label": "Publyon",
+      "name": "Publyon",
+      "interests": "Advances interests of their clients",
+      "register_id": "85606455727-29",
+      "degree": 47
+    },
+    {
+      "id": "org_b97c4a45f5afecb6",
+      "type": "org",
+      "label": "SME United",
+      "name": "SME United",
+      "interests": "",
+      "register_id": null,
+      "degree": 8
+    },
+    {
+      "id": "724240721429-43",
+      "type": "org",
+      "label": "Erasmus Universitair Medisch Centrum Rotterdam",
+      "name": "Erasmus Universitair Medisch Centrum Rotterdam",
+      "interests": "Does not represent commercial interests",
+      "register_id": "724240721429-43",
+      "degree": 5
+    },
+    {
+      "id": "13255254129-80",
+      "type": "org",
+      "label": "Vereniging VNO-NCW",
+      "name": "Vereniging VNO-NCW",
+      "interests": "Promotes their own interests or the collective interests of their members",
+      "register_id": "13255254129-80",
+      "degree": 93
+    },
+    {
+      "id": "353231132587-96",
+      "type": "org",
+      "label": "ABN AMRO Bank N.V.",
+      "name": "ABN AMRO Bank N.V.",
+      "interests": "Promotes their own interests or the collective interests of their members",
+      "register_id": "353231132587-96",
+      "degree": 9
+    },
+    {
+      "id": "501735195390-18",
+      "type": "org",
+      "label": "Stichting High-Speed Rail Nederland",
+      "name": "Stichting High-Speed Rail Nederland",
+      "interests": "Does not represent commercial interests",
+      "register_id": "501735195390-18",
+      "degree": 7
+    },
+    {
+      "id": "302212447149-07",
+      "type": "org",
+      "label": "Avery Dennison Materials Europe BV",
+      "name": "Avery Dennison Materials Europe BV",
+      "interests": "Promotes their own interests or the collective interests of their members",
+      "register_id": "302212447149-07",
+      "degree": 5
+    },
+    {
+      "id": "org_3edcb05777c3ca8a",
+      "type": "org",
+      "label": "De Nederlandsche Bank",
+      "name": "De Nederlandsche Bank",
+      "interests": "",
+      "register_id": null,
+      "degree": 3
+    },
+    {
+      "id": "99937329074-65",
+      "type": "org",
+      "label": "Mars Incorporated",
+      "name": "Mars Incorporated",
+      "interests": "Promotes their own interests or the collective interests of their members",
+      "register_id": "99937329074-65",
+      "degree": 18
+    },
+    {
+      "id": "953927613272-05",
+      "type": "org",
+      "label": "Stichting Woord en Daad",
+      "name": "Stichting Woord en Daad",
+      "interests": "Does not represent commercial interests",
+      "register_id": "953927613272-05",
+      "degree": 4
+    },
+    {
+      "id": "910956030915-30",
+      "type": "org",
+      "label": "OLX Global BV",
+      "name": "OLX Global BV",
+      "interests": "Promotes their own interests or the collective interests of their members",
+      "register_id": "910956030915-30",
+      "degree": 1
+    },
+    {
+      "id": "510247941330-21",
+      "type": "org",
+      "label": "FincoEnergies B.V.",
+      "name": "FincoEnergies B.V.",
+      "interests": "Promotes their own interests or the collective interests of their members",
+      "register_id": "510247941330-21",
+      "degree": 23
+    },
+    {
+      "id": "org_f0355e770fd988dc",
+      "type": "org",
+      "label": "Metropoolregio Amsterdam",
+      "name": "Metropoolregio Amsterdam",
+      "interests": "",
+      "register_id": null,
+      "degree": 1
+    },
+    {
+      "id": "org_4d22e8c41853627a",
+      "type": "org",
+      "label": "Koninklijke Vereniging van Nederlandse Reders",
+      "name": "Koninklijke Vereniging van Nederlandse Reders",
+      "interests": "",
+      "register_id": null,
+      "degree": 7
+    },
+    {
+      "id": "568222016448-48",
+      "type": "org",
+      "label": "Harley-Davidson Europe",
+      "name": "Harley-Davidson Europe",
+      "interests": "Promotes their own interests or the collective interests of their members",
+      "register_id": "568222016448-48",
+      "degree": 1
+    },
+    {
+      "id": "32705794105-55",
+      "type": "org",
+      "label": "Vereniging van Nederlandse Gemeenten",
+      "name": "Vereniging van Nederlandse Gemeenten",
+      "interests": "Promotes their own interests or the collective interests of their members",
+      "register_id": "32705794105-55",
+      "degree": 4
+    },
+    {
+      "id": "930637620172-95",
+      "type": "org",
+      "label": "Havenbedrijf Rotterdam NV",
+      "name": "Havenbedrijf Rotterdam NV",
+      "interests": "Promotes their own interests or the collective interests of their members",
+      "register_id": "930637620172-95",
+      "degree": 16
+    },
+    {
+      "id": "052269393423-46",
+      "type": "org",
+      "label": "ASML Netherlands B.V.",
+      "name": "ASML Netherlands B.V.",
+      "interests": "Promotes their own interests or the collective interests of their members",
+      "register_id": "052269393423-46",
+      "degree": 2
+    },
+    {
+      "id": "087418193041-10",
+      "type": "org",
+      "label": "Centraal Bureau Levensmiddelenhandel",
+      "name": "Centraal Bureau Levensmiddelenhandel",
+      "interests": "Promotes their own interests or the collective interests of their members",
+      "register_id": "087418193041-10",
+      "degree": 14
+    },
+    {
+      "id": "942505344125-37",
+      "type": "org",
+      "label": "Co\u00f6peratie Koninklijke Cosun U.A.",
+      "name": "Co\u00f6peratie Koninklijke Cosun U.A.",
+      "interests": "Promotes their own interests or the collective interests of their members",
+      "register_id": "942505344125-37",
+      "degree": 40
+    },
+    {
+      "id": "852199818450-61",
+      "type": "org",
+      "label": "Koppert",
+      "name": "Koppert",
+      "interests": "Promotes their own interests or the collective interests of their members",
+      "register_id": "852199818450-61",
+      "degree": 8
+    },
+    {
+      "id": "75311753240-67",
+      "type": "org",
+      "label": "Honeywell Europe NV",
+      "name": "Honeywell Europe NV",
+      "interests": "Promotes their own interests or the collective interests of their members",
+      "register_id": "75311753240-67",
+      "degree": 25
+    },
+    {
+      "id": "400320250147-12",
+      "type": "org",
+      "label": "Just Eat Takeaway.com N.V.",
+      "name": "Just Eat Takeaway.com N.V.",
+      "interests": "Promotes their own interests or the collective interests of their members",
+      "register_id": "400320250147-12",
+      "degree": 3
+    },
+    {
+      "id": "19736167705-91",
+      "type": "org",
+      "label": "Deutsche Unternehmensinitiative Energieeffizienz e.V.",
+      "name": "Deutsche Unternehmensinitiative Energieeffizienz e.V.",
+      "interests": "Does not represent commercial interests",
+      "register_id": "19736167705-91",
+      "degree": 1
+    },
+    {
+      "id": "org_b8948e4230133df0",
+      "type": "org",
+      "label": "European Tyre and Rubber Manufacturers\u2019 Association - ETRMA",
+      "name": "European Tyre and Rubber Manufacturers\u2019 Association - ETRMA",
+      "interests": "",
+      "register_id": null,
+      "degree": 1
+    },
+    {
+      "id": "org_abca748076927efd",
+      "type": "org",
+      "label": "Gemeente Rotterdam",
+      "name": "Gemeente Rotterdam",
+      "interests": "",
+      "register_id": null,
+      "degree": 2
+    },
+    {
+      "id": "org_5903170cdc585d99",
+      "type": "org",
+      "label": "EUROPEN",
+      "name": "EUROPEN",
+      "interests": "",
+      "register_id": null,
+      "degree": 15
+    },
+    {
+      "id": "953017548438-73",
+      "type": "org",
+      "label": "JDE Peet's",
+      "name": "JDE Peet's",
+      "interests": "Promotes their own interests or the collective interests of their members",
+      "register_id": "953017548438-73",
+      "degree": 25
+    },
+    {
+      "id": "17798717671-62",
+      "type": "org",
+      "label": "Bureau Brussel Vewin - Unie van Waterschappen",
+      "name": "Bureau Brussel Vewin - Unie van Waterschappen",
+      "interests": "Promotes their own interests or the collective interests of their members",
+      "register_id": "17798717671-62",
+      "degree": 36
+    },
+    {
+      "id": "org_70cc2d97a7b6a8bd",
+      "type": "org",
+      "label": "IMEC",
+      "name": "IMEC",
+      "interests": "",
+      "register_id": null,
+      "degree": 2
+    },
+    {
+      "id": "624025437423-56",
+      "type": "org",
+      "label": "Koninklijke Bouwend Nederland",
+      "name": "Koninklijke Bouwend Nederland",
+      "interests": "Promotes their own interests or the collective interests of their members",
+      "register_id": "624025437423-56",
+      "degree": 9
+    },
+    {
+      "id": "560446038784-46",
+      "type": "org",
+      "label": "Policy Hub - Circularity for Apparel and Footwear",
+      "name": "Policy Hub - Circularity for Apparel and Footwear",
+      "interests": "Promotes their own interests or the collective interests of their members",
+      "register_id": "560446038784-46",
+      "degree": 5
+    },
+    {
+      "id": "05673984520-73",
+      "type": "org",
+      "label": "Koninklijke Vereniging MKB-Nederland",
+      "name": "Koninklijke Vereniging MKB-Nederland",
+      "interests": "Promotes their own interests or the collective interests of their members",
+      "register_id": "05673984520-73",
+      "degree": 31
+    },
+    {
+      "id": "202702447560-24",
+      "type": "org",
+      "label": "Chartered Institute of Export & International Trade",
+      "name": "Chartered Institute of Export & International Trade",
+      "interests": "Promotes their own interests or the collective interests of their members",
+      "register_id": "202702447560-24",
+      "degree": 4
+    },
+    {
+      "id": "824033130961-66",
+      "type": "org",
+      "label": "GroentenFruit Huis",
+      "name": "GroentenFruit Huis",
+      "interests": "Promotes their own interests or the collective interests of their members",
+      "register_id": "824033130961-66",
+      "degree": 6
+    },
+    {
+      "id": "386723034383-54",
+      "type": "org",
+      "label": "Koninklijke Notari\u00eble Beroepsorganisatie",
+      "name": "Koninklijke Notari\u00eble Beroepsorganisatie",
+      "interests": "Promotes their own interests or the collective interests of their members",
+      "register_id": "386723034383-54",
+      "degree": 3
+    },
+    {
+      "id": "10944091576-90",
+      "type": "org",
+      "label": "Bureau Brussels Consulting",
+      "name": "Bureau Brussels Consulting",
+      "interests": "Advances interests of their clients",
+      "register_id": "10944091576-90",
+      "degree": 18
+    },
+    {
+      "id": "29967294656-11",
+      "type": "org",
+      "label": "N.V. Nederlandse Gasunie",
+      "name": "N.V. Nederlandse Gasunie",
+      "interests": "Promotes their own interests or the collective interests of their members",
+      "register_id": "29967294656-11",
+      "degree": 33
+    },
+    {
+      "id": "org_b2754ebd9c39fdb9",
+      "type": "org",
+      "label": "Gaza Humanitarian Foundation",
+      "name": "Gaza Humanitarian Foundation",
+      "interests": "",
+      "register_id": null,
+      "degree": 1
+    },
+    {
+      "id": "org_112912e26677d217",
+      "type": "org",
+      "label": "Conference",
+      "name": "Conference",
+      "interests": "",
+      "register_id": null,
+      "degree": 1
+    },
+    {
+      "id": "org_1862938034275c47",
+      "type": "org",
+      "label": "FoodNL",
+      "name": "FoodNL",
+      "interests": "",
+      "register_id": null,
+      "degree": 4
+    },
+    {
+      "id": "org_844812aee34e4fcb",
+      "type": "org",
+      "label": "CCSA",
+      "name": "CCSA",
+      "interests": "",
+      "register_id": null,
+      "degree": 19
+    },
+    {
+      "id": "org_754f76de60e1871e",
+      "type": "org",
+      "label": "EDEKA",
+      "name": "EDEKA",
+      "interests": "",
+      "register_id": null,
+      "degree": 1
+    },
+    {
+      "id": "org_29183ecc26ca91aa",
+      "type": "org",
+      "label": "Emergent BioSolutions",
+      "name": "Emergent BioSolutions",
+      "interests": "",
+      "register_id": null,
+      "degree": 1
+    },
+    {
+      "id": "84476202986-17",
+      "type": "org",
+      "label": "Pensioenfederatie (Federation of the Dutch Pension Funds)",
+      "name": "Pensioenfederatie (Federation of the Dutch Pension Funds)",
+      "interests": "Promotes their own interests or the collective interests of their members",
+      "register_id": "84476202986-17",
+      "degree": 7
+    },
+    {
+      "id": "827688315793-86",
+      "type": "org",
+      "label": "Heineken N.V.",
+      "name": "Heineken N.V.",
+      "interests": "Promotes their own interests or the collective interests of their members",
+      "register_id": "827688315793-86",
+      "degree": 22
+    },
+    {
+      "id": "08746491502-16",
+      "type": "org",
+      "label": "Tata Steel Nederland",
+      "name": "Tata Steel Nederland",
+      "interests": "Promotes their own interests or the collective interests of their members",
+      "register_id": "08746491502-16",
+      "degree": 44
+    },
+    {
+      "id": "95713206856-14",
+      "type": "org",
+      "label": "AJC Transatlantic Institute",
+      "name": "AJC Transatlantic Institute",
+      "interests": "Does not represent commercial interests",
+      "register_id": "95713206856-14",
+      "degree": 6
+    },
+    {
+      "id": "org_0a1a3d9f9104baa4",
+      "type": "org",
+      "label": "Brancheorganisatie Nederlandse Zeehavens",
+      "name": "Brancheorganisatie Nederlandse Zeehavens",
+      "interests": "",
+      "register_id": null,
+      "degree": 7
+    },
+    {
+      "id": "41712511261-57",
+      "type": "org",
+      "label": "Transport en Logistiek Nederland",
+      "name": "Transport en Logistiek Nederland",
+      "interests": "Promotes their own interests or the collective interests of their members",
+      "register_id": "41712511261-57",
+      "degree": 35
+    },
+    {
+      "id": "924832594611-79",
+      "type": "org",
+      "label": "MVO Platform",
+      "name": "MVO Platform",
+      "interests": "Promotes their own interests or the collective interests of their members",
+      "register_id": "924832594611-79",
+      "degree": 4
+    },
+    {
+      "id": "org_424e0980fddd1f21",
+      "type": "org",
+      "label": "TLN",
+      "name": "TLN",
+      "interests": "",
+      "register_id": null,
+      "degree": 23
+    },
+    {
+      "id": "1894704851-83",
+      "type": "org",
+      "label": "European Express Association",
+      "name": "European Express Association",
+      "interests": "Promotes their own interests or the collective interests of their members",
+      "register_id": "1894704851-83",
+      "degree": 9
+    },
+    {
+      "id": "01678796979-90",
+      "type": "org",
+      "label": "Netherlands House for Education and Research (Neth-ER)",
+      "name": "Netherlands House for Education and Research (Neth-ER)",
+      "interests": "Does not represent commercial interests",
+      "register_id": "01678796979-90",
+      "degree": 23
+    },
+    {
+      "id": "358015448693-47",
+      "type": "org",
+      "label": "de Nederlandse ggz",
+      "name": "de Nederlandse ggz",
+      "interests": "Promotes their own interests or the collective interests of their members",
+      "register_id": "358015448693-47",
+      "degree": 2
+    },
+    {
+      "id": "org_0264d4d2adfb28c0",
+      "type": "org",
+      "label": "Sustainable Public Affairs",
+      "name": "Sustainable Public Affairs",
+      "interests": "",
+      "register_id": null,
+      "degree": 17
+    },
+    {
+      "id": "994694795829-46",
+      "type": "org",
+      "label": "Vereniging Universiteiten van Nederland",
+      "name": "Vereniging Universiteiten van Nederland",
+      "interests": "Does not represent commercial interests",
+      "register_id": "994694795829-46",
+      "degree": 6
+    },
+    {
+      "id": "793750635630-82",
+      "type": "org",
+      "label": "Royal Schiphol Group",
+      "name": "Royal Schiphol Group",
+      "interests": "Promotes their own interests or the collective interests of their members",
+      "register_id": "793750635630-82",
+      "degree": 38
+    },
+    {
+      "id": "org_a20dc89494b88a77",
+      "type": "org",
+      "label": "Euric",
+      "name": "Euric",
+      "interests": "",
+      "register_id": null,
+      "degree": 9
+    },
+    {
+      "id": "705450224079-05",
+      "type": "org",
+      "label": "Universiteit Leiden",
+      "name": "Universiteit Leiden",
+      "interests": "Does not represent commercial interests",
+      "register_id": "705450224079-05",
+      "degree": 2
+    },
+    {
+      "id": "org_0ef5fb86cfb961a2",
+      "type": "org",
+      "label": "AmCham",
+      "name": "AmCham",
+      "interests": "",
+      "register_id": null,
+      "degree": 38
+    },
+    {
+      "id": "580486295858-34",
+      "type": "org",
+      "label": "Chemelot",
+      "name": "Chemelot",
+      "interests": "Promotes their own interests or the collective interests of their members",
+      "register_id": "580486295858-34",
+      "degree": 46
+    },
+    {
+      "id": "090804049414-19",
+      "type": "org",
+      "label": "Israel Allies Foundation Europe",
+      "name": "Israel Allies Foundation Europe",
+      "interests": "Does not represent commercial interests",
+      "register_id": "090804049414-19",
+      "degree": 2
+    },
+    {
+      "id": "125110346079-89",
+      "type": "org",
+      "label": "Deltalinqs",
+      "name": "Deltalinqs",
+      "interests": "Promotes their own interests or the collective interests of their members",
+      "register_id": "125110346079-89",
+      "degree": 8
+    },
+    {
+      "id": "org_ea64dca00297190e",
+      "type": "org",
+      "label": "International Organisation of Oil and Gas Producers",
+      "name": "International Organisation of Oil and Gas Producers",
+      "interests": "",
+      "register_id": null,
+      "degree": 16
+    },
+    {
+      "id": "377643141797-21",
+      "type": "org",
+      "label": "EU Watch",
+      "name": "EU Watch",
+      "interests": "Does not represent commercial interests",
+      "register_id": "377643141797-21",
+      "degree": 2
+    },
+    {
+      "id": "119101322906-62",
+      "type": "org",
+      "label": "Air Products",
+      "name": "Air Products",
+      "interests": "Promotes their own interests or the collective interests of their members",
+      "register_id": "119101322906-62",
+      "degree": 4
+    },
+    {
+      "id": "org_588b1eda9ca60d42",
+      "type": "org",
+      "label": "Autoriteit Persoonsgegevens",
+      "name": "Autoriteit Persoonsgegevens",
+      "interests": "",
+      "register_id": null,
+      "degree": 4
+    },
+    {
+      "id": "112051847836-65",
+      "type": "org",
+      "label": "Nyrstar Netherlands (Holdings) B.V.",
+      "name": "Nyrstar Netherlands (Holdings) B.V.",
+      "interests": "Promotes their own interests or the collective interests of their members",
+      "register_id": "112051847836-65",
+      "degree": 35
+    },
+    {
+      "id": "289810215426-07",
+      "type": "org",
+      "label": "TenneT Holding B.V.",
+      "name": "TenneT Holding B.V.",
+      "interests": "Promotes their own interests or the collective interests of their members",
+      "register_id": "289810215426-07",
+      "degree": 31
+    },
+    {
+      "id": "006687715492-92",
+      "type": "org",
+      "label": "Rabobank",
+      "name": "Rabobank",
+      "interests": "Promotes their own interests or the collective interests of their members",
+      "register_id": "006687715492-92",
+      "degree": 8
+    },
+    {
+      "id": "056048443448-39",
+      "type": "org",
+      "label": "Technische Universiteit Delft",
+      "name": "Technische Universiteit Delft",
+      "interests": "Does not represent commercial interests",
+      "register_id": "056048443448-39",
+      "degree": 2
+    },
+    {
+      "id": "org_499f34202db489aa",
+      "type": "org",
+      "label": "Bol.com",
+      "name": "Bol.com",
+      "interests": "",
+      "register_id": null,
+      "degree": 1
+    },
+    {
+      "id": "org_d8f9c3940c6db678",
+      "type": "org",
+      "label": "VEMOBIN",
+      "name": "VEMOBIN",
+      "interests": "",
+      "register_id": null,
+      "degree": 7
+    },
+    {
+      "id": "org_4fefc0402846d7fc",
+      "type": "org",
+      "label": "KVNR",
+      "name": "KVNR",
+      "interests": "",
+      "register_id": null,
+      "degree": 20
+    },
+    {
+      "id": "org_fc4c3c046ac0df30",
+      "type": "org",
+      "label": "Stichting Ons Geld",
+      "name": "Stichting Ons Geld",
+      "interests": "",
+      "register_id": null,
+      "degree": 5
+    },
+    {
+      "id": "525441739605-60",
+      "type": "org",
+      "label": "Nederlandse Spoorwegen",
+      "name": "Nederlandse Spoorwegen",
+      "interests": "Promotes their own interests or the collective interests of their members",
+      "register_id": "525441739605-60",
+      "degree": 24
+    },
+    {
+      "id": "org_ad07640883222e26",
+      "type": "org",
+      "label": "CNV",
+      "name": "CNV",
+      "interests": "",
+      "register_id": null,
+      "degree": 1
+    },
+    {
+      "id": "015617142386-42",
+      "type": "org",
+      "label": "Classifieds Marketplaces Europe",
+      "name": "Classifieds Marketplaces Europe",
+      "interests": "Promotes their own interests or the collective interests of their members",
+      "register_id": "015617142386-42",
+      "degree": 2
+    },
+    {
+      "id": "059134051904-87",
+      "type": "org",
+      "label": "Battolyser Systems",
+      "name": "Battolyser Systems",
+      "interests": "Promotes their own interests or the collective interests of their members",
+      "register_id": "059134051904-87",
+      "degree": 16
+    },
+    {
+      "id": "40524063921-20",
+      "type": "org",
+      "label": "Netherlands Organisation for Applied Scientific Research TNO",
+      "name": "Netherlands Organisation for Applied Scientific Research TNO",
+      "interests": "Does not represent commercial interests",
+      "register_id": "40524063921-20",
+      "degree": 12
+    },
+    {
+      "id": "org_4ce317772d3b5b1a",
+      "type": "org",
+      "label": "Embassy of Israel",
+      "name": "Embassy of Israel",
+      "interests": "",
+      "register_id": null,
+      "degree": 3
+    },
+    {
+      "id": "525700249853-18",
+      "type": "org",
+      "label": "Stichting Mondiaal FNV",
+      "name": "Stichting Mondiaal FNV",
+      "interests": "Does not represent commercial interests",
+      "register_id": "525700249853-18",
+      "degree": 8
+    },
+    {
+      "id": "576870951717-17",
+      "type": "org",
+      "label": "Bol",
+      "name": "Bol",
+      "interests": "Promotes their own interests or the collective interests of their members",
+      "register_id": "576870951717-17",
+      "degree": 4
+    },
+    {
+      "id": "828715012462-94",
+      "type": "org",
+      "label": "TOMRA Systems ASA",
+      "name": "TOMRA Systems ASA",
+      "interests": "Promotes their own interests or the collective interests of their members",
+      "register_id": "828715012462-94",
+      "degree": 23
+    },
+    {
+      "id": "035366013790-68",
+      "type": "org",
+      "label": "Koninklijke Philips",
+      "name": "Koninklijke Philips",
+      "interests": "Promotes their own interests or the collective interests of their members",
+      "register_id": "035366013790-68",
+      "degree": 10
+    },
+    {
+      "id": "org_bac780517e0e347b",
+      "type": "org",
+      "label": "Provincie Limburg",
+      "name": "Provincie Limburg",
+      "interests": "",
+      "register_id": null,
+      "degree": 2
+    },
+    {
+      "id": "org_18472d783c7af3af",
+      "type": "org",
+      "label": "Mission of Georgia to the EU",
+      "name": "Mission of Georgia to the EU",
+      "interests": "",
+      "register_id": null,
+      "degree": 1
+    },
+    {
+      "id": "76441066192-30",
+      "type": "org",
+      "label": "KLM Royal Dutch Airlines",
+      "name": "KLM Royal Dutch Airlines",
+      "interests": "Promotes their own interests or the collective interests of their members",
+      "register_id": "76441066192-30",
+      "degree": 15
+    },
+    {
+      "id": "701646744539-02",
+      "type": "org",
+      "label": "Ecocem Materials Ltd",
+      "name": "Ecocem Materials Ltd",
+      "interests": "Promotes their own interests or the collective interests of their members",
+      "register_id": "701646744539-02",
+      "degree": 28
+    },
+    {
+      "id": "org_023d2a061ef7b6b1",
+      "type": "org",
+      "label": "Elnet",
+      "name": "Elnet",
+      "interests": "",
+      "register_id": null,
+      "degree": 9
+    },
+    {
+      "id": "38392131923-05",
+      "type": "org",
+      "label": "KPN",
+      "name": "KPN",
+      "interests": "Promotes their own interests or the collective interests of their members",
+      "register_id": "38392131923-05",
+      "degree": 47
+    },
+    {
+      "id": "51894741860-19",
+      "type": "org",
+      "label": "Nederlandse Vereniging van Banken / Dutch Banking Association",
+      "name": "Nederlandse Vereniging van Banken / Dutch Banking Association",
+      "interests": "Promotes their own interests or the collective interests of their members",
+      "register_id": "51894741860-19",
+      "degree": 13
+    },
+    {
+      "id": "714466824568-72",
+      "type": "org",
+      "label": "Clean Clothes Campaign / Stichting Schone Kleren Kampagne",
+      "name": "Clean Clothes Campaign / Stichting Schone Kleren Kampagne",
+      "interests": "Does not represent commercial interests",
+      "register_id": "714466824568-72",
+      "degree": 1
+    },
+    {
+      "id": "61866543669-46",
+      "type": "org",
+      "label": "European Branded Clothing Association",
+      "name": "European Branded Clothing Association",
+      "interests": "Promotes their own interests or the collective interests of their members",
+      "register_id": "61866543669-46",
+      "degree": 9
+    },
+    {
+      "id": "org_c8f2cf848eb23e89",
+      "type": "org",
+      "label": "CBL",
+      "name": "CBL",
+      "interests": "",
+      "register_id": null,
+      "degree": 6
+    },
+    {
+      "id": "282227450818-50",
+      "type": "org",
+      "label": "Vereniging Innovatieve Geneesmiddelen",
+      "name": "Vereniging Innovatieve Geneesmiddelen",
+      "interests": "Promotes their own interests or the collective interests of their members",
+      "register_id": "282227450818-50",
+      "degree": 34
+    },
+    {
+      "id": "513095842513-75",
+      "type": "org",
+      "label": "Mosa Meat BV",
+      "name": "Mosa Meat BV",
+      "interests": "Promotes their own interests or the collective interests of their members",
+      "register_id": "513095842513-75",
+      "degree": 6
+    }
+  ],
+  "links": [
+    {
+      "source": "390331424747-18",
+      "target": "20210641335-88",
+      "weight": 11.8,
+      "shared": 2
+    },
+    {
+      "source": "org_75e71c584e0a70a4",
+      "target": "95713206856-14",
+      "weight": 23.39,
+      "shared": 4
+    },
+    {
+      "source": "org_75e71c584e0a70a4",
+      "target": "org_023d2a061ef7b6b1",
+      "weight": 11.97,
+      "shared": 2
+    },
+    {
+      "source": "org_49d958adfa1dfbc3",
+      "target": "13255254129-80",
+      "weight": 12.44,
+      "shared": 2
+    },
+    {
+      "source": "org_49d958adfa1dfbc3",
+      "target": "77926494338-54",
+      "weight": 12.44,
+      "shared": 2
+    },
+    {
+      "source": "org_dc7ff4351eee066b",
+      "target": "779809814433-48",
+      "weight": 10.48,
+      "shared": 2
+    },
+    {
+      "source": "org_dc7ff4351eee066b",
+      "target": "13255254129-80",
+      "weight": 10.48,
+      "shared": 2
+    },
+    {
+      "source": "org_dc7ff4351eee066b",
+      "target": "org_4fefc0402846d7fc",
+      "weight": 10.48,
+      "shared": 2
+    },
+    {
+      "source": "org_dc7ff4351eee066b",
+      "target": "org_1862938034275c47",
+      "weight": 10.48,
+      "shared": 2
+    },
+    {
+      "source": "793300922868-60",
+      "target": "828715012462-94",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "793300922868-60",
+      "target": "20620934484-91",
+      "weight": 10.31,
+      "shared": 2
+    },
+    {
+      "source": "793300922868-60",
+      "target": "20210641335-88",
+      "weight": 10.31,
+      "shared": 2
+    },
+    {
+      "source": "793300922868-60",
+      "target": "510247941330-21",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "793300922868-60",
+      "target": "05673984520-73",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "793300922868-60",
+      "target": "779809814433-48",
+      "weight": 10.31,
+      "shared": 2
+    },
+    {
+      "source": "793300922868-60",
+      "target": "08746491502-16",
+      "weight": 15.87,
+      "shared": 3
+    },
+    {
+      "source": "793300922868-60",
+      "target": "289810215426-07",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "793300922868-60",
+      "target": "112051847836-65",
+      "weight": 15.87,
+      "shared": 3
+    },
+    {
+      "source": "793300922868-60",
+      "target": "793750635630-82",
+      "weight": 15.87,
+      "shared": 3
+    },
+    {
+      "source": "793300922868-60",
+      "target": "953017548438-73",
+      "weight": 10.31,
+      "shared": 2
+    },
+    {
+      "source": "793300922868-60",
+      "target": "05032108616-26",
+      "weight": 15.87,
+      "shared": 3
+    },
+    {
+      "source": "793300922868-60",
+      "target": "059134051904-87",
+      "weight": 10.3,
+      "shared": 2
+    },
+    {
+      "source": "793300922868-60",
+      "target": "10944091576-90",
+      "weight": 10.31,
+      "shared": 2
+    },
+    {
+      "source": "793300922868-60",
+      "target": "13255254129-80",
+      "weight": 21.2,
+      "shared": 4
+    },
+    {
+      "source": "793300922868-60",
+      "target": "17798717671-62",
+      "weight": 10.31,
+      "shared": 2
+    },
+    {
+      "source": "793300922868-60",
+      "target": "282227450818-50",
+      "weight": 10.31,
+      "shared": 2
+    },
+    {
+      "source": "793300922868-60",
+      "target": "29967294656-11",
+      "weight": 15.87,
+      "shared": 3
+    },
+    {
+      "source": "793300922868-60",
+      "target": "38392131923-05",
+      "weight": 15.87,
+      "shared": 3
+    },
+    {
+      "source": "793300922868-60",
+      "target": "385192846585-87",
+      "weight": 15.87,
+      "shared": 3
+    },
+    {
+      "source": "793300922868-60",
+      "target": "41712511261-57",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "793300922868-60",
+      "target": "455557951034-97",
+      "weight": 10.3,
+      "shared": 2
+    },
+    {
+      "source": "793300922868-60",
+      "target": "525441739605-60",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "793300922868-60",
+      "target": "580486295858-34",
+      "weight": 15.87,
+      "shared": 3
+    },
+    {
+      "source": "793300922868-60",
+      "target": "604742116836-08",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "793300922868-60",
+      "target": "65780747925-05",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "793300922868-60",
+      "target": "701646744539-02",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "793300922868-60",
+      "target": "75311753240-67",
+      "weight": 15.87,
+      "shared": 3
+    },
+    {
+      "source": "793300922868-60",
+      "target": "827688315793-86",
+      "weight": 10.31,
+      "shared": 2
+    },
+    {
+      "source": "793300922868-60",
+      "target": "85606455727-29",
+      "weight": 21.2,
+      "shared": 4
+    },
+    {
+      "source": "793300922868-60",
+      "target": "942505344125-37",
+      "weight": 15.87,
+      "shared": 3
+    },
+    {
+      "source": "793300922868-60",
+      "target": "99937329074-65",
+      "weight": 10.31,
+      "shared": 2
+    },
+    {
+      "source": "793300922868-60",
+      "target": "org_0264d4d2adfb28c0",
+      "weight": 10.3,
+      "shared": 2
+    },
+    {
+      "source": "793300922868-60",
+      "target": "org_0ef5fb86cfb961a2",
+      "weight": 15.63,
+      "shared": 3
+    },
+    {
+      "source": "793300922868-60",
+      "target": "org_424e0980fddd1f21",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "793300922868-60",
+      "target": "org_4fefc0402846d7fc",
+      "weight": 10.3,
+      "shared": 2
+    },
+    {
+      "source": "793300922868-60",
+      "target": "org_5903170cdc585d99",
+      "weight": 10.31,
+      "shared": 2
+    },
+    {
+      "source": "793300922868-60",
+      "target": "org_844812aee34e4fcb",
+      "weight": 10.31,
+      "shared": 2
+    },
+    {
+      "source": "793300922868-60",
+      "target": "org_c0f0e385d12d4c15",
+      "weight": 15.87,
+      "shared": 3
+    },
+    {
+      "source": "793300922868-60",
+      "target": "org_c8bb0e11a251f956",
+      "weight": 10.3,
+      "shared": 2
+    },
+    {
+      "source": "793300922868-60",
+      "target": "org_ea64dca00297190e",
+      "weight": 10.3,
+      "shared": 2
+    },
+    {
+      "source": "793300922868-60",
+      "target": "01678796979-90",
+      "weight": 10.9,
+      "shared": 2
+    },
+    {
+      "source": "793300922868-60",
+      "target": "113240451776-42",
+      "weight": 10.89,
+      "shared": 2
+    },
+    {
+      "source": "793300922868-60",
+      "target": "77926494338-54",
+      "weight": 10.9,
+      "shared": 2
+    },
+    {
+      "source": "793300922868-60",
+      "target": "930637620172-95",
+      "weight": 10.9,
+      "shared": 2
+    },
+    {
+      "source": "793300922868-60",
+      "target": "035366013790-68",
+      "weight": 10.66,
+      "shared": 2
+    },
+    {
+      "source": "793300922868-60",
+      "target": "org_d8f9c3940c6db678",
+      "weight": 10.66,
+      "shared": 2
+    },
+    {
+      "source": "113240451776-42",
+      "target": "08746491502-16",
+      "weight": 10.89,
+      "shared": 2
+    },
+    {
+      "source": "113240451776-42",
+      "target": "112051847836-65",
+      "weight": 10.89,
+      "shared": 2
+    },
+    {
+      "source": "113240451776-42",
+      "target": "38392131923-05",
+      "weight": 10.89,
+      "shared": 2
+    },
+    {
+      "source": "113240451776-42",
+      "target": "29967294656-11",
+      "weight": 10.89,
+      "shared": 2
+    },
+    {
+      "source": "113240451776-42",
+      "target": "75311753240-67",
+      "weight": 10.89,
+      "shared": 2
+    },
+    {
+      "source": "113240451776-42",
+      "target": "05032108616-26",
+      "weight": 10.89,
+      "shared": 2
+    },
+    {
+      "source": "113240451776-42",
+      "target": "13255254129-80",
+      "weight": 10.89,
+      "shared": 2
+    },
+    {
+      "source": "113240451776-42",
+      "target": "85606455727-29",
+      "weight": 10.89,
+      "shared": 2
+    },
+    {
+      "source": "113240451776-42",
+      "target": "org_c0f0e385d12d4c15",
+      "weight": 10.89,
+      "shared": 2
+    },
+    {
+      "source": "606644737858-48",
+      "target": "08746491502-16",
+      "weight": 11.24,
+      "shared": 2
+    },
+    {
+      "source": "606644737858-48",
+      "target": "289810215426-07",
+      "weight": 11.24,
+      "shared": 2
+    },
+    {
+      "source": "606644737858-48",
+      "target": "953017548438-73",
+      "weight": 11.22,
+      "shared": 2
+    },
+    {
+      "source": "606644737858-48",
+      "target": "29967294656-11",
+      "weight": 11.24,
+      "shared": 2
+    },
+    {
+      "source": "606644737858-48",
+      "target": "282227450818-50",
+      "weight": 11.24,
+      "shared": 2
+    },
+    {
+      "source": "606644737858-48",
+      "target": "701646744539-02",
+      "weight": 11.24,
+      "shared": 2
+    },
+    {
+      "source": "606644737858-48",
+      "target": "302212447149-07",
+      "weight": 9.84,
+      "shared": 2
+    },
+    {
+      "source": "606644737858-48",
+      "target": "65780747925-05",
+      "weight": 11.24,
+      "shared": 2
+    },
+    {
+      "source": "606644737858-48",
+      "target": "560446038784-46",
+      "weight": 9.84,
+      "shared": 2
+    },
+    {
+      "source": "606644737858-48",
+      "target": "org_a20dc89494b88a77",
+      "weight": 9.84,
+      "shared": 2
+    },
+    {
+      "source": "606644737858-48",
+      "target": "org_c0f0e385d12d4c15",
+      "weight": 14.41,
+      "shared": 3
+    },
+    {
+      "source": "70699309784-62",
+      "target": "779809814433-48",
+      "weight": 11.6,
+      "shared": 2
+    },
+    {
+      "source": "70699309784-62",
+      "target": "282227450818-50",
+      "weight": 11.6,
+      "shared": 2
+    },
+    {
+      "source": "70699309784-62",
+      "target": "41712511261-57",
+      "weight": 11.6,
+      "shared": 2
+    },
+    {
+      "source": "70699309784-62",
+      "target": "385192846585-87",
+      "weight": 11.6,
+      "shared": 2
+    },
+    {
+      "source": "70699309784-62",
+      "target": "087418193041-10",
+      "weight": 11.6,
+      "shared": 2
+    },
+    {
+      "source": "70699309784-62",
+      "target": "13255254129-80",
+      "weight": 11.6,
+      "shared": 2
+    },
+    {
+      "source": "77926494338-54",
+      "target": "793750635630-82",
+      "weight": 10.9,
+      "shared": 2
+    },
+    {
+      "source": "77926494338-54",
+      "target": "942505344125-37",
+      "weight": 10.9,
+      "shared": 2
+    },
+    {
+      "source": "77926494338-54",
+      "target": "385192846585-87",
+      "weight": 10.9,
+      "shared": 2
+    },
+    {
+      "source": "77926494338-54",
+      "target": "01678796979-90",
+      "weight": 10.9,
+      "shared": 2
+    },
+    {
+      "source": "77926494338-54",
+      "target": "924832594611-79",
+      "weight": 12.21,
+      "shared": 2
+    },
+    {
+      "source": "77926494338-54",
+      "target": "580486295858-34",
+      "weight": 10.9,
+      "shared": 2
+    },
+    {
+      "source": "77926494338-54",
+      "target": "930637620172-95",
+      "weight": 10.9,
+      "shared": 2
+    },
+    {
+      "source": "77926494338-54",
+      "target": "13255254129-80",
+      "weight": 17.77,
+      "shared": 3
+    },
+    {
+      "source": "77926494338-54",
+      "target": "17798717671-62",
+      "weight": 12.21,
+      "shared": 2
+    },
+    {
+      "source": "77926494338-54",
+      "target": "85606455727-29",
+      "weight": 10.9,
+      "shared": 2
+    },
+    {
+      "source": "77926494338-54",
+      "target": "org_0ef5fb86cfb961a2",
+      "weight": 12.21,
+      "shared": 2
+    },
+    {
+      "source": "20620934484-91",
+      "target": "05673984520-73",
+      "weight": 11.5,
+      "shared": 2
+    },
+    {
+      "source": "20620934484-91",
+      "target": "087418193041-10",
+      "weight": 10.4,
+      "shared": 2
+    },
+    {
+      "source": "20620934484-91",
+      "target": "10944091576-90",
+      "weight": 10.31,
+      "shared": 2
+    },
+    {
+      "source": "20620934484-91",
+      "target": "13255254129-80",
+      "weight": 33.43,
+      "shared": 6
+    },
+    {
+      "source": "20620934484-91",
+      "target": "17798717671-62",
+      "weight": 15.73,
+      "shared": 3
+    },
+    {
+      "source": "20620934484-91",
+      "target": "1894704851-83",
+      "weight": 10.4,
+      "shared": 2
+    },
+    {
+      "source": "20620934484-91",
+      "target": "282227450818-50",
+      "weight": 10.31,
+      "shared": 2
+    },
+    {
+      "source": "20620934484-91",
+      "target": "38392131923-05",
+      "weight": 11.5,
+      "shared": 2
+    },
+    {
+      "source": "20620934484-91",
+      "target": "385192846585-87",
+      "weight": 15.73,
+      "shared": 3
+    },
+    {
+      "source": "20620934484-91",
+      "target": "40524063921-20",
+      "weight": 11.5,
+      "shared": 2
+    },
+    {
+      "source": "20620934484-91",
+      "target": "4656646862-72",
+      "weight": 10.62,
+      "shared": 2
+    },
+    {
+      "source": "20620934484-91",
+      "target": "513095842513-75",
+      "weight": 10.62,
+      "shared": 2
+    },
+    {
+      "source": "20620934484-91",
+      "target": "580486295858-34",
+      "weight": 16.83,
+      "shared": 3
+    },
+    {
+      "source": "20620934484-91",
+      "target": "61866543669-46",
+      "weight": 10.4,
+      "shared": 2
+    },
+    {
+      "source": "20620934484-91",
+      "target": "624025437423-56",
+      "weight": 10.4,
+      "shared": 2
+    },
+    {
+      "source": "20620934484-91",
+      "target": "65780747925-05",
+      "weight": 10.4,
+      "shared": 2
+    },
+    {
+      "source": "20620934484-91",
+      "target": "76441066192-30",
+      "weight": 11.5,
+      "shared": 2
+    },
+    {
+      "source": "20620934484-91",
+      "target": "779809814433-48",
+      "weight": 16.83,
+      "shared": 3
+    },
+    {
+      "source": "20620934484-91",
+      "target": "793750635630-82",
+      "weight": 10.31,
+      "shared": 2
+    },
+    {
+      "source": "20620934484-91",
+      "target": "827688315793-86",
+      "weight": 10.31,
+      "shared": 2
+    },
+    {
+      "source": "20620934484-91",
+      "target": "852199818450-61",
+      "weight": 10.62,
+      "shared": 2
+    },
+    {
+      "source": "20620934484-91",
+      "target": "85606455727-29",
+      "weight": 10.31,
+      "shared": 2
+    },
+    {
+      "source": "20620934484-91",
+      "target": "914893310703-33",
+      "weight": 10.4,
+      "shared": 2
+    },
+    {
+      "source": "20620934484-91",
+      "target": "942505344125-37",
+      "weight": 10.31,
+      "shared": 2
+    },
+    {
+      "source": "20620934484-91",
+      "target": "953017548438-73",
+      "weight": 10.31,
+      "shared": 2
+    },
+    {
+      "source": "20620934484-91",
+      "target": "99937329074-65",
+      "weight": 10.31,
+      "shared": 2
+    },
+    {
+      "source": "20620934484-91",
+      "target": "org_0264d4d2adfb28c0",
+      "weight": 10.62,
+      "shared": 2
+    },
+    {
+      "source": "20620934484-91",
+      "target": "org_0ef5fb86cfb961a2",
+      "weight": 10.31,
+      "shared": 2
+    },
+    {
+      "source": "20620934484-91",
+      "target": "org_844812aee34e4fcb",
+      "weight": 10.31,
+      "shared": 2
+    },
+    {
+      "source": "20620934484-91",
+      "target": "org_b97c4a45f5afecb6",
+      "weight": 10.62,
+      "shared": 2
+    },
+    {
+      "source": "20620934484-91",
+      "target": "508823592253-86",
+      "weight": 11.95,
+      "shared": 2
+    },
+    {
+      "source": "20620934484-91",
+      "target": "51894741860-19",
+      "weight": 11.95,
+      "shared": 2
+    },
+    {
+      "source": "20620934484-91",
+      "target": "01678796979-90",
+      "weight": 11.86,
+      "shared": 2
+    },
+    {
+      "source": "20620934484-91",
+      "target": "724240721429-43",
+      "weight": 11.86,
+      "shared": 2
+    },
+    {
+      "source": "385192846585-87",
+      "target": "828715012462-94",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "385192846585-87",
+      "target": "510247941330-21",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "385192846585-87",
+      "target": "05673984520-73",
+      "weight": 17.07,
+      "shared": 3
+    },
+    {
+      "source": "385192846585-87",
+      "target": "779809814433-48",
+      "weight": 16.94,
+      "shared": 3
+    },
+    {
+      "source": "385192846585-87",
+      "target": "08746491502-16",
+      "weight": 17.07,
+      "shared": 3
+    },
+    {
+      "source": "385192846585-87",
+      "target": "914893310703-33",
+      "weight": 16.93,
+      "shared": 3
+    },
+    {
+      "source": "385192846585-87",
+      "target": "289810215426-07",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "385192846585-87",
+      "target": "202702447560-24",
+      "weight": 11.95,
+      "shared": 2
+    },
+    {
+      "source": "385192846585-87",
+      "target": "112051847836-65",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "385192846585-87",
+      "target": "793750635630-82",
+      "weight": 15.87,
+      "shared": 3
+    },
+    {
+      "source": "385192846585-87",
+      "target": "953017548438-73",
+      "weight": 10.31,
+      "shared": 2
+    },
+    {
+      "source": "385192846585-87",
+      "target": "942505344125-37",
+      "weight": 15.87,
+      "shared": 3
+    },
+    {
+      "source": "385192846585-87",
+      "target": "38392131923-05",
+      "weight": 17.07,
+      "shared": 3
+    },
+    {
+      "source": "385192846585-87",
+      "target": "29967294656-11",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "385192846585-87",
+      "target": "76441066192-30",
+      "weight": 11.5,
+      "shared": 2
+    },
+    {
+      "source": "385192846585-87",
+      "target": "386723034383-54",
+      "weight": 12.06,
+      "shared": 2
+    },
+    {
+      "source": "385192846585-87",
+      "target": "282227450818-50",
+      "weight": 16.94,
+      "shared": 3
+    },
+    {
+      "source": "385192846585-87",
+      "target": "035366013790-68",
+      "weight": 11.86,
+      "shared": 2
+    },
+    {
+      "source": "385192846585-87",
+      "target": "624025437423-56",
+      "weight": 10.4,
+      "shared": 2
+    },
+    {
+      "source": "385192846585-87",
+      "target": "701646744539-02",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "385192846585-87",
+      "target": "824033130961-66",
+      "weight": 19.14,
+      "shared": 3
+    },
+    {
+      "source": "385192846585-87",
+      "target": "4656646862-72",
+      "weight": 11.92,
+      "shared": 2
+    },
+    {
+      "source": "385192846585-87",
+      "target": "827688315793-86",
+      "weight": 10.31,
+      "shared": 2
+    },
+    {
+      "source": "385192846585-87",
+      "target": "65780747925-05",
+      "weight": 15.97,
+      "shared": 3
+    },
+    {
+      "source": "385192846585-87",
+      "target": "41712511261-57",
+      "weight": 23.69,
+      "shared": 4
+    },
+    {
+      "source": "385192846585-87",
+      "target": "087418193041-10",
+      "weight": 17.03,
+      "shared": 3
+    },
+    {
+      "source": "385192846585-87",
+      "target": "10944091576-90",
+      "weight": 10.31,
+      "shared": 2
+    },
+    {
+      "source": "385192846585-87",
+      "target": "13255254129-80",
+      "weight": 34.46,
+      "shared": 6
+    },
+    {
+      "source": "385192846585-87",
+      "target": "17798717671-62",
+      "weight": 15.73,
+      "shared": 3
+    },
+    {
+      "source": "385192846585-87",
+      "target": "1894704851-83",
+      "weight": 10.4,
+      "shared": 2
+    },
+    {
+      "source": "385192846585-87",
+      "target": "525441739605-60",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "385192846585-87",
+      "target": "580486295858-34",
+      "weight": 15.87,
+      "shared": 3
+    },
+    {
+      "source": "385192846585-87",
+      "target": "604742116836-08",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "385192846585-87",
+      "target": "61866543669-46",
+      "weight": 10.4,
+      "shared": 2
+    },
+    {
+      "source": "385192846585-87",
+      "target": "85606455727-29",
+      "weight": 15.87,
+      "shared": 3
+    },
+    {
+      "source": "385192846585-87",
+      "target": "99937329074-65",
+      "weight": 10.31,
+      "shared": 2
+    },
+    {
+      "source": "385192846585-87",
+      "target": "org_0ef5fb86cfb961a2",
+      "weight": 10.31,
+      "shared": 2
+    },
+    {
+      "source": "385192846585-87",
+      "target": "org_424e0980fddd1f21",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "385192846585-87",
+      "target": "org_844812aee34e4fcb",
+      "weight": 10.31,
+      "shared": 2
+    },
+    {
+      "source": "385192846585-87",
+      "target": "org_c0f0e385d12d4c15",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "385192846585-87",
+      "target": "01678796979-90",
+      "weight": 17.53,
+      "shared": 3
+    },
+    {
+      "source": "385192846585-87",
+      "target": "930637620172-95",
+      "weight": 17.53,
+      "shared": 3
+    },
+    {
+      "source": "385192846585-87",
+      "target": "org_0a1a3d9f9104baa4",
+      "weight": 12.09,
+      "shared": 2
+    },
+    {
+      "source": "385192846585-87",
+      "target": "org_4d22e8c41853627a",
+      "weight": 12.09,
+      "shared": 2
+    },
+    {
+      "source": "385192846585-87",
+      "target": "006687715492-92",
+      "weight": 12.37,
+      "shared": 2
+    },
+    {
+      "source": "385192846585-87",
+      "target": "org_c8f2cf848eb23e89",
+      "weight": 11.86,
+      "shared": 2
+    },
+    {
+      "source": "org_b770335575e467d0",
+      "target": "org_5903170cdc585d99",
+      "weight": 12.36,
+      "shared": 2
+    },
+    {
+      "source": "738140415497-66",
+      "target": "289810215426-07",
+      "weight": 11.94,
+      "shared": 2
+    },
+    {
+      "source": "738140415497-66",
+      "target": "701646744539-02",
+      "weight": 11.94,
+      "shared": 2
+    },
+    {
+      "source": "738140415497-66",
+      "target": "580486295858-34",
+      "weight": 11.94,
+      "shared": 2
+    },
+    {
+      "source": "914893310703-33",
+      "target": "05673984520-73",
+      "weight": 11.5,
+      "shared": 2
+    },
+    {
+      "source": "914893310703-33",
+      "target": "08746491502-16",
+      "weight": 11.5,
+      "shared": 2
+    },
+    {
+      "source": "914893310703-33",
+      "target": "087418193041-10",
+      "weight": 10.4,
+      "shared": 2
+    },
+    {
+      "source": "914893310703-33",
+      "target": "13255254129-80",
+      "weight": 16.93,
+      "shared": 3
+    },
+    {
+      "source": "914893310703-33",
+      "target": "17798717671-62",
+      "weight": 10.4,
+      "shared": 2
+    },
+    {
+      "source": "914893310703-33",
+      "target": "1894704851-83",
+      "weight": 10.4,
+      "shared": 2
+    },
+    {
+      "source": "914893310703-33",
+      "target": "38392131923-05",
+      "weight": 11.5,
+      "shared": 2
+    },
+    {
+      "source": "914893310703-33",
+      "target": "41712511261-57",
+      "weight": 11.5,
+      "shared": 2
+    },
+    {
+      "source": "914893310703-33",
+      "target": "61866543669-46",
+      "weight": 10.4,
+      "shared": 2
+    },
+    {
+      "source": "914893310703-33",
+      "target": "624025437423-56",
+      "weight": 10.4,
+      "shared": 2
+    },
+    {
+      "source": "914893310703-33",
+      "target": "65780747925-05",
+      "weight": 10.4,
+      "shared": 2
+    },
+    {
+      "source": "914893310703-33",
+      "target": "76441066192-30",
+      "weight": 11.5,
+      "shared": 2
+    },
+    {
+      "source": "914893310703-33",
+      "target": "202702447560-24",
+      "weight": 11.95,
+      "shared": 2
+    },
+    {
+      "source": "org_ba873683e14cd4f7",
+      "target": "95713206856-14",
+      "weight": 12.81,
+      "shared": 2
+    },
+    {
+      "source": "org_c8bb0e11a251f956",
+      "target": "08746491502-16",
+      "weight": 10.3,
+      "shared": 2
+    },
+    {
+      "source": "org_c8bb0e11a251f956",
+      "target": "112051847836-65",
+      "weight": 10.3,
+      "shared": 2
+    },
+    {
+      "source": "org_c8bb0e11a251f956",
+      "target": "38392131923-05",
+      "weight": 10.3,
+      "shared": 2
+    },
+    {
+      "source": "org_c8bb0e11a251f956",
+      "target": "29967294656-11",
+      "weight": 10.3,
+      "shared": 2
+    },
+    {
+      "source": "org_c8bb0e11a251f956",
+      "target": "059134051904-87",
+      "weight": 10.3,
+      "shared": 2
+    },
+    {
+      "source": "org_c8bb0e11a251f956",
+      "target": "75311753240-67",
+      "weight": 10.3,
+      "shared": 2
+    },
+    {
+      "source": "org_c8bb0e11a251f956",
+      "target": "05032108616-26",
+      "weight": 10.3,
+      "shared": 2
+    },
+    {
+      "source": "org_c8bb0e11a251f956",
+      "target": "455557951034-97",
+      "weight": 10.3,
+      "shared": 2
+    },
+    {
+      "source": "org_c8bb0e11a251f956",
+      "target": "13255254129-80",
+      "weight": 10.3,
+      "shared": 2
+    },
+    {
+      "source": "org_c8bb0e11a251f956",
+      "target": "85606455727-29",
+      "weight": 10.3,
+      "shared": 2
+    },
+    {
+      "source": "org_c8bb0e11a251f956",
+      "target": "org_c0f0e385d12d4c15",
+      "weight": 10.3,
+      "shared": 2
+    },
+    {
+      "source": "org_c8bb0e11a251f956",
+      "target": "org_4fefc0402846d7fc",
+      "weight": 10.3,
+      "shared": 2
+    },
+    {
+      "source": "org_c8bb0e11a251f956",
+      "target": "org_0264d4d2adfb28c0",
+      "weight": 10.3,
+      "shared": 2
+    },
+    {
+      "source": "org_c8bb0e11a251f956",
+      "target": "org_0ef5fb86cfb961a2",
+      "weight": 10.3,
+      "shared": 2
+    },
+    {
+      "source": "org_c8bb0e11a251f956",
+      "target": "org_ea64dca00297190e",
+      "weight": 10.3,
+      "shared": 2
+    },
+    {
+      "source": "779809814433-48",
+      "target": "20210641335-88",
+      "weight": 10.31,
+      "shared": 2
+    },
+    {
+      "source": "779809814433-48",
+      "target": "05673984520-73",
+      "weight": 11.5,
+      "shared": 2
+    },
+    {
+      "source": "779809814433-48",
+      "target": "05032108616-26",
+      "weight": 11.5,
+      "shared": 2
+    },
+    {
+      "source": "779809814433-48",
+      "target": "087418193041-10",
+      "weight": 11.6,
+      "shared": 2
+    },
+    {
+      "source": "779809814433-48",
+      "target": "10944091576-90",
+      "weight": 10.31,
+      "shared": 2
+    },
+    {
+      "source": "779809814433-48",
+      "target": "13255254129-80",
+      "weight": 28.97,
+      "shared": 5
+    },
+    {
+      "source": "779809814433-48",
+      "target": "17798717671-62",
+      "weight": 10.31,
+      "shared": 2
+    },
+    {
+      "source": "779809814433-48",
+      "target": "282227450818-50",
+      "weight": 16.94,
+      "shared": 3
+    },
+    {
+      "source": "779809814433-48",
+      "target": "38392131923-05",
+      "weight": 11.5,
+      "shared": 2
+    },
+    {
+      "source": "779809814433-48",
+      "target": "40524063921-20",
+      "weight": 11.5,
+      "shared": 2
+    },
+    {
+      "source": "779809814433-48",
+      "target": "41712511261-57",
+      "weight": 11.6,
+      "shared": 2
+    },
+    {
+      "source": "779809814433-48",
+      "target": "580486295858-34",
+      "weight": 16.83,
+      "shared": 3
+    },
+    {
+      "source": "779809814433-48",
+      "target": "76441066192-30",
+      "weight": 11.5,
+      "shared": 2
+    },
+    {
+      "source": "779809814433-48",
+      "target": "793750635630-82",
+      "weight": 10.31,
+      "shared": 2
+    },
+    {
+      "source": "779809814433-48",
+      "target": "827688315793-86",
+      "weight": 10.31,
+      "shared": 2
+    },
+    {
+      "source": "779809814433-48",
+      "target": "85606455727-29",
+      "weight": 10.31,
+      "shared": 2
+    },
+    {
+      "source": "779809814433-48",
+      "target": "942505344125-37",
+      "weight": 10.31,
+      "shared": 2
+    },
+    {
+      "source": "779809814433-48",
+      "target": "953017548438-73",
+      "weight": 10.31,
+      "shared": 2
+    },
+    {
+      "source": "779809814433-48",
+      "target": "99937329074-65",
+      "weight": 10.31,
+      "shared": 2
+    },
+    {
+      "source": "779809814433-48",
+      "target": "org_0ef5fb86cfb961a2",
+      "weight": 10.31,
+      "shared": 2
+    },
+    {
+      "source": "779809814433-48",
+      "target": "org_1862938034275c47",
+      "weight": 10.48,
+      "shared": 2
+    },
+    {
+      "source": "779809814433-48",
+      "target": "org_4fefc0402846d7fc",
+      "weight": 10.48,
+      "shared": 2
+    },
+    {
+      "source": "779809814433-48",
+      "target": "org_5903170cdc585d99",
+      "weight": 10.31,
+      "shared": 2
+    },
+    {
+      "source": "779809814433-48",
+      "target": "org_844812aee34e4fcb",
+      "weight": 10.31,
+      "shared": 2
+    },
+    {
+      "source": "779809814433-48",
+      "target": "01678796979-90",
+      "weight": 18.49,
+      "shared": 3
+    },
+    {
+      "source": "779809814433-48",
+      "target": "930637620172-95",
+      "weight": 11.96,
+      "shared": 2
+    },
+    {
+      "source": "779809814433-48",
+      "target": "953927613272-05",
+      "weight": 10.85,
+      "shared": 2
+    },
+    {
+      "source": "779809814433-48",
+      "target": "org_023d2a061ef7b6b1",
+      "weight": 10.85,
+      "shared": 2
+    },
+    {
+      "source": "779809814433-48",
+      "target": "org_c8f2cf848eb23e89",
+      "weight": 10.85,
+      "shared": 2
+    },
+    {
+      "source": "779809814433-48",
+      "target": "724240721429-43",
+      "weight": 11.86,
+      "shared": 2
+    },
+    {
+      "source": "05032108616-26",
+      "target": "828715012462-94",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "05032108616-26",
+      "target": "510247941330-21",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "05032108616-26",
+      "target": "05673984520-73",
+      "weight": 17.07,
+      "shared": 3
+    },
+    {
+      "source": "05032108616-26",
+      "target": "08746491502-16",
+      "weight": 15.87,
+      "shared": 3
+    },
+    {
+      "source": "05032108616-26",
+      "target": "51894741860-19",
+      "weight": 14.28,
+      "shared": 2
+    },
+    {
+      "source": "05032108616-26",
+      "target": "40524063921-20",
+      "weight": 11.5,
+      "shared": 2
+    },
+    {
+      "source": "05032108616-26",
+      "target": "112051847836-65",
+      "weight": 15.87,
+      "shared": 3
+    },
+    {
+      "source": "05032108616-26",
+      "target": "793750635630-82",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "05032108616-26",
+      "target": "942505344125-37",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "05032108616-26",
+      "target": "38392131923-05",
+      "weight": 22.39,
+      "shared": 4
+    },
+    {
+      "source": "05032108616-26",
+      "target": "29967294656-11",
+      "weight": 15.87,
+      "shared": 3
+    },
+    {
+      "source": "05032108616-26",
+      "target": "76441066192-30",
+      "weight": 24.44,
+      "shared": 4
+    },
+    {
+      "source": "05032108616-26",
+      "target": "059134051904-87",
+      "weight": 10.3,
+      "shared": 2
+    },
+    {
+      "source": "05032108616-26",
+      "target": "701646744539-02",
+      "weight": 15.98,
+      "shared": 3
+    },
+    {
+      "source": "05032108616-26",
+      "target": "827688315793-86",
+      "weight": 12.73,
+      "shared": 2
+    },
+    {
+      "source": "05032108616-26",
+      "target": "41712511261-57",
+      "weight": 18.29,
+      "shared": 3
+    },
+    {
+      "source": "05032108616-26",
+      "target": "604742116836-08",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "05032108616-26",
+      "target": "75311753240-67",
+      "weight": 15.87,
+      "shared": 3
+    },
+    {
+      "source": "05032108616-26",
+      "target": "13255254129-80",
+      "weight": 30.15,
+      "shared": 5
+    },
+    {
+      "source": "05032108616-26",
+      "target": "455557951034-97",
+      "weight": 10.3,
+      "shared": 2
+    },
+    {
+      "source": "05032108616-26",
+      "target": "525441739605-60",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "05032108616-26",
+      "target": "580486295858-34",
+      "weight": 17.07,
+      "shared": 3
+    },
+    {
+      "source": "05032108616-26",
+      "target": "85606455727-29",
+      "weight": 15.87,
+      "shared": 3
+    },
+    {
+      "source": "05032108616-26",
+      "target": "org_424e0980fddd1f21",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "05032108616-26",
+      "target": "org_4fefc0402846d7fc",
+      "weight": 10.3,
+      "shared": 2
+    },
+    {
+      "source": "05032108616-26",
+      "target": "org_844812aee34e4fcb",
+      "weight": 9.54,
+      "shared": 2
+    },
+    {
+      "source": "05032108616-26",
+      "target": "org_c0f0e385d12d4c15",
+      "weight": 15.87,
+      "shared": 3
+    },
+    {
+      "source": "05032108616-26",
+      "target": "org_ea64dca00297190e",
+      "weight": 10.3,
+      "shared": 2
+    },
+    {
+      "source": "05032108616-26",
+      "target": "930637620172-95",
+      "weight": 13.32,
+      "shared": 2
+    },
+    {
+      "source": "05032108616-26",
+      "target": "994694795829-46",
+      "weight": 12.09,
+      "shared": 2
+    },
+    {
+      "source": "450109092006-03",
+      "target": "13255254129-80",
+      "weight": 24.85,
+      "shared": 4
+    },
+    {
+      "source": "450109092006-03",
+      "target": "17798717671-62",
+      "weight": 12.3,
+      "shared": 2
+    },
+    {
+      "source": "450109092006-03",
+      "target": "org_3edcb05777c3ca8a",
+      "weight": 12.3,
+      "shared": 2
+    },
+    {
+      "source": "508823592253-86",
+      "target": "51894741860-19",
+      "weight": 18.56,
+      "shared": 3
+    },
+    {
+      "source": "508823592253-86",
+      "target": "353231132587-96",
+      "weight": 12.03,
+      "shared": 2
+    },
+    {
+      "source": "508823592253-86",
+      "target": "17798717671-62",
+      "weight": 11.8,
+      "shared": 2
+    },
+    {
+      "source": "508823592253-86",
+      "target": "580486295858-34",
+      "weight": 12.9,
+      "shared": 2
+    },
+    {
+      "source": "508823592253-86",
+      "target": "org_b48f2a0e53ca468e",
+      "weight": 18.4,
+      "shared": 3
+    },
+    {
+      "source": "508823592253-86",
+      "target": "13255254129-80",
+      "weight": 18.56,
+      "shared": 3
+    },
+    {
+      "source": "508823592253-86",
+      "target": "org_fc4c3c046ac0df30",
+      "weight": 12.03,
+      "shared": 2
+    },
+    {
+      "source": "org_5f5a8df52ef059dc",
+      "target": "org_0ef5fb86cfb961a2",
+      "weight": 10.86,
+      "shared": 2
+    },
+    {
+      "source": "org_c0f0e385d12d4c15",
+      "target": "828715012462-94",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "org_c0f0e385d12d4c15",
+      "target": "510247941330-21",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "org_c0f0e385d12d4c15",
+      "target": "05673984520-73",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "org_c0f0e385d12d4c15",
+      "target": "08746491502-16",
+      "weight": 15.87,
+      "shared": 3
+    },
+    {
+      "source": "org_c0f0e385d12d4c15",
+      "target": "289810215426-07",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "org_c0f0e385d12d4c15",
+      "target": "112051847836-65",
+      "weight": 15.87,
+      "shared": 3
+    },
+    {
+      "source": "org_c0f0e385d12d4c15",
+      "target": "793750635630-82",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "org_c0f0e385d12d4c15",
+      "target": "942505344125-37",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "org_c0f0e385d12d4c15",
+      "target": "38392131923-05",
+      "weight": 15.87,
+      "shared": 3
+    },
+    {
+      "source": "org_c0f0e385d12d4c15",
+      "target": "29967294656-11",
+      "weight": 15.87,
+      "shared": 3
+    },
+    {
+      "source": "org_c0f0e385d12d4c15",
+      "target": "059134051904-87",
+      "weight": 10.3,
+      "shared": 2
+    },
+    {
+      "source": "org_c0f0e385d12d4c15",
+      "target": "701646744539-02",
+      "weight": 16.14,
+      "shared": 3
+    },
+    {
+      "source": "org_c0f0e385d12d4c15",
+      "target": "302212447149-07",
+      "weight": 9.84,
+      "shared": 2
+    },
+    {
+      "source": "org_c0f0e385d12d4c15",
+      "target": "41712511261-57",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "org_c0f0e385d12d4c15",
+      "target": "604742116836-08",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "org_c0f0e385d12d4c15",
+      "target": "75311753240-67",
+      "weight": 21.54,
+      "shared": 4
+    },
+    {
+      "source": "org_c0f0e385d12d4c15",
+      "target": "580486295858-34",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "org_c0f0e385d12d4c15",
+      "target": "560446038784-46",
+      "weight": 9.84,
+      "shared": 2
+    },
+    {
+      "source": "org_c0f0e385d12d4c15",
+      "target": "19736167705-91",
+      "weight": 10.8,
+      "shared": 2
+    },
+    {
+      "source": "org_c0f0e385d12d4c15",
+      "target": "525441739605-60",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "org_c0f0e385d12d4c15",
+      "target": "455557951034-97",
+      "weight": 10.3,
+      "shared": 2
+    },
+    {
+      "source": "org_c0f0e385d12d4c15",
+      "target": "13255254129-80",
+      "weight": 15.87,
+      "shared": 3
+    },
+    {
+      "source": "org_c0f0e385d12d4c15",
+      "target": "85606455727-29",
+      "weight": 15.87,
+      "shared": 3
+    },
+    {
+      "source": "org_c0f0e385d12d4c15",
+      "target": "org_0ef5fb86cfb961a2",
+      "weight": 10.3,
+      "shared": 2
+    },
+    {
+      "source": "org_c0f0e385d12d4c15",
+      "target": "org_424e0980fddd1f21",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "org_c0f0e385d12d4c15",
+      "target": "org_4fefc0402846d7fc",
+      "weight": 10.3,
+      "shared": 2
+    },
+    {
+      "source": "org_c0f0e385d12d4c15",
+      "target": "org_a20dc89494b88a77",
+      "weight": 9.84,
+      "shared": 2
+    },
+    {
+      "source": "org_c0f0e385d12d4c15",
+      "target": "org_ea64dca00297190e",
+      "weight": 10.3,
+      "shared": 2
+    },
+    {
+      "source": "65780747925-05",
+      "target": "828715012462-94",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "65780747925-05",
+      "target": "510247941330-21",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "65780747925-05",
+      "target": "05673984520-73",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "65780747925-05",
+      "target": "525700249853-18",
+      "weight": 18.72,
+      "shared": 3
+    },
+    {
+      "source": "65780747925-05",
+      "target": "08746491502-16",
+      "weight": 23.49,
+      "shared": 4
+    },
+    {
+      "source": "65780747925-05",
+      "target": "51894741860-19",
+      "weight": 11.11,
+      "shared": 2
+    },
+    {
+      "source": "65780747925-05",
+      "target": "289810215426-07",
+      "weight": 23.49,
+      "shared": 4
+    },
+    {
+      "source": "65780747925-05",
+      "target": "40524063921-20",
+      "weight": 10.71,
+      "shared": 2
+    },
+    {
+      "source": "65780747925-05",
+      "target": "353231132587-96",
+      "weight": 11.11,
+      "shared": 2
+    },
+    {
+      "source": "65780747925-05",
+      "target": "112051847836-65",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "65780747925-05",
+      "target": "793750635630-82",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "65780747925-05",
+      "target": "942505344125-37",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "65780747925-05",
+      "target": "38392131923-05",
+      "weight": 22.91,
+      "shared": 4
+    },
+    {
+      "source": "65780747925-05",
+      "target": "015617142386-42",
+      "weight": 11.32,
+      "shared": 2
+    },
+    {
+      "source": "65780747925-05",
+      "target": "29967294656-11",
+      "weight": 16.81,
+      "shared": 3
+    },
+    {
+      "source": "65780747925-05",
+      "target": "125110346079-89",
+      "weight": 12.25,
+      "shared": 2
+    },
+    {
+      "source": "65780747925-05",
+      "target": "282227450818-50",
+      "weight": 11.24,
+      "shared": 2
+    },
+    {
+      "source": "65780747925-05",
+      "target": "624025437423-56",
+      "weight": 10.4,
+      "shared": 2
+    },
+    {
+      "source": "65780747925-05",
+      "target": "701646744539-02",
+      "weight": 16.81,
+      "shared": 3
+    },
+    {
+      "source": "65780747925-05",
+      "target": "087418193041-10",
+      "weight": 10.4,
+      "shared": 2
+    },
+    {
+      "source": "65780747925-05",
+      "target": "13255254129-80",
+      "weight": 46.7,
+      "shared": 8
+    },
+    {
+      "source": "65780747925-05",
+      "target": "17798717671-62",
+      "weight": 10.4,
+      "shared": 2
+    },
+    {
+      "source": "65780747925-05",
+      "target": "1894704851-83",
+      "weight": 10.4,
+      "shared": 2
+    },
+    {
+      "source": "65780747925-05",
+      "target": "41712511261-57",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "65780747925-05",
+      "target": "525441739605-60",
+      "weight": 16.23,
+      "shared": 3
+    },
+    {
+      "source": "65780747925-05",
+      "target": "580486295858-34",
+      "weight": 17.22,
+      "shared": 3
+    },
+    {
+      "source": "65780747925-05",
+      "target": "604742116836-08",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "65780747925-05",
+      "target": "85606455727-29",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "65780747925-05",
+      "target": "org_424e0980fddd1f21",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "65780747925-05",
+      "target": "org_499f34202db489aa",
+      "weight": 11.63,
+      "shared": 2
+    },
+    {
+      "source": "65780747925-05",
+      "target": "01678796979-90",
+      "weight": 12.25,
+      "shared": 2
+    },
+    {
+      "source": "65780747925-05",
+      "target": "576870951717-17",
+      "weight": 11.25,
+      "shared": 2
+    },
+    {
+      "source": "65780747925-05",
+      "target": "org_588b1eda9ca60d42",
+      "weight": 12.01,
+      "shared": 2
+    },
+    {
+      "source": "65780747925-05",
+      "target": "006687715492-92",
+      "weight": 11.11,
+      "shared": 2
+    },
+    {
+      "source": "65780747925-05",
+      "target": "501735195390-18",
+      "weight": 11.11,
+      "shared": 2
+    },
+    {
+      "source": "65780747925-05",
+      "target": "84476202986-17",
+      "weight": 11.11,
+      "shared": 2
+    },
+    {
+      "source": "65780747925-05",
+      "target": "org_b48f2a0e53ca468e",
+      "weight": 11.11,
+      "shared": 2
+    },
+    {
+      "source": "65780747925-05",
+      "target": "org_ad07640883222e26",
+      "weight": 13.0,
+      "shared": 2
+    },
+    {
+      "source": "65780747925-05",
+      "target": "726924727096-27",
+      "weight": 13.03,
+      "shared": 2
+    },
+    {
+      "source": "265233751161-18",
+      "target": "13255254129-80",
+      "weight": 12.06,
+      "shared": 2
+    },
+    {
+      "source": "4656646862-72",
+      "target": "525700249853-18",
+      "weight": 12.01,
+      "shared": 2
+    },
+    {
+      "source": "4656646862-72",
+      "target": "08746491502-16",
+      "weight": 11.13,
+      "shared": 2
+    },
+    {
+      "source": "4656646862-72",
+      "target": "289810215426-07",
+      "weight": 11.34,
+      "shared": 2
+    },
+    {
+      "source": "4656646862-72",
+      "target": "112051847836-65",
+      "weight": 11.13,
+      "shared": 2
+    },
+    {
+      "source": "4656646862-72",
+      "target": "953017548438-73",
+      "weight": 11.13,
+      "shared": 2
+    },
+    {
+      "source": "4656646862-72",
+      "target": "942505344125-37",
+      "weight": 11.13,
+      "shared": 2
+    },
+    {
+      "source": "4656646862-72",
+      "target": "38392131923-05",
+      "weight": 11.13,
+      "shared": 2
+    },
+    {
+      "source": "4656646862-72",
+      "target": "852199818450-61",
+      "weight": 10.62,
+      "shared": 2
+    },
+    {
+      "source": "4656646862-72",
+      "target": "513095842513-75",
+      "weight": 10.62,
+      "shared": 2
+    },
+    {
+      "source": "4656646862-72",
+      "target": "282227450818-50",
+      "weight": 11.13,
+      "shared": 2
+    },
+    {
+      "source": "4656646862-72",
+      "target": "701646744539-02",
+      "weight": 11.34,
+      "shared": 2
+    },
+    {
+      "source": "4656646862-72",
+      "target": "824033130961-66",
+      "weight": 12.59,
+      "shared": 2
+    },
+    {
+      "source": "4656646862-72",
+      "target": "17798717671-62",
+      "weight": 11.34,
+      "shared": 2
+    },
+    {
+      "source": "4656646862-72",
+      "target": "580486295858-34",
+      "weight": 17.5,
+      "shared": 3
+    },
+    {
+      "source": "4656646862-72",
+      "target": "org_0264d4d2adfb28c0",
+      "weight": 10.62,
+      "shared": 2
+    },
+    {
+      "source": "4656646862-72",
+      "target": "org_b97c4a45f5afecb6",
+      "weight": 10.62,
+      "shared": 2
+    },
+    {
+      "source": "455557951034-97",
+      "target": "08746491502-16",
+      "weight": 10.3,
+      "shared": 2
+    },
+    {
+      "source": "455557951034-97",
+      "target": "112051847836-65",
+      "weight": 10.3,
+      "shared": 2
+    },
+    {
+      "source": "455557951034-97",
+      "target": "38392131923-05",
+      "weight": 10.3,
+      "shared": 2
+    },
+    {
+      "source": "455557951034-97",
+      "target": "29967294656-11",
+      "weight": 10.3,
+      "shared": 2
+    },
+    {
+      "source": "455557951034-97",
+      "target": "059134051904-87",
+      "weight": 10.3,
+      "shared": 2
+    },
+    {
+      "source": "455557951034-97",
+      "target": "75311753240-67",
+      "weight": 10.3,
+      "shared": 2
+    },
+    {
+      "source": "455557951034-97",
+      "target": "334674912578-83",
+      "weight": 11.57,
+      "shared": 2
+    },
+    {
+      "source": "455557951034-97",
+      "target": "13255254129-80",
+      "weight": 16.9,
+      "shared": 3
+    },
+    {
+      "source": "455557951034-97",
+      "target": "85606455727-29",
+      "weight": 10.3,
+      "shared": 2
+    },
+    {
+      "source": "455557951034-97",
+      "target": "org_0264d4d2adfb28c0",
+      "weight": 10.3,
+      "shared": 2
+    },
+    {
+      "source": "455557951034-97",
+      "target": "org_0ef5fb86cfb961a2",
+      "weight": 10.3,
+      "shared": 2
+    },
+    {
+      "source": "455557951034-97",
+      "target": "org_4fefc0402846d7fc",
+      "weight": 10.3,
+      "shared": 2
+    },
+    {
+      "source": "455557951034-97",
+      "target": "org_ea64dca00297190e",
+      "weight": 10.3,
+      "shared": 2
+    },
+    {
+      "source": "592872451677-29",
+      "target": "13255254129-80",
+      "weight": 13.7,
+      "shared": 2
+    },
+    {
+      "source": "118453295368-28",
+      "target": "17798717671-62",
+      "weight": 13.24,
+      "shared": 2
+    },
+    {
+      "source": "org_cdc9040b96148f0f",
+      "target": "75311753240-67",
+      "weight": 13.01,
+      "shared": 2
+    },
+    {
+      "source": "org_25675d551dc4a03f",
+      "target": "20210641335-88",
+      "weight": 12.13,
+      "shared": 2
+    },
+    {
+      "source": "org_b48f2a0e53ca468e",
+      "target": "525700249853-18",
+      "weight": 12.05,
+      "shared": 2
+    },
+    {
+      "source": "org_b48f2a0e53ca468e",
+      "target": "51894741860-19",
+      "weight": 17.72,
+      "shared": 3
+    },
+    {
+      "source": "org_b48f2a0e53ca468e",
+      "target": "353231132587-96",
+      "weight": 17.72,
+      "shared": 3
+    },
+    {
+      "source": "org_b48f2a0e53ca468e",
+      "target": "84476202986-17",
+      "weight": 11.11,
+      "shared": 2
+    },
+    {
+      "source": "org_b48f2a0e53ca468e",
+      "target": "006687715492-92",
+      "weight": 11.11,
+      "shared": 2
+    },
+    {
+      "source": "org_b48f2a0e53ca468e",
+      "target": "13255254129-80",
+      "weight": 17.72,
+      "shared": 3
+    },
+    {
+      "source": "org_b48f2a0e53ca468e",
+      "target": "501735195390-18",
+      "weight": 11.11,
+      "shared": 2
+    },
+    {
+      "source": "org_b48f2a0e53ca468e",
+      "target": "17798717671-62",
+      "weight": 11.8,
+      "shared": 2
+    },
+    {
+      "source": "org_b48f2a0e53ca468e",
+      "target": "org_fc4c3c046ac0df30",
+      "weight": 12.03,
+      "shared": 2
+    },
+    {
+      "source": "org_56e08a80269f4fb0",
+      "target": "org_023d2a061ef7b6b1",
+      "weight": 13.11,
+      "shared": 2
+    },
+    {
+      "source": "726924727096-27",
+      "target": "525700249853-18",
+      "weight": 13.03,
+      "shared": 2
+    },
+    {
+      "source": "726924727096-27",
+      "target": "13255254129-80",
+      "weight": 13.03,
+      "shared": 2
+    },
+    {
+      "source": "604742116836-08",
+      "target": "828715012462-94",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "604742116836-08",
+      "target": "510247941330-21",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "604742116836-08",
+      "target": "05673984520-73",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "604742116836-08",
+      "target": "08746491502-16",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "604742116836-08",
+      "target": "289810215426-07",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "604742116836-08",
+      "target": "112051847836-65",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "604742116836-08",
+      "target": "793750635630-82",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "604742116836-08",
+      "target": "942505344125-37",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "604742116836-08",
+      "target": "38392131923-05",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "604742116836-08",
+      "target": "29967294656-11",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "604742116836-08",
+      "target": "701646744539-02",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "604742116836-08",
+      "target": "41712511261-57",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "604742116836-08",
+      "target": "13255254129-80",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "604742116836-08",
+      "target": "525441739605-60",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "604742116836-08",
+      "target": "580486295858-34",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "604742116836-08",
+      "target": "75311753240-67",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "604742116836-08",
+      "target": "85606455727-29",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "604742116836-08",
+      "target": "org_424e0980fddd1f21",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "20210641335-88",
+      "target": "10944091576-90",
+      "weight": 10.31,
+      "shared": 2
+    },
+    {
+      "source": "20210641335-88",
+      "target": "17798717671-62",
+      "weight": 10.31,
+      "shared": 2
+    },
+    {
+      "source": "20210641335-88",
+      "target": "1894704851-83",
+      "weight": 12.17,
+      "shared": 2
+    },
+    {
+      "source": "20210641335-88",
+      "target": "282227450818-50",
+      "weight": 10.31,
+      "shared": 2
+    },
+    {
+      "source": "20210641335-88",
+      "target": "40524063921-20",
+      "weight": 9.9,
+      "shared": 2
+    },
+    {
+      "source": "20210641335-88",
+      "target": "793750635630-82",
+      "weight": 10.31,
+      "shared": 2
+    },
+    {
+      "source": "20210641335-88",
+      "target": "827688315793-86",
+      "weight": 10.31,
+      "shared": 2
+    },
+    {
+      "source": "20210641335-88",
+      "target": "85606455727-29",
+      "weight": 10.31,
+      "shared": 2
+    },
+    {
+      "source": "20210641335-88",
+      "target": "942505344125-37",
+      "weight": 10.31,
+      "shared": 2
+    },
+    {
+      "source": "20210641335-88",
+      "target": "953017548438-73",
+      "weight": 16.09,
+      "shared": 3
+    },
+    {
+      "source": "20210641335-88",
+      "target": "99937329074-65",
+      "weight": 10.31,
+      "shared": 2
+    },
+    {
+      "source": "20210641335-88",
+      "target": "org_0ef5fb86cfb961a2",
+      "weight": 15.84,
+      "shared": 3
+    },
+    {
+      "source": "20210641335-88",
+      "target": "org_844812aee34e4fcb",
+      "weight": 10.31,
+      "shared": 2
+    },
+    {
+      "source": "20210641335-88",
+      "target": "org_a20dc89494b88a77",
+      "weight": 16.29,
+      "shared": 3
+    },
+    {
+      "source": "20210641335-88",
+      "target": "930637620172-95",
+      "weight": 10.68,
+      "shared": 2
+    },
+    {
+      "source": "334674912578-83",
+      "target": "13255254129-80",
+      "weight": 11.57,
+      "shared": 2
+    },
+    {
+      "source": "85606455727-29",
+      "target": "828715012462-94",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "85606455727-29",
+      "target": "510247941330-21",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "85606455727-29",
+      "target": "05673984520-73",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "85606455727-29",
+      "target": "08746491502-16",
+      "weight": 15.87,
+      "shared": 3
+    },
+    {
+      "source": "85606455727-29",
+      "target": "289810215426-07",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "85606455727-29",
+      "target": "112051847836-65",
+      "weight": 15.87,
+      "shared": 3
+    },
+    {
+      "source": "85606455727-29",
+      "target": "793750635630-82",
+      "weight": 15.87,
+      "shared": 3
+    },
+    {
+      "source": "85606455727-29",
+      "target": "953017548438-73",
+      "weight": 10.31,
+      "shared": 2
+    },
+    {
+      "source": "85606455727-29",
+      "target": "942505344125-37",
+      "weight": 15.87,
+      "shared": 3
+    },
+    {
+      "source": "85606455727-29",
+      "target": "38392131923-05",
+      "weight": 15.87,
+      "shared": 3
+    },
+    {
+      "source": "85606455727-29",
+      "target": "29967294656-11",
+      "weight": 15.87,
+      "shared": 3
+    },
+    {
+      "source": "85606455727-29",
+      "target": "059134051904-87",
+      "weight": 10.3,
+      "shared": 2
+    },
+    {
+      "source": "85606455727-29",
+      "target": "282227450818-50",
+      "weight": 10.31,
+      "shared": 2
+    },
+    {
+      "source": "85606455727-29",
+      "target": "035366013790-68",
+      "weight": 10.66,
+      "shared": 2
+    },
+    {
+      "source": "85606455727-29",
+      "target": "701646744539-02",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "85606455727-29",
+      "target": "827688315793-86",
+      "weight": 10.31,
+      "shared": 2
+    },
+    {
+      "source": "85606455727-29",
+      "target": "41712511261-57",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "85606455727-29",
+      "target": "75311753240-67",
+      "weight": 15.87,
+      "shared": 3
+    },
+    {
+      "source": "85606455727-29",
+      "target": "01678796979-90",
+      "weight": 10.9,
+      "shared": 2
+    },
+    {
+      "source": "85606455727-29",
+      "target": "99937329074-65",
+      "weight": 10.31,
+      "shared": 2
+    },
+    {
+      "source": "85606455727-29",
+      "target": "580486295858-34",
+      "weight": 15.87,
+      "shared": 3
+    },
+    {
+      "source": "85606455727-29",
+      "target": "525441739605-60",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "85606455727-29",
+      "target": "930637620172-95",
+      "weight": 10.9,
+      "shared": 2
+    },
+    {
+      "source": "85606455727-29",
+      "target": "10944091576-90",
+      "weight": 10.31,
+      "shared": 2
+    },
+    {
+      "source": "85606455727-29",
+      "target": "13255254129-80",
+      "weight": 21.2,
+      "shared": 4
+    },
+    {
+      "source": "85606455727-29",
+      "target": "17798717671-62",
+      "weight": 10.31,
+      "shared": 2
+    },
+    {
+      "source": "85606455727-29",
+      "target": "org_0264d4d2adfb28c0",
+      "weight": 10.3,
+      "shared": 2
+    },
+    {
+      "source": "85606455727-29",
+      "target": "org_0ef5fb86cfb961a2",
+      "weight": 15.63,
+      "shared": 3
+    },
+    {
+      "source": "85606455727-29",
+      "target": "org_424e0980fddd1f21",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "85606455727-29",
+      "target": "org_4fefc0402846d7fc",
+      "weight": 10.3,
+      "shared": 2
+    },
+    {
+      "source": "85606455727-29",
+      "target": "org_5903170cdc585d99",
+      "weight": 10.31,
+      "shared": 2
+    },
+    {
+      "source": "85606455727-29",
+      "target": "org_844812aee34e4fcb",
+      "weight": 10.31,
+      "shared": 2
+    },
+    {
+      "source": "85606455727-29",
+      "target": "org_ea64dca00297190e",
+      "weight": 10.3,
+      "shared": 2
+    },
+    {
+      "source": "85606455727-29",
+      "target": "org_d8f9c3940c6db678",
+      "weight": 10.66,
+      "shared": 2
+    },
+    {
+      "source": "org_b97c4a45f5afecb6",
+      "target": "714466824568-72",
+      "weight": 12.35,
+      "shared": 2
+    },
+    {
+      "source": "org_b97c4a45f5afecb6",
+      "target": "852199818450-61",
+      "weight": 10.62,
+      "shared": 2
+    },
+    {
+      "source": "org_b97c4a45f5afecb6",
+      "target": "513095842513-75",
+      "weight": 10.62,
+      "shared": 2
+    },
+    {
+      "source": "org_b97c4a45f5afecb6",
+      "target": "13255254129-80",
+      "weight": 17.49,
+      "shared": 3
+    },
+    {
+      "source": "org_b97c4a45f5afecb6",
+      "target": "17798717671-62",
+      "weight": 11.84,
+      "shared": 2
+    },
+    {
+      "source": "org_b97c4a45f5afecb6",
+      "target": "org_0ef5fb86cfb961a2",
+      "weight": 11.84,
+      "shared": 2
+    },
+    {
+      "source": "724240721429-43",
+      "target": "01678796979-90",
+      "weight": 11.86,
+      "shared": 2
+    },
+    {
+      "source": "724240721429-43",
+      "target": "580486295858-34",
+      "weight": 11.86,
+      "shared": 2
+    },
+    {
+      "source": "724240721429-43",
+      "target": "13255254129-80",
+      "weight": 11.86,
+      "shared": 2
+    },
+    {
+      "source": "13255254129-80",
+      "target": "828715012462-94",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "13255254129-80",
+      "target": "510247941330-21",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "13255254129-80",
+      "target": "05673984520-73",
+      "weight": 23.59,
+      "shared": 4
+    },
+    {
+      "source": "13255254129-80",
+      "target": "525700249853-18",
+      "weight": 24.36,
+      "shared": 4
+    },
+    {
+      "source": "13255254129-80",
+      "target": "08746491502-16",
+      "weight": 35.35,
+      "shared": 6
+    },
+    {
+      "source": "13255254129-80",
+      "target": "51894741860-19",
+      "weight": 32.0,
+      "shared": 5
+    },
+    {
+      "source": "13255254129-80",
+      "target": "953927613272-05",
+      "weight": 10.85,
+      "shared": 2
+    },
+    {
+      "source": "13255254129-80",
+      "target": "289810215426-07",
+      "weight": 23.49,
+      "shared": 4
+    },
+    {
+      "source": "13255254129-80",
+      "target": "40524063921-20",
+      "weight": 17.24,
+      "shared": 3
+    },
+    {
+      "source": "13255254129-80",
+      "target": "202702447560-24",
+      "weight": 11.95,
+      "shared": 2
+    },
+    {
+      "source": "13255254129-80",
+      "target": "353231132587-96",
+      "weight": 17.72,
+      "shared": 3
+    },
+    {
+      "source": "13255254129-80",
+      "target": "112051847836-65",
+      "weight": 15.87,
+      "shared": 3
+    },
+    {
+      "source": "13255254129-80",
+      "target": "793750635630-82",
+      "weight": 15.87,
+      "shared": 3
+    },
+    {
+      "source": "13255254129-80",
+      "target": "942505344125-37",
+      "weight": 15.87,
+      "shared": 3
+    },
+    {
+      "source": "13255254129-80",
+      "target": "38392131923-05",
+      "weight": 41.29,
+      "shared": 7
+    },
+    {
+      "source": "13255254129-80",
+      "target": "852199818450-61",
+      "weight": 10.62,
+      "shared": 2
+    },
+    {
+      "source": "13255254129-80",
+      "target": "29967294656-11",
+      "weight": 22.14,
+      "shared": 4
+    },
+    {
+      "source": "13255254129-80",
+      "target": "76441066192-30",
+      "weight": 25.78,
+      "shared": 4
+    },
+    {
+      "source": "13255254129-80",
+      "target": "125110346079-89",
+      "weight": 17.77,
+      "shared": 3
+    },
+    {
+      "source": "13255254129-80",
+      "target": "119101322906-62",
+      "weight": 12.01,
+      "shared": 2
+    },
+    {
+      "source": "13255254129-80",
+      "target": "513095842513-75",
+      "weight": 10.62,
+      "shared": 2
+    },
+    {
+      "source": "13255254129-80",
+      "target": "400320250147-12",
+      "weight": 20.02,
+      "shared": 3
+    },
+    {
+      "source": "13255254129-80",
+      "target": "059134051904-87",
+      "weight": 10.3,
+      "shared": 2
+    },
+    {
+      "source": "13255254129-80",
+      "target": "386723034383-54",
+      "weight": 12.06,
+      "shared": 2
+    },
+    {
+      "source": "13255254129-80",
+      "target": "282227450818-50",
+      "weight": 23.21,
+      "shared": 4
+    },
+    {
+      "source": "13255254129-80",
+      "target": "035366013790-68",
+      "weight": 22.87,
+      "shared": 4
+    },
+    {
+      "source": "13255254129-80",
+      "target": "624025437423-56",
+      "weight": 10.4,
+      "shared": 2
+    },
+    {
+      "source": "13255254129-80",
+      "target": "701646744539-02",
+      "weight": 16.81,
+      "shared": 3
+    },
+    {
+      "source": "13255254129-80",
+      "target": "824033130961-66",
+      "weight": 17.84,
+      "shared": 3
+    },
+    {
+      "source": "13255254129-80",
+      "target": "827688315793-86",
+      "weight": 18.06,
+      "shared": 3
+    },
+    {
+      "source": "13255254129-80",
+      "target": "41712511261-57",
+      "weight": 31.45,
+      "shared": 5
+    },
+    {
+      "source": "13255254129-80",
+      "target": "84476202986-17",
+      "weight": 11.11,
+      "shared": 2
+    },
+    {
+      "source": "13255254129-80",
+      "target": "358015448693-47",
+      "weight": 11.07,
+      "shared": 2
+    },
+    {
+      "source": "13255254129-80",
+      "target": "01678796979-90",
+      "weight": 30.74,
+      "shared": 5
+    },
+    {
+      "source": "13255254129-80",
+      "target": "576870951717-17",
+      "weight": 11.25,
+      "shared": 2
+    },
+    {
+      "source": "13255254129-80",
+      "target": "99937329074-65",
+      "weight": 10.31,
+      "shared": 2
+    },
+    {
+      "source": "13255254129-80",
+      "target": "006687715492-92",
+      "weight": 16.63,
+      "shared": 3
+    },
+    {
+      "source": "13255254129-80",
+      "target": "924832594611-79",
+      "weight": 12.21,
+      "shared": 2
+    },
+    {
+      "source": "13255254129-80",
+      "target": "087418193041-10",
+      "weight": 17.03,
+      "shared": 3
+    },
+    {
+      "source": "13255254129-80",
+      "target": "052269393423-46",
+      "weight": 10.85,
+      "shared": 2
+    },
+    {
+      "source": "13255254129-80",
+      "target": "994694795829-46",
+      "weight": 12.09,
+      "shared": 2
+    },
+    {
+      "source": "13255254129-80",
+      "target": "580486295858-34",
+      "weight": 29.08,
+      "shared": 5
+    },
+    {
+      "source": "13255254129-80",
+      "target": "525441739605-60",
+      "weight": 16.23,
+      "shared": 3
+    },
+    {
+      "source": "13255254129-80",
+      "target": "930637620172-95",
+      "weight": 25.29,
+      "shared": 4
+    },
+    {
+      "source": "13255254129-80",
+      "target": "10944091576-90",
+      "weight": 10.31,
+      "shared": 2
+    },
+    {
+      "source": "13255254129-80",
+      "target": "705450224079-05",
+      "weight": 11.07,
+      "shared": 2
+    },
+    {
+      "source": "13255254129-80",
+      "target": "17798717671-62",
+      "weight": 22.61,
+      "shared": 4
+    },
+    {
+      "source": "13255254129-80",
+      "target": "org_0264d4d2adfb28c0",
+      "weight": 15.94,
+      "shared": 3
+    },
+    {
+      "source": "13255254129-80",
+      "target": "org_0ef5fb86cfb961a2",
+      "weight": 22.51,
+      "shared": 4
+    },
+    {
+      "source": "13255254129-80",
+      "target": "org_1862938034275c47",
+      "weight": 10.48,
+      "shared": 2
+    },
+    {
+      "source": "13255254129-80",
+      "target": "org_424e0980fddd1f21",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "13255254129-80",
+      "target": "org_4fefc0402846d7fc",
+      "weight": 15.81,
+      "shared": 3
+    },
+    {
+      "source": "13255254129-80",
+      "target": "org_844812aee34e4fcb",
+      "weight": 10.31,
+      "shared": 2
+    },
+    {
+      "source": "13255254129-80",
+      "target": "org_ea64dca00297190e",
+      "weight": 10.3,
+      "shared": 2
+    },
+    {
+      "source": "13255254129-80",
+      "target": "org_0a1a3d9f9104baa4",
+      "weight": 12.09,
+      "shared": 2
+    },
+    {
+      "source": "13255254129-80",
+      "target": "org_4d22e8c41853627a",
+      "weight": 12.09,
+      "shared": 2
+    },
+    {
+      "source": "13255254129-80",
+      "target": "org_abca748076927efd",
+      "weight": 11.09,
+      "shared": 2
+    },
+    {
+      "source": "13255254129-80",
+      "target": "org_588b1eda9ca60d42",
+      "weight": 18.12,
+      "shared": 3
+    },
+    {
+      "source": "13255254129-80",
+      "target": "org_f0355e770fd988dc",
+      "weight": 12.22,
+      "shared": 2
+    },
+    {
+      "source": "13255254129-80",
+      "target": "org_bac780517e0e347b",
+      "weight": 10.85,
+      "shared": 2
+    },
+    {
+      "source": "13255254129-80",
+      "target": "org_3edcb05777c3ca8a",
+      "weight": 12.3,
+      "shared": 2
+    },
+    {
+      "source": "13255254129-80",
+      "target": "501735195390-18",
+      "weight": 11.11,
+      "shared": 2
+    },
+    {
+      "source": "13255254129-80",
+      "target": "org_fc4c3c046ac0df30",
+      "weight": 12.03,
+      "shared": 2
+    },
+    {
+      "source": "13255254129-80",
+      "target": "org_d8f9c3940c6db678",
+      "weight": 10.66,
+      "shared": 2
+    },
+    {
+      "source": "13255254129-80",
+      "target": "org_c8f2cf848eb23e89",
+      "weight": 17.37,
+      "shared": 3
+    },
+    {
+      "source": "13255254129-80",
+      "target": "org_112912e26677d217",
+      "weight": 11.76,
+      "shared": 2
+    },
+    {
+      "source": "13255254129-80",
+      "target": "056048443448-39",
+      "weight": 12.27,
+      "shared": 2
+    },
+    {
+      "source": "353231132587-96",
+      "target": "51894741860-19",
+      "weight": 17.72,
+      "shared": 3
+    },
+    {
+      "source": "353231132587-96",
+      "target": "006687715492-92",
+      "weight": 11.11,
+      "shared": 2
+    },
+    {
+      "source": "353231132587-96",
+      "target": "501735195390-18",
+      "weight": 11.11,
+      "shared": 2
+    },
+    {
+      "source": "353231132587-96",
+      "target": "84476202986-17",
+      "weight": 11.11,
+      "shared": 2
+    },
+    {
+      "source": "353231132587-96",
+      "target": "org_fc4c3c046ac0df30",
+      "weight": 12.03,
+      "shared": 2
+    },
+    {
+      "source": "501735195390-18",
+      "target": "51894741860-19",
+      "weight": 11.11,
+      "shared": 2
+    },
+    {
+      "source": "501735195390-18",
+      "target": "84476202986-17",
+      "weight": 11.11,
+      "shared": 2
+    },
+    {
+      "source": "501735195390-18",
+      "target": "006687715492-92",
+      "weight": 11.11,
+      "shared": 2
+    },
+    {
+      "source": "302212447149-07",
+      "target": "560446038784-46",
+      "weight": 9.84,
+      "shared": 2
+    },
+    {
+      "source": "302212447149-07",
+      "target": "org_5903170cdc585d99",
+      "weight": 9.84,
+      "shared": 2
+    },
+    {
+      "source": "302212447149-07",
+      "target": "org_a20dc89494b88a77",
+      "weight": 9.84,
+      "shared": 2
+    },
+    {
+      "source": "org_3edcb05777c3ca8a",
+      "target": "17798717671-62",
+      "weight": 12.3,
+      "shared": 2
+    },
+    {
+      "source": "99937329074-65",
+      "target": "793750635630-82",
+      "weight": 10.31,
+      "shared": 2
+    },
+    {
+      "source": "99937329074-65",
+      "target": "953017548438-73",
+      "weight": 10.31,
+      "shared": 2
+    },
+    {
+      "source": "99937329074-65",
+      "target": "942505344125-37",
+      "weight": 10.31,
+      "shared": 2
+    },
+    {
+      "source": "99937329074-65",
+      "target": "282227450818-50",
+      "weight": 10.31,
+      "shared": 2
+    },
+    {
+      "source": "99937329074-65",
+      "target": "827688315793-86",
+      "weight": 10.31,
+      "shared": 2
+    },
+    {
+      "source": "99937329074-65",
+      "target": "10944091576-90",
+      "weight": 10.31,
+      "shared": 2
+    },
+    {
+      "source": "99937329074-65",
+      "target": "17798717671-62",
+      "weight": 10.31,
+      "shared": 2
+    },
+    {
+      "source": "99937329074-65",
+      "target": "580486295858-34",
+      "weight": 10.31,
+      "shared": 2
+    },
+    {
+      "source": "99937329074-65",
+      "target": "org_0ef5fb86cfb961a2",
+      "weight": 10.31,
+      "shared": 2
+    },
+    {
+      "source": "99937329074-65",
+      "target": "org_5903170cdc585d99",
+      "weight": 10.31,
+      "shared": 2
+    },
+    {
+      "source": "99937329074-65",
+      "target": "org_844812aee34e4fcb",
+      "weight": 10.31,
+      "shared": 2
+    },
+    {
+      "source": "953927613272-05",
+      "target": "org_023d2a061ef7b6b1",
+      "weight": 10.85,
+      "shared": 2
+    },
+    {
+      "source": "953927613272-05",
+      "target": "org_c8f2cf848eb23e89",
+      "weight": 10.85,
+      "shared": 2
+    },
+    {
+      "source": "910956030915-30",
+      "target": "75311753240-67",
+      "weight": 12.93,
+      "shared": 2
+    },
+    {
+      "source": "510247941330-21",
+      "target": "828715012462-94",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "510247941330-21",
+      "target": "05673984520-73",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "510247941330-21",
+      "target": "08746491502-16",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "510247941330-21",
+      "target": "112051847836-65",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "510247941330-21",
+      "target": "289810215426-07",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "510247941330-21",
+      "target": "29967294656-11",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "510247941330-21",
+      "target": "38392131923-05",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "510247941330-21",
+      "target": "41712511261-57",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "510247941330-21",
+      "target": "525441739605-60",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "510247941330-21",
+      "target": "580486295858-34",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "510247941330-21",
+      "target": "701646744539-02",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "510247941330-21",
+      "target": "75311753240-67",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "510247941330-21",
+      "target": "793750635630-82",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "510247941330-21",
+      "target": "942505344125-37",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "510247941330-21",
+      "target": "org_424e0980fddd1f21",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "org_4d22e8c41853627a",
+      "target": "05673984520-73",
+      "weight": 12.09,
+      "shared": 2
+    },
+    {
+      "source": "org_4d22e8c41853627a",
+      "target": "08746491502-16",
+      "weight": 12.09,
+      "shared": 2
+    },
+    {
+      "source": "org_4d22e8c41853627a",
+      "target": "38392131923-05",
+      "weight": 12.09,
+      "shared": 2
+    },
+    {
+      "source": "org_4d22e8c41853627a",
+      "target": "41712511261-57",
+      "weight": 12.09,
+      "shared": 2
+    },
+    {
+      "source": "org_4d22e8c41853627a",
+      "target": "org_0a1a3d9f9104baa4",
+      "weight": 12.09,
+      "shared": 2
+    },
+    {
+      "source": "568222016448-48",
+      "target": "org_0ef5fb86cfb961a2",
+      "weight": 11.8,
+      "shared": 2
+    },
+    {
+      "source": "32705794105-55",
+      "target": "282227450818-50",
+      "weight": 11.5,
+      "shared": 2
+    },
+    {
+      "source": "32705794105-55",
+      "target": "580486295858-34",
+      "weight": 11.5,
+      "shared": 2
+    },
+    {
+      "source": "32705794105-55",
+      "target": "942505344125-37",
+      "weight": 11.5,
+      "shared": 2
+    },
+    {
+      "source": "32705794105-55",
+      "target": "953017548438-73",
+      "weight": 11.5,
+      "shared": 2
+    },
+    {
+      "source": "930637620172-95",
+      "target": "793750635630-82",
+      "weight": 10.9,
+      "shared": 2
+    },
+    {
+      "source": "930637620172-95",
+      "target": "942505344125-37",
+      "weight": 10.9,
+      "shared": 2
+    },
+    {
+      "source": "930637620172-95",
+      "target": "282227450818-50",
+      "weight": 11.96,
+      "shared": 2
+    },
+    {
+      "source": "930637620172-95",
+      "target": "824033130961-66",
+      "weight": 12.2,
+      "shared": 2
+    },
+    {
+      "source": "930637620172-95",
+      "target": "827688315793-86",
+      "weight": 13.09,
+      "shared": 2
+    },
+    {
+      "source": "930637620172-95",
+      "target": "41712511261-57",
+      "weight": 19.95,
+      "shared": 3
+    },
+    {
+      "source": "930637620172-95",
+      "target": "01678796979-90",
+      "weight": 17.53,
+      "shared": 3
+    },
+    {
+      "source": "930637620172-95",
+      "target": "580486295858-34",
+      "weight": 10.9,
+      "shared": 2
+    },
+    {
+      "source": "052269393423-46",
+      "target": "org_bac780517e0e347b",
+      "weight": 10.85,
+      "shared": 2
+    },
+    {
+      "source": "087418193041-10",
+      "target": "386723034383-54",
+      "weight": 12.06,
+      "shared": 2
+    },
+    {
+      "source": "087418193041-10",
+      "target": "282227450818-50",
+      "weight": 11.6,
+      "shared": 2
+    },
+    {
+      "source": "087418193041-10",
+      "target": "624025437423-56",
+      "weight": 10.4,
+      "shared": 2
+    },
+    {
+      "source": "087418193041-10",
+      "target": "41712511261-57",
+      "weight": 11.6,
+      "shared": 2
+    },
+    {
+      "source": "087418193041-10",
+      "target": "1894704851-83",
+      "weight": 10.4,
+      "shared": 2
+    },
+    {
+      "source": "087418193041-10",
+      "target": "17798717671-62",
+      "weight": 10.4,
+      "shared": 2
+    },
+    {
+      "source": "087418193041-10",
+      "target": "61866543669-46",
+      "weight": 10.4,
+      "shared": 2
+    },
+    {
+      "source": "942505344125-37",
+      "target": "828715012462-94",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "942505344125-37",
+      "target": "05673984520-73",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "942505344125-37",
+      "target": "08746491502-16",
+      "weight": 16.7,
+      "shared": 3
+    },
+    {
+      "source": "942505344125-37",
+      "target": "289810215426-07",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "942505344125-37",
+      "target": "112051847836-65",
+      "weight": 16.7,
+      "shared": 3
+    },
+    {
+      "source": "942505344125-37",
+      "target": "793750635630-82",
+      "weight": 15.87,
+      "shared": 3
+    },
+    {
+      "source": "942505344125-37",
+      "target": "953017548438-73",
+      "weight": 16.47,
+      "shared": 3
+    },
+    {
+      "source": "942505344125-37",
+      "target": "10944091576-90",
+      "weight": 10.31,
+      "shared": 2
+    },
+    {
+      "source": "942505344125-37",
+      "target": "17798717671-62",
+      "weight": 10.31,
+      "shared": 2
+    },
+    {
+      "source": "942505344125-37",
+      "target": "282227450818-50",
+      "weight": 16.47,
+      "shared": 3
+    },
+    {
+      "source": "942505344125-37",
+      "target": "29967294656-11",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "942505344125-37",
+      "target": "38392131923-05",
+      "weight": 16.7,
+      "shared": 3
+    },
+    {
+      "source": "942505344125-37",
+      "target": "41712511261-57",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "942505344125-37",
+      "target": "525441739605-60",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "942505344125-37",
+      "target": "580486295858-34",
+      "weight": 22.04,
+      "shared": 4
+    },
+    {
+      "source": "942505344125-37",
+      "target": "701646744539-02",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "942505344125-37",
+      "target": "75311753240-67",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "942505344125-37",
+      "target": "827688315793-86",
+      "weight": 10.31,
+      "shared": 2
+    },
+    {
+      "source": "942505344125-37",
+      "target": "org_0ef5fb86cfb961a2",
+      "weight": 10.31,
+      "shared": 2
+    },
+    {
+      "source": "942505344125-37",
+      "target": "org_424e0980fddd1f21",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "942505344125-37",
+      "target": "org_5903170cdc585d99",
+      "weight": 10.31,
+      "shared": 2
+    },
+    {
+      "source": "942505344125-37",
+      "target": "org_844812aee34e4fcb",
+      "weight": 10.31,
+      "shared": 2
+    },
+    {
+      "source": "942505344125-37",
+      "target": "01678796979-90",
+      "weight": 10.9,
+      "shared": 2
+    },
+    {
+      "source": "852199818450-61",
+      "target": "513095842513-75",
+      "weight": 10.62,
+      "shared": 2
+    },
+    {
+      "source": "852199818450-61",
+      "target": "701646744539-02",
+      "weight": 9.89,
+      "shared": 2
+    },
+    {
+      "source": "852199818450-61",
+      "target": "org_0264d4d2adfb28c0",
+      "weight": 10.62,
+      "shared": 2
+    },
+    {
+      "source": "852199818450-61",
+      "target": "org_0ef5fb86cfb961a2",
+      "weight": 9.89,
+      "shared": 2
+    },
+    {
+      "source": "75311753240-67",
+      "target": "828715012462-94",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "75311753240-67",
+      "target": "08746491502-16",
+      "weight": 15.87,
+      "shared": 3
+    },
+    {
+      "source": "75311753240-67",
+      "target": "112051847836-65",
+      "weight": 15.87,
+      "shared": 3
+    },
+    {
+      "source": "75311753240-67",
+      "target": "793750635630-82",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "75311753240-67",
+      "target": "953017548438-73",
+      "weight": 10.76,
+      "shared": 2
+    },
+    {
+      "source": "75311753240-67",
+      "target": "38392131923-05",
+      "weight": 15.87,
+      "shared": 3
+    },
+    {
+      "source": "75311753240-67",
+      "target": "29967294656-11",
+      "weight": 15.87,
+      "shared": 3
+    },
+    {
+      "source": "75311753240-67",
+      "target": "059134051904-87",
+      "weight": 10.3,
+      "shared": 2
+    },
+    {
+      "source": "75311753240-67",
+      "target": "525441739605-60",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "75311753240-67",
+      "target": "org_0ef5fb86cfb961a2",
+      "weight": 16.57,
+      "shared": 3
+    },
+    {
+      "source": "75311753240-67",
+      "target": "org_424e0980fddd1f21",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "75311753240-67",
+      "target": "org_4fefc0402846d7fc",
+      "weight": 10.3,
+      "shared": 2
+    },
+    {
+      "source": "75311753240-67",
+      "target": "org_ea64dca00297190e",
+      "weight": 10.3,
+      "shared": 2
+    },
+    {
+      "source": "400320250147-12",
+      "target": "76441066192-30",
+      "weight": 14.28,
+      "shared": 2
+    },
+    {
+      "source": "400320250147-12",
+      "target": "41712511261-57",
+      "weight": 14.28,
+      "shared": 2
+    },
+    {
+      "source": "org_b8948e4230133df0",
+      "target": "org_a20dc89494b88a77",
+      "weight": 10.4,
+      "shared": 2
+    },
+    {
+      "source": "org_abca748076927efd",
+      "target": "125110346079-89",
+      "weight": 11.09,
+      "shared": 2
+    },
+    {
+      "source": "org_5903170cdc585d99",
+      "target": "793750635630-82",
+      "weight": 10.31,
+      "shared": 2
+    },
+    {
+      "source": "org_5903170cdc585d99",
+      "target": "953017548438-73",
+      "weight": 10.31,
+      "shared": 2
+    },
+    {
+      "source": "org_5903170cdc585d99",
+      "target": "282227450818-50",
+      "weight": 10.31,
+      "shared": 2
+    },
+    {
+      "source": "org_5903170cdc585d99",
+      "target": "827688315793-86",
+      "weight": 10.31,
+      "shared": 2
+    },
+    {
+      "source": "org_5903170cdc585d99",
+      "target": "560446038784-46",
+      "weight": 9.84,
+      "shared": 2
+    },
+    {
+      "source": "org_5903170cdc585d99",
+      "target": "10944091576-90",
+      "weight": 10.31,
+      "shared": 2
+    },
+    {
+      "source": "org_5903170cdc585d99",
+      "target": "17798717671-62",
+      "weight": 10.31,
+      "shared": 2
+    },
+    {
+      "source": "org_5903170cdc585d99",
+      "target": "org_844812aee34e4fcb",
+      "weight": 10.31,
+      "shared": 2
+    },
+    {
+      "source": "953017548438-73",
+      "target": "08746491502-16",
+      "weight": 11.13,
+      "shared": 2
+    },
+    {
+      "source": "953017548438-73",
+      "target": "112051847836-65",
+      "weight": 11.13,
+      "shared": 2
+    },
+    {
+      "source": "953017548438-73",
+      "target": "793750635630-82",
+      "weight": 10.31,
+      "shared": 2
+    },
+    {
+      "source": "953017548438-73",
+      "target": "10944091576-90",
+      "weight": 10.31,
+      "shared": 2
+    },
+    {
+      "source": "953017548438-73",
+      "target": "17798717671-62",
+      "weight": 10.31,
+      "shared": 2
+    },
+    {
+      "source": "953017548438-73",
+      "target": "282227450818-50",
+      "weight": 16.47,
+      "shared": 3
+    },
+    {
+      "source": "953017548438-73",
+      "target": "38392131923-05",
+      "weight": 11.13,
+      "shared": 2
+    },
+    {
+      "source": "953017548438-73",
+      "target": "580486295858-34",
+      "weight": 16.47,
+      "shared": 3
+    },
+    {
+      "source": "953017548438-73",
+      "target": "827688315793-86",
+      "weight": 10.31,
+      "shared": 2
+    },
+    {
+      "source": "953017548438-73",
+      "target": "org_0ef5fb86cfb961a2",
+      "weight": 10.31,
+      "shared": 2
+    },
+    {
+      "source": "953017548438-73",
+      "target": "org_844812aee34e4fcb",
+      "weight": 10.31,
+      "shared": 2
+    },
+    {
+      "source": "953017548438-73",
+      "target": "org_a20dc89494b88a77",
+      "weight": 10.76,
+      "shared": 2
+    },
+    {
+      "source": "17798717671-62",
+      "target": "289810215426-07",
+      "weight": 11.34,
+      "shared": 2
+    },
+    {
+      "source": "17798717671-62",
+      "target": "793750635630-82",
+      "weight": 10.31,
+      "shared": 2
+    },
+    {
+      "source": "17798717671-62",
+      "target": "282227450818-50",
+      "weight": 10.31,
+      "shared": 2
+    },
+    {
+      "source": "17798717671-62",
+      "target": "624025437423-56",
+      "weight": 10.4,
+      "shared": 2
+    },
+    {
+      "source": "17798717671-62",
+      "target": "701646744539-02",
+      "weight": 11.34,
+      "shared": 2
+    },
+    {
+      "source": "17798717671-62",
+      "target": "827688315793-86",
+      "weight": 10.31,
+      "shared": 2
+    },
+    {
+      "source": "17798717671-62",
+      "target": "1894704851-83",
+      "weight": 10.4,
+      "shared": 2
+    },
+    {
+      "source": "17798717671-62",
+      "target": "924832594611-79",
+      "weight": 12.21,
+      "shared": 2
+    },
+    {
+      "source": "17798717671-62",
+      "target": "580486295858-34",
+      "weight": 16.68,
+      "shared": 3
+    },
+    {
+      "source": "17798717671-62",
+      "target": "10944091576-90",
+      "weight": 10.31,
+      "shared": 2
+    },
+    {
+      "source": "17798717671-62",
+      "target": "61866543669-46",
+      "weight": 10.4,
+      "shared": 2
+    },
+    {
+      "source": "17798717671-62",
+      "target": "org_0ef5fb86cfb961a2",
+      "weight": 17.18,
+      "shared": 3
+    },
+    {
+      "source": "17798717671-62",
+      "target": "org_844812aee34e4fcb",
+      "weight": 10.31,
+      "shared": 2
+    },
+    {
+      "source": "17798717671-62",
+      "target": "org_d8f9c3940c6db678",
+      "weight": 11.7,
+      "shared": 2
+    },
+    {
+      "source": "org_70cc2d97a7b6a8bd",
+      "target": "112051847836-65",
+      "weight": 11.35,
+      "shared": 2
+    },
+    {
+      "source": "org_70cc2d97a7b6a8bd",
+      "target": "org_0264d4d2adfb28c0",
+      "weight": 11.14,
+      "shared": 2
+    },
+    {
+      "source": "624025437423-56",
+      "target": "1894704851-83",
+      "weight": 10.4,
+      "shared": 2
+    },
+    {
+      "source": "624025437423-56",
+      "target": "61866543669-46",
+      "weight": 10.4,
+      "shared": 2
+    },
+    {
+      "source": "560446038784-46",
+      "target": "org_a20dc89494b88a77",
+      "weight": 9.84,
+      "shared": 2
+    },
+    {
+      "source": "05673984520-73",
+      "target": "828715012462-94",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "05673984520-73",
+      "target": "08746491502-16",
+      "weight": 17.07,
+      "shared": 3
+    },
+    {
+      "source": "05673984520-73",
+      "target": "112051847836-65",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "05673984520-73",
+      "target": "289810215426-07",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "05673984520-73",
+      "target": "29967294656-11",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "05673984520-73",
+      "target": "38392131923-05",
+      "weight": 32.04,
+      "shared": 5
+    },
+    {
+      "source": "05673984520-73",
+      "target": "40524063921-20",
+      "weight": 11.5,
+      "shared": 2
+    },
+    {
+      "source": "05673984520-73",
+      "target": "41712511261-57",
+      "weight": 17.07,
+      "shared": 3
+    },
+    {
+      "source": "05673984520-73",
+      "target": "525441739605-60",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "05673984520-73",
+      "target": "580486295858-34",
+      "weight": 17.07,
+      "shared": 3
+    },
+    {
+      "source": "05673984520-73",
+      "target": "701646744539-02",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "05673984520-73",
+      "target": "76441066192-30",
+      "weight": 18.02,
+      "shared": 3
+    },
+    {
+      "source": "05673984520-73",
+      "target": "793750635630-82",
+      "weight": 18.99,
+      "shared": 3
+    },
+    {
+      "source": "05673984520-73",
+      "target": "org_424e0980fddd1f21",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "05673984520-73",
+      "target": "01678796979-90",
+      "weight": 12.09,
+      "shared": 2
+    },
+    {
+      "source": "05673984520-73",
+      "target": "994694795829-46",
+      "weight": 12.09,
+      "shared": 2
+    },
+    {
+      "source": "05673984520-73",
+      "target": "org_0a1a3d9f9104baa4",
+      "weight": 12.09,
+      "shared": 2
+    },
+    {
+      "source": "202702447560-24",
+      "target": "035366013790-68",
+      "weight": 12.59,
+      "shared": 2
+    },
+    {
+      "source": "824033130961-66",
+      "target": "01678796979-90",
+      "weight": 12.2,
+      "shared": 2
+    },
+    {
+      "source": "824033130961-66",
+      "target": "41712511261-57",
+      "weight": 12.2,
+      "shared": 2
+    },
+    {
+      "source": "10944091576-90",
+      "target": "793750635630-82",
+      "weight": 10.31,
+      "shared": 2
+    },
+    {
+      "source": "10944091576-90",
+      "target": "282227450818-50",
+      "weight": 10.31,
+      "shared": 2
+    },
+    {
+      "source": "10944091576-90",
+      "target": "827688315793-86",
+      "weight": 10.31,
+      "shared": 2
+    },
+    {
+      "source": "10944091576-90",
+      "target": "580486295858-34",
+      "weight": 10.31,
+      "shared": 2
+    },
+    {
+      "source": "10944091576-90",
+      "target": "org_0ef5fb86cfb961a2",
+      "weight": 10.31,
+      "shared": 2
+    },
+    {
+      "source": "10944091576-90",
+      "target": "org_844812aee34e4fcb",
+      "weight": 10.31,
+      "shared": 2
+    },
+    {
+      "source": "29967294656-11",
+      "target": "828715012462-94",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "29967294656-11",
+      "target": "08746491502-16",
+      "weight": 22.14,
+      "shared": 4
+    },
+    {
+      "source": "29967294656-11",
+      "target": "289810215426-07",
+      "weight": 16.81,
+      "shared": 3
+    },
+    {
+      "source": "29967294656-11",
+      "target": "112051847836-65",
+      "weight": 15.87,
+      "shared": 3
+    },
+    {
+      "source": "29967294656-11",
+      "target": "793750635630-82",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "29967294656-11",
+      "target": "38392131923-05",
+      "weight": 15.87,
+      "shared": 3
+    },
+    {
+      "source": "29967294656-11",
+      "target": "059134051904-87",
+      "weight": 10.3,
+      "shared": 2
+    },
+    {
+      "source": "29967294656-11",
+      "target": "282227450818-50",
+      "weight": 11.24,
+      "shared": 2
+    },
+    {
+      "source": "29967294656-11",
+      "target": "41712511261-57",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "29967294656-11",
+      "target": "525441739605-60",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "29967294656-11",
+      "target": "580486295858-34",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "29967294656-11",
+      "target": "701646744539-02",
+      "weight": 16.81,
+      "shared": 3
+    },
+    {
+      "source": "29967294656-11",
+      "target": "org_0264d4d2adfb28c0",
+      "weight": 10.3,
+      "shared": 2
+    },
+    {
+      "source": "29967294656-11",
+      "target": "org_0ef5fb86cfb961a2",
+      "weight": 10.3,
+      "shared": 2
+    },
+    {
+      "source": "29967294656-11",
+      "target": "org_424e0980fddd1f21",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "29967294656-11",
+      "target": "org_4fefc0402846d7fc",
+      "weight": 10.3,
+      "shared": 2
+    },
+    {
+      "source": "29967294656-11",
+      "target": "org_ea64dca00297190e",
+      "weight": 10.3,
+      "shared": 2
+    },
+    {
+      "source": "org_b2754ebd9c39fdb9",
+      "target": "org_4ce317772d3b5b1a",
+      "weight": 14.88,
+      "shared": 2
+    },
+    {
+      "source": "org_1862938034275c47",
+      "target": "org_4fefc0402846d7fc",
+      "weight": 10.48,
+      "shared": 2
+    },
+    {
+      "source": "org_844812aee34e4fcb",
+      "target": "793750635630-82",
+      "weight": 10.31,
+      "shared": 2
+    },
+    {
+      "source": "org_844812aee34e4fcb",
+      "target": "282227450818-50",
+      "weight": 10.31,
+      "shared": 2
+    },
+    {
+      "source": "org_844812aee34e4fcb",
+      "target": "827688315793-86",
+      "weight": 10.31,
+      "shared": 2
+    },
+    {
+      "source": "org_844812aee34e4fcb",
+      "target": "580486295858-34",
+      "weight": 10.31,
+      "shared": 2
+    },
+    {
+      "source": "org_844812aee34e4fcb",
+      "target": "org_0ef5fb86cfb961a2",
+      "weight": 10.31,
+      "shared": 2
+    },
+    {
+      "source": "org_754f76de60e1871e",
+      "target": "org_023d2a061ef7b6b1",
+      "weight": 13.37,
+      "shared": 2
+    },
+    {
+      "source": "org_29183ecc26ca91aa",
+      "target": "org_023d2a061ef7b6b1",
+      "weight": 11.99,
+      "shared": 2
+    },
+    {
+      "source": "84476202986-17",
+      "target": "51894741860-19",
+      "weight": 11.11,
+      "shared": 2
+    },
+    {
+      "source": "84476202986-17",
+      "target": "006687715492-92",
+      "weight": 11.11,
+      "shared": 2
+    },
+    {
+      "source": "827688315793-86",
+      "target": "793750635630-82",
+      "weight": 10.31,
+      "shared": 2
+    },
+    {
+      "source": "827688315793-86",
+      "target": "76441066192-30",
+      "weight": 12.73,
+      "shared": 2
+    },
+    {
+      "source": "827688315793-86",
+      "target": "282227450818-50",
+      "weight": 10.31,
+      "shared": 2
+    },
+    {
+      "source": "827688315793-86",
+      "target": "41712511261-57",
+      "weight": 12.73,
+      "shared": 2
+    },
+    {
+      "source": "827688315793-86",
+      "target": "580486295858-34",
+      "weight": 10.31,
+      "shared": 2
+    },
+    {
+      "source": "827688315793-86",
+      "target": "org_0ef5fb86cfb961a2",
+      "weight": 10.31,
+      "shared": 2
+    },
+    {
+      "source": "08746491502-16",
+      "target": "828715012462-94",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "08746491502-16",
+      "target": "059134051904-87",
+      "weight": 10.3,
+      "shared": 2
+    },
+    {
+      "source": "08746491502-16",
+      "target": "112051847836-65",
+      "weight": 22.03,
+      "shared": 4
+    },
+    {
+      "source": "08746491502-16",
+      "target": "282227450818-50",
+      "weight": 17.4,
+      "shared": 3
+    },
+    {
+      "source": "08746491502-16",
+      "target": "289810215426-07",
+      "weight": 23.49,
+      "shared": 4
+    },
+    {
+      "source": "08746491502-16",
+      "target": "38392131923-05",
+      "weight": 35.24,
+      "shared": 6
+    },
+    {
+      "source": "08746491502-16",
+      "target": "41712511261-57",
+      "weight": 17.07,
+      "shared": 3
+    },
+    {
+      "source": "08746491502-16",
+      "target": "525441739605-60",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "08746491502-16",
+      "target": "580486295858-34",
+      "weight": 23.39,
+      "shared": 4
+    },
+    {
+      "source": "08746491502-16",
+      "target": "701646744539-02",
+      "weight": 16.81,
+      "shared": 3
+    },
+    {
+      "source": "08746491502-16",
+      "target": "76441066192-30",
+      "weight": 11.5,
+      "shared": 2
+    },
+    {
+      "source": "08746491502-16",
+      "target": "793750635630-82",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "08746491502-16",
+      "target": "org_0264d4d2adfb28c0",
+      "weight": 10.3,
+      "shared": 2
+    },
+    {
+      "source": "08746491502-16",
+      "target": "org_0ef5fb86cfb961a2",
+      "weight": 10.3,
+      "shared": 2
+    },
+    {
+      "source": "08746491502-16",
+      "target": "org_424e0980fddd1f21",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "08746491502-16",
+      "target": "org_4fefc0402846d7fc",
+      "weight": 10.3,
+      "shared": 2
+    },
+    {
+      "source": "08746491502-16",
+      "target": "org_ea64dca00297190e",
+      "weight": 10.3,
+      "shared": 2
+    },
+    {
+      "source": "08746491502-16",
+      "target": "01678796979-90",
+      "weight": 12.25,
+      "shared": 2
+    },
+    {
+      "source": "08746491502-16",
+      "target": "125110346079-89",
+      "weight": 12.25,
+      "shared": 2
+    },
+    {
+      "source": "08746491502-16",
+      "target": "org_0a1a3d9f9104baa4",
+      "weight": 12.09,
+      "shared": 2
+    },
+    {
+      "source": "08746491502-16",
+      "target": "org_588b1eda9ca60d42",
+      "weight": 12.43,
+      "shared": 2
+    },
+    {
+      "source": "08746491502-16",
+      "target": "035366013790-68",
+      "weight": 11.85,
+      "shared": 2
+    },
+    {
+      "source": "08746491502-16",
+      "target": "119101322906-62",
+      "weight": 12.01,
+      "shared": 2
+    },
+    {
+      "source": "95713206856-14",
+      "target": "377643141797-21",
+      "weight": 13.17,
+      "shared": 2
+    },
+    {
+      "source": "95713206856-14",
+      "target": "org_4fefc0402846d7fc",
+      "weight": 10.84,
+      "shared": 2
+    },
+    {
+      "source": "95713206856-14",
+      "target": "org_4ce317772d3b5b1a",
+      "weight": 14.01,
+      "shared": 2
+    },
+    {
+      "source": "95713206856-14",
+      "target": "org_023d2a061ef7b6b1",
+      "weight": 18.68,
+      "shared": 3
+    },
+    {
+      "source": "org_0a1a3d9f9104baa4",
+      "target": "38392131923-05",
+      "weight": 12.09,
+      "shared": 2
+    },
+    {
+      "source": "org_0a1a3d9f9104baa4",
+      "target": "41712511261-57",
+      "weight": 12.09,
+      "shared": 2
+    },
+    {
+      "source": "41712511261-57",
+      "target": "828715012462-94",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "41712511261-57",
+      "target": "289810215426-07",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "41712511261-57",
+      "target": "112051847836-65",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "41712511261-57",
+      "target": "793750635630-82",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "41712511261-57",
+      "target": "38392131923-05",
+      "weight": 17.07,
+      "shared": 3
+    },
+    {
+      "source": "41712511261-57",
+      "target": "76441066192-30",
+      "weight": 19.25,
+      "shared": 3
+    },
+    {
+      "source": "41712511261-57",
+      "target": "282227450818-50",
+      "weight": 11.6,
+      "shared": 2
+    },
+    {
+      "source": "41712511261-57",
+      "target": "701646744539-02",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "41712511261-57",
+      "target": "525441739605-60",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "41712511261-57",
+      "target": "580486295858-34",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "41712511261-57",
+      "target": "org_424e0980fddd1f21",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "41712511261-57",
+      "target": "01678796979-90",
+      "weight": 12.2,
+      "shared": 2
+    },
+    {
+      "source": "924832594611-79",
+      "target": "org_0ef5fb86cfb961a2",
+      "weight": 12.21,
+      "shared": 2
+    },
+    {
+      "source": "org_424e0980fddd1f21",
+      "target": "828715012462-94",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "org_424e0980fddd1f21",
+      "target": "289810215426-07",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "org_424e0980fddd1f21",
+      "target": "112051847836-65",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "org_424e0980fddd1f21",
+      "target": "793750635630-82",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "org_424e0980fddd1f21",
+      "target": "38392131923-05",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "org_424e0980fddd1f21",
+      "target": "701646744539-02",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "org_424e0980fddd1f21",
+      "target": "580486295858-34",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "org_424e0980fddd1f21",
+      "target": "525441739605-60",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "1894704851-83",
+      "target": "61866543669-46",
+      "weight": 10.4,
+      "shared": 2
+    },
+    {
+      "source": "01678796979-90",
+      "target": "289810215426-07",
+      "weight": 12.25,
+      "shared": 2
+    },
+    {
+      "source": "01678796979-90",
+      "target": "40524063921-20",
+      "weight": 11.45,
+      "shared": 2
+    },
+    {
+      "source": "01678796979-90",
+      "target": "793750635630-82",
+      "weight": 10.9,
+      "shared": 2
+    },
+    {
+      "source": "01678796979-90",
+      "target": "38392131923-05",
+      "weight": 18.78,
+      "shared": 3
+    },
+    {
+      "source": "01678796979-90",
+      "target": "125110346079-89",
+      "weight": 12.25,
+      "shared": 2
+    },
+    {
+      "source": "01678796979-90",
+      "target": "282227450818-50",
+      "weight": 11.96,
+      "shared": 2
+    },
+    {
+      "source": "01678796979-90",
+      "target": "580486295858-34",
+      "weight": 24.11,
+      "shared": 4
+    },
+    {
+      "source": "01678796979-90",
+      "target": "994694795829-46",
+      "weight": 12.09,
+      "shared": 2
+    },
+    {
+      "source": "358015448693-47",
+      "target": "705450224079-05",
+      "weight": 11.07,
+      "shared": 2
+    },
+    {
+      "source": "org_0264d4d2adfb28c0",
+      "target": "289810215426-07",
+      "weight": 9.44,
+      "shared": 2
+    },
+    {
+      "source": "org_0264d4d2adfb28c0",
+      "target": "112051847836-65",
+      "weight": 10.3,
+      "shared": 2
+    },
+    {
+      "source": "org_0264d4d2adfb28c0",
+      "target": "513095842513-75",
+      "weight": 10.62,
+      "shared": 2
+    },
+    {
+      "source": "org_0264d4d2adfb28c0",
+      "target": "059134051904-87",
+      "weight": 10.3,
+      "shared": 2
+    },
+    {
+      "source": "org_0264d4d2adfb28c0",
+      "target": "org_4fefc0402846d7fc",
+      "weight": 10.3,
+      "shared": 2
+    },
+    {
+      "source": "org_0264d4d2adfb28c0",
+      "target": "org_ea64dca00297190e",
+      "weight": 10.3,
+      "shared": 2
+    },
+    {
+      "source": "994694795829-46",
+      "target": "38392131923-05",
+      "weight": 12.09,
+      "shared": 2
+    },
+    {
+      "source": "994694795829-46",
+      "target": "580486295858-34",
+      "weight": 12.09,
+      "shared": 2
+    },
+    {
+      "source": "793750635630-82",
+      "target": "828715012462-94",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "793750635630-82",
+      "target": "289810215426-07",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "793750635630-82",
+      "target": "112051847836-65",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "793750635630-82",
+      "target": "282227450818-50",
+      "weight": 10.31,
+      "shared": 2
+    },
+    {
+      "source": "793750635630-82",
+      "target": "38392131923-05",
+      "weight": 18.99,
+      "shared": 3
+    },
+    {
+      "source": "793750635630-82",
+      "target": "525441739605-60",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "793750635630-82",
+      "target": "580486295858-34",
+      "weight": 15.87,
+      "shared": 3
+    },
+    {
+      "source": "793750635630-82",
+      "target": "701646744539-02",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "793750635630-82",
+      "target": "org_0ef5fb86cfb961a2",
+      "weight": 10.31,
+      "shared": 2
+    },
+    {
+      "source": "org_a20dc89494b88a77",
+      "target": "701646744539-02",
+      "weight": 11.5,
+      "shared": 2
+    },
+    {
+      "source": "org_a20dc89494b88a77",
+      "target": "org_0ef5fb86cfb961a2",
+      "weight": 10.5,
+      "shared": 2
+    },
+    {
+      "source": "org_0ef5fb86cfb961a2",
+      "target": "112051847836-65",
+      "weight": 10.3,
+      "shared": 2
+    },
+    {
+      "source": "org_0ef5fb86cfb961a2",
+      "target": "38392131923-05",
+      "weight": 10.3,
+      "shared": 2
+    },
+    {
+      "source": "org_0ef5fb86cfb961a2",
+      "target": "059134051904-87",
+      "weight": 10.3,
+      "shared": 2
+    },
+    {
+      "source": "org_0ef5fb86cfb961a2",
+      "target": "282227450818-50",
+      "weight": 10.31,
+      "shared": 2
+    },
+    {
+      "source": "org_0ef5fb86cfb961a2",
+      "target": "035366013790-68",
+      "weight": 10.66,
+      "shared": 2
+    },
+    {
+      "source": "org_0ef5fb86cfb961a2",
+      "target": "580486295858-34",
+      "weight": 10.31,
+      "shared": 2
+    },
+    {
+      "source": "org_0ef5fb86cfb961a2",
+      "target": "61866543669-46",
+      "weight": 11.24,
+      "shared": 2
+    },
+    {
+      "source": "org_0ef5fb86cfb961a2",
+      "target": "org_4fefc0402846d7fc",
+      "weight": 10.3,
+      "shared": 2
+    },
+    {
+      "source": "org_0ef5fb86cfb961a2",
+      "target": "org_ea64dca00297190e",
+      "weight": 10.3,
+      "shared": 2
+    },
+    {
+      "source": "org_0ef5fb86cfb961a2",
+      "target": "org_d8f9c3940c6db678",
+      "weight": 10.66,
+      "shared": 2
+    },
+    {
+      "source": "580486295858-34",
+      "target": "828715012462-94",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "580486295858-34",
+      "target": "525700249853-18",
+      "weight": 13.05,
+      "shared": 2
+    },
+    {
+      "source": "580486295858-34",
+      "target": "289810215426-07",
+      "weight": 23.59,
+      "shared": 4
+    },
+    {
+      "source": "580486295858-34",
+      "target": "40524063921-20",
+      "weight": 11.5,
+      "shared": 2
+    },
+    {
+      "source": "580486295858-34",
+      "target": "112051847836-65",
+      "weight": 16.7,
+      "shared": 3
+    },
+    {
+      "source": "580486295858-34",
+      "target": "38392131923-05",
+      "weight": 29.91,
+      "shared": 5
+    },
+    {
+      "source": "580486295858-34",
+      "target": "76441066192-30",
+      "weight": 11.5,
+      "shared": 2
+    },
+    {
+      "source": "580486295858-34",
+      "target": "125110346079-89",
+      "weight": 12.25,
+      "shared": 2
+    },
+    {
+      "source": "580486295858-34",
+      "target": "282227450818-50",
+      "weight": 16.47,
+      "shared": 3
+    },
+    {
+      "source": "580486295858-34",
+      "target": "701646744539-02",
+      "weight": 16.91,
+      "shared": 3
+    },
+    {
+      "source": "580486295858-34",
+      "target": "525441739605-60",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "580486295858-34",
+      "target": "org_d8f9c3940c6db678",
+      "weight": 11.7,
+      "shared": 2
+    },
+    {
+      "source": "090804049414-19",
+      "target": "org_18472d783c7af3af",
+      "weight": 14.09,
+      "shared": 2
+    },
+    {
+      "source": "090804049414-19",
+      "target": "org_4ce317772d3b5b1a",
+      "weight": 14.24,
+      "shared": 2
+    },
+    {
+      "source": "125110346079-89",
+      "target": "289810215426-07",
+      "weight": 12.25,
+      "shared": 2
+    },
+    {
+      "source": "125110346079-89",
+      "target": "38392131923-05",
+      "weight": 12.25,
+      "shared": 2
+    },
+    {
+      "source": "org_ea64dca00297190e",
+      "target": "112051847836-65",
+      "weight": 10.3,
+      "shared": 2
+    },
+    {
+      "source": "org_ea64dca00297190e",
+      "target": "38392131923-05",
+      "weight": 10.3,
+      "shared": 2
+    },
+    {
+      "source": "org_ea64dca00297190e",
+      "target": "059134051904-87",
+      "weight": 10.3,
+      "shared": 2
+    },
+    {
+      "source": "org_ea64dca00297190e",
+      "target": "org_4fefc0402846d7fc",
+      "weight": 10.3,
+      "shared": 2
+    },
+    {
+      "source": "377643141797-21",
+      "target": "org_023d2a061ef7b6b1",
+      "weight": 13.17,
+      "shared": 2
+    },
+    {
+      "source": "119101322906-62",
+      "target": "289810215426-07",
+      "weight": 12.3,
+      "shared": 2
+    },
+    {
+      "source": "119101322906-62",
+      "target": "38392131923-05",
+      "weight": 12.01,
+      "shared": 2
+    },
+    {
+      "source": "org_588b1eda9ca60d42",
+      "target": "282227450818-50",
+      "weight": 12.43,
+      "shared": 2
+    },
+    {
+      "source": "112051847836-65",
+      "target": "828715012462-94",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "112051847836-65",
+      "target": "289810215426-07",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "112051847836-65",
+      "target": "059134051904-87",
+      "weight": 10.3,
+      "shared": 2
+    },
+    {
+      "source": "112051847836-65",
+      "target": "282227450818-50",
+      "weight": 11.13,
+      "shared": 2
+    },
+    {
+      "source": "112051847836-65",
+      "target": "38392131923-05",
+      "weight": 22.03,
+      "shared": 4
+    },
+    {
+      "source": "112051847836-65",
+      "target": "525441739605-60",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "112051847836-65",
+      "target": "701646744539-02",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "112051847836-65",
+      "target": "org_4fefc0402846d7fc",
+      "weight": 10.3,
+      "shared": 2
+    },
+    {
+      "source": "289810215426-07",
+      "target": "828715012462-94",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "289810215426-07",
+      "target": "525700249853-18",
+      "weight": 13.05,
+      "shared": 2
+    },
+    {
+      "source": "289810215426-07",
+      "target": "282227450818-50",
+      "weight": 11.24,
+      "shared": 2
+    },
+    {
+      "source": "289810215426-07",
+      "target": "38392131923-05",
+      "weight": 17.22,
+      "shared": 3
+    },
+    {
+      "source": "289810215426-07",
+      "target": "525441739605-60",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "289810215426-07",
+      "target": "701646744539-02",
+      "weight": 23.18,
+      "shared": 4
+    },
+    {
+      "source": "006687715492-92",
+      "target": "51894741860-19",
+      "weight": 11.11,
+      "shared": 2
+    },
+    {
+      "source": "056048443448-39",
+      "target": "40524063921-20",
+      "weight": 12.27,
+      "shared": 2
+    },
+    {
+      "source": "org_d8f9c3940c6db678",
+      "target": "035366013790-68",
+      "weight": 10.66,
+      "shared": 2
+    },
+    {
+      "source": "org_4fefc0402846d7fc",
+      "target": "38392131923-05",
+      "weight": 10.3,
+      "shared": 2
+    },
+    {
+      "source": "org_4fefc0402846d7fc",
+      "target": "059134051904-87",
+      "weight": 10.3,
+      "shared": 2
+    },
+    {
+      "source": "org_fc4c3c046ac0df30",
+      "target": "51894741860-19",
+      "weight": 12.03,
+      "shared": 2
+    },
+    {
+      "source": "525441739605-60",
+      "target": "828715012462-94",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "525441739605-60",
+      "target": "38392131923-05",
+      "weight": 16.23,
+      "shared": 3
+    },
+    {
+      "source": "525441739605-60",
+      "target": "701646744539-02",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "525441739605-60",
+      "target": "576870951717-17",
+      "weight": 11.25,
+      "shared": 2
+    },
+    {
+      "source": "015617142386-42",
+      "target": "61866543669-46",
+      "weight": 12.12,
+      "shared": 2
+    },
+    {
+      "source": "059134051904-87",
+      "target": "38392131923-05",
+      "weight": 10.3,
+      "shared": 2
+    },
+    {
+      "source": "40524063921-20",
+      "target": "38392131923-05",
+      "weight": 11.5,
+      "shared": 2
+    },
+    {
+      "source": "40524063921-20",
+      "target": "76441066192-30",
+      "weight": 11.5,
+      "shared": 2
+    },
+    {
+      "source": "525700249853-18",
+      "target": "38392131923-05",
+      "weight": 12.37,
+      "shared": 2
+    },
+    {
+      "source": "576870951717-17",
+      "target": "38392131923-05",
+      "weight": 11.25,
+      "shared": 2
+    },
+    {
+      "source": "828715012462-94",
+      "target": "38392131923-05",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "828715012462-94",
+      "target": "701646744539-02",
+      "weight": 10.54,
+      "shared": 2
+    },
+    {
+      "source": "035366013790-68",
+      "target": "38392131923-05",
+      "weight": 17.54,
+      "shared": 3
+    },
+    {
+      "source": "035366013790-68",
+      "target": "org_c8f2cf848eb23e89",
+      "weight": 11.86,
+      "shared": 2
+    },
+    {
+      "source": "76441066192-30",
+      "target": "51894741860-19",
+      "weight": 14.28,
+      "shared": 2
+    },
+    {
+      "source": "76441066192-30",
+      "target": "38392131923-05",
+      "weight": 18.02,
+      "shared": 3
+    },
+    {
+      "source": "701646744539-02",
+      "target": "282227450818-50",
+      "weight": 11.24,
+      "shared": 2
+    },
+    {
+      "source": "org_023d2a061ef7b6b1",
+      "target": "org_c8f2cf848eb23e89",
+      "weight": 10.85,
+      "shared": 2
+    },
+    {
+      "source": "38392131923-05",
+      "target": "51894741860-19",
+      "weight": 12.21,
+      "shared": 2
+    },
+    {
+      "source": "38392131923-05",
+      "target": "282227450818-50",
+      "weight": 11.13,
+      "shared": 2
+    }
+  ],
+  "external_connections": [
+    {
+      "cluster_id": 1,
+      "cluster_label": "German",
+      "edge_count": 191,
+      "weight": 2403.43
+    },
+    {
+      "cluster_id": 3,
+      "cluster_label": "Energy & Climate / Tech & Digital",
+      "edge_count": 166,
+      "weight": 2319.02
+    },
+    {
+      "cluster_id": 0,
+      "cluster_label": "Tech & Digital",
+      "edge_count": 86,
+      "weight": 1089.23
+    },
+    {
+      "cluster_id": 4,
+      "cluster_label": "Tech & Digital / Transport & Aviation",
+      "edge_count": 49,
+      "weight": 594.75
+    },
+    {
+      "cluster_id": 5,
+      "cluster_label": "Pharma & Health",
+      "edge_count": 43,
+      "weight": 585.47
+    },
+    {
+      "cluster_id": 9,
+      "cluster_label": "Finance & Banking / Tech & Digital",
+      "edge_count": 42,
+      "weight": 504.14
+    },
+    {
+      "cluster_id": 7,
+      "cluster_label": "Agriculture & Food / Trade & Business",
+      "edge_count": 29,
+      "weight": 383.39
+    },
+    {
+      "cluster_id": 2,
+      "cluster_label": "Tech & Digital / Human Rights & NGO",
+      "edge_count": 24,
+      "weight": 331.76
+    },
+    {
+      "cluster_id": 6,
+      "cluster_label": "Nordic / Tech & Digital",
+      "edge_count": 24,
+      "weight": 292.72
+    },
+    {
+      "cluster_id": 11,
+      "cluster_label": "Nordic",
+      "edge_count": 5,
+      "weight": 93.68
+    },
+    {
+      "cluster_id": 12,
+      "cluster_label": "Nordic",
+      "edge_count": 4,
+      "weight": 48.65
+    },
+    {
+      "cluster_id": 8,
+      "cluster_label": "ENEL SpA & A2A",
+      "edge_count": 4,
+      "weight": 57.54
+    },
+    {
+      "cluster_id": 13,
+      "cluster_label": "Austrian",
+      "edge_count": 3,
+      "weight": 35.53
+    }
+  ],
+  "metadata": {
+    "node_count": 134,
+    "edge_count": 897,
+    "density": 0.101
+  }
+}

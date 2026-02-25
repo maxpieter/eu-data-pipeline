@@ -1,0 +1,38 @@
+{
+  "cluster_id": 21,
+  "cluster_label": "SDG Watch Europe",
+  "nodes": [
+    {
+      "id": "037833727533-45",
+      "type": "org",
+      "label": "SDG Watch Europe",
+      "name": "SDG Watch Europe",
+      "interests": "Does not represent commercial interests",
+      "register_id": "037833727533-45",
+      "degree": 1
+    },
+    {
+      "id": "org_0fde6694bb961cbf",
+      "type": "org",
+      "label": "UN/UNDP Representation Office in Brussels",
+      "name": "UN/UNDP Representation Office in Brussels",
+      "interests": "",
+      "register_id": null,
+      "degree": 1
+    }
+  ],
+  "links": [
+    {
+      "source": "037833727533-45",
+      "target": "org_0fde6694bb961cbf",
+      "weight": 15.92,
+      "shared": 2
+    }
+  ],
+  "external_connections": [],
+  "metadata": {
+    "node_count": 2,
+    "edge_count": 1,
+    "density": 1.0
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "cluster_id": 20,
+  "cluster_label": "Forum r\u00e9fugi\u00e9s",
+  "nodes": [
+    {
+      "id": "475947931780-87",
+      "type": "org",
+      "label": "Forum r\u00e9fugi\u00e9s",
+      "name": "Forum r\u00e9fugi\u00e9s",
+      "interests": "Does not represent commercial interests",
+      "register_id": "475947931780-87",
+      "degree": 1
+    },
+    {
+      "id": "org_47488227d70fa21d",
+      "type": "org",
+      "label": "Utopia 56",
+      "name": "Utopia 56",
+      "interests": "",
+      "register_id": null,
+      "degree": 1
+    }
+  ],
+  "links": [
+    {
+      "source": "475947931780-87",
+      "target": "org_47488227d70fa21d",
+      "weight": 11.76,
+      "shared": 2
+    }
+  ],
+  "external_connections": [],
+  "metadata": {
+    "node_count": 2,
+    "edge_count": 1,
+    "density": 1.0
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "cluster_id": 29,
+  "cluster_label": "ZRZESZENIE MI\u0118DZYNARODOWYCH PR",
+  "nodes": [
+    {
+      "id": "org_c8e37c7768366f34",
+      "type": "org",
+      "label": "ZRZESZENIE MI\u0118DZYNARODOWYCH PRZEWO\u0179NIK\u00d3W DROGOWYCH W POLSCE",
+      "name": "ZRZESZENIE MI\u0118DZYNARODOWYCH PRZEWO\u0179NIK\u00d3W DROGOWYCH W POLSCE",
+      "interests": "",
+      "register_id": null,
+      "degree": 1
+    },
+    {
+      "id": "org_985a486c253856b7",
+      "type": "org",
+      "label": "National Assembly of Vietnam",
+      "name": "National Assembly of Vietnam",
+      "interests": "",
+      "register_id": null,
+      "degree": 1
+    }
+  ],
+  "links": [
+    {
+      "source": "org_c8e37c7768366f34",
+      "target": "org_985a486c253856b7",
+      "weight": 14.11,
+      "shared": 2
+    }
+  ],
+  "external_connections": [],
+  "metadata": {
+    "node_count": 2,
+    "edge_count": 1,
+    "density": 1.0
+  }
+}

@@ -26,16 +26,15 @@ npm-debug.log*
 .env.local
 .env.*.local
 
-# Vercel
-.vercel
-
 # TypeScript
 *.tsbuildinfo
 next-env.d.ts
 .env*.local
 
-# Python
+# cache
 api/__pycache__/
 debug_*.py
 test_graph.py
 venv/
+__pycache__/
+.scraper_cache/

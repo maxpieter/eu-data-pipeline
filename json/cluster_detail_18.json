@@ -1,0 +1,53 @@
+{
+  "cluster_id": 18,
+  "cluster_label": "Permanent Mission of & Mission of the Peopl",
+  "nodes": [
+    {
+      "id": "org_0c58a88348ec4017",
+      "type": "org",
+      "label": "Mission of the Peoples\u00b4s Republic of China",
+      "name": "Mission of the Peoples\u00b4s Republic of China",
+      "interests": "",
+      "register_id": null,
+      "degree": 1
+    },
+    {
+      "id": "org_672625d838f6b4dc",
+      "type": "org",
+      "label": "Permanent Mission of the Russian Federation to the European Union and the Euratom",
+      "name": "Permanent Mission of the Russian Federation to the European Union and the Euratom",
+      "interests": "",
+      "register_id": null,
+      "degree": 2
+    },
+    {
+      "id": "org_ebc54dec20fdc638",
+      "type": "org",
+      "label": "Embassy of the Republic of Belarus in the Kingdom of Belgium",
+      "name": "Embassy of the Republic of Belarus in the Kingdom of Belgium",
+      "interests": "",
+      "register_id": null,
+      "degree": 1
+    }
+  ],
+  "links": [
+    {
+      "source": "org_0c58a88348ec4017",
+      "target": "org_672625d838f6b4dc",
+      "weight": 15.52,
+      "shared": 2
+    },
+    {
+      "source": "org_672625d838f6b4dc",
+      "target": "org_ebc54dec20fdc638",
+      "weight": 17.39,
+      "shared": 2
+    }
+  ],
+  "external_connections": [],
+  "metadata": {
+    "node_count": 3,
+    "edge_count": 2,
+    "density": 0.667
+  }
+}

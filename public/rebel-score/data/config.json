@@ -1,0 +1,41 @@
+{
+  "topics": {
+    "Biodiversity": "biodiversity",
+    "Climate and environment": "climate-and-environment",
+    "Climate change": "climate-change",
+    "Consumer protection": "consumer-protection",
+    "Digital": "digital",
+    "Economy and budget": "economy-and-budget",
+    "Education": "education",
+    "Energy": "energy",
+    "Enlargement": "enlargement",
+    "Food and agriculture": "food-and-agriculture",
+    "Foreign affairs": "foreign-affairs",
+    "Gender equality": "gender-equality",
+    "Health": "health",
+    "International trade": "international-trade",
+    "Migration": "migration",
+    "Social protection": "social-protection",
+    "Taxation": "taxation",
+    "Travel": "travel",
+    "Worker’s rights": "worker-s-rights",
+    "youth and culture": "youth-and-culture"
+  },
+  "periods": [
+    {
+      "id": "ep10",
+      "label": "EP10 (2024-2029)",
+      "start": "2024-07-16",
+      "end": "2029-07-15",
+      "is_default": true
+    },
+    {
+      "id": "ep9",
+      "label": "EP9 (2019-2024)",
+      "start": "2019-07-02",
+      "end": "2024-07-15",
+      "is_default": false
+    }
+  ],
+  "default_period": "ep10"
+}

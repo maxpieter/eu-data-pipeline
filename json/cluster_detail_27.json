@@ -1,0 +1,38 @@
+{
+  "cluster_id": 27,
+  "cluster_label": "Permanent Representation of La",
+  "nodes": [
+    {
+      "id": "org_9948b52a4a3645fa",
+      "type": "org",
+      "label": "Permanent Representation of Latvia to the EU",
+      "name": "Permanent Representation of Latvia to the EU",
+      "interests": "",
+      "register_id": null,
+      "degree": 1
+    },
+    {
+      "id": "org_6c81420ff7640f50",
+      "type": "org",
+      "label": "Permanent Representation of the Czech Republic to the EU",
+      "name": "Permanent Representation of the Czech Republic to the EU",
+      "interests": "",
+      "register_id": null,
+      "degree": 1
+    }
+  ],
+  "links": [
+    {
+      "source": "org_9948b52a4a3645fa",
+      "target": "org_6c81420ff7640f50",
+      "weight": 11.03,
+      "shared": 2
+    }
+  ],
+  "external_connections": [],
+  "metadata": {
+    "node_count": 2,
+    "edge_count": 1,
+    "density": 1.0
+  }
+}
