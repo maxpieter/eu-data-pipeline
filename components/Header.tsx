@@ -4,14 +4,14 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 const pageTitles: Record<string, { main: string; accent: string }> = {
-  "/mep-meetings": { main: "MEP", accent: " meetings" },
-  "/network": { main: "Meeting", accent: " network" },
-  "/rebel-scores": { main: "MEP", accent: " voting" },
+  "/meeting-timeline": { main: "MEP", accent: " meetings" },
+  "/meeting-graph": { main: "Meeting", accent: " network" },
+  "/rebel-score": { main: "MEP", accent: " voting" },
 };
 
 export default function Header() {
   const pathname = usePathname();
-  const title = pageTitles[pathname] || pageTitles["/mep-meetings"];
+  const title = pageTitles[pathname] || pageTitles["/meeting-timeline"];
 
   return (
     <header className="header">
@@ -24,8 +24,8 @@ export default function Header() {
 
       <nav className="header-nav">
         <Link
-          href="/rebel-scores"
-          className={pathname === "/rebel-scores" ? "active" : ""}
+          href="/rebel-score"
+          className={pathname === "/rebel-score" ? "active" : ""}
         >
           <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path
@@ -39,8 +39,8 @@ export default function Header() {
         </Link>
 
         <Link
-          href="/mep-meetings"
-          className={pathname === "/mep-meetings" ? "active" : ""}
+          href="/meeting-timeline"
+          className={pathname === "/meeting-timeline" ? "active" : ""}
         >
           <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path
@@ -54,8 +54,8 @@ export default function Header() {
         </Link>
 
         <Link
-          href="/network"
-          className={pathname === "/network" ? "active" : ""}
+          href="/meeting-graph"
+          className={pathname === "/meeting-graph" ? "active" : ""}
         >
           <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path
