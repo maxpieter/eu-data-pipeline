@@ -1,131 +1,521 @@
 "use client";
 
-import React from "react";
-import { useTimelineData } from "@/hooks/useTimelineData";
-import FilterBar from "@/components/timeline/FilterBar";
-import ActiveFilters from "@/components/timeline/ActiveFilters";
-import ResultsCard from "@/components/timeline/ResultsCard";
-import TimelineChart from "@/components/timeline/TimelineChart";
+import { useEffect, useState, useMemo, useCallback } from "react";
+import FilterBar from "./mep-meetings/FilterBar";
+import ActiveFilters from "./mep-meetings/ActiveFilters";
+import ResultsInfoCard from "./mep-meetings/ResultsInfoCard";
+import TimelineChart from "./mep-meetings/TimelineChart";
+import AnalysisCards from "./mep-meetings/AnalysisCards";
+import { fuzzyMatch, getGroupShortName } from "./mep-meetings/utils";
+import type {
+  MepInfo,
+  CommitteeInfo,
+  ProcedureInfo,
+  OrganizationInfo,
+  TimelineData,
+  ProcedureEventsData,
+  AnalysisCard,
+  AnalysisResult,
+  EpPeriod,
+} from "./mep-meetings/types";
 
-/**
- * MEP Meeting Timeline — orchestrator component.
- *
- * All state and data-fetching live in `useTimelineData`.  This component is a
- * thin shell: it calls the hook and fans the returned values out to the four
- * focused sub-components.
- */
 export default function MepMeetingsGraph() {
-  const timeline = useTimelineData();
+  // Data
+  const [mepList, setMepList] = useState<MepInfo[]>([]);
+  const [committees, setCommittees] = useState<CommitteeInfo[]>([]);
+  const [procedures, setProcedures] = useState<ProcedureInfo[]>([]);
+  const [organizations, setOrganizations] = useState<OrganizationInfo[]>([]);
+  const [timelineData, setTimelineData] = useState<TimelineData | null>(null);
+
+  // Procedure events (OEIL)
+  const [procedureEvents, setProcedureEvents] =
+    useState<ProcedureEventsData | null>(null);
+  const [eventsLoading, setEventsLoading] = useState(false);
+  const [showKeyEvents, setShowKeyEvents] = useState(true);
+  const [showDocGateway, setShowDocGateway] = useState(true);
+
+  // Selections
+  const [selectedMep, setSelectedMep] = useState<MepInfo | null>(null);
+  const [selectedCommittee, setSelectedCommittee] = useState<string>("");
+  const [selectedProcedure, setSelectedProcedure] = useState<string>("");
+  const [selectedOrganization, setSelectedOrganization] = useState<string>("");
+
+  // Search inputs
+  const [mepSearch, setMepSearch] = useState("");
+  const [committeeSearch, setCommitteeSearch] = useState("");
+  const [procedureSearch, setProcedureSearch] = useState("");
+  const [organizationSearch, setOrganizationSearch] = useState("");
+
+  // Dropdown visibility
+  const [mepDropdownOpen, setMepDropdownOpen] = useState(false);
+  const [committeeDropdownOpen, setCommitteeDropdownOpen] = useState(false);
+  const [procedureDropdownOpen, setProcedureDropdownOpen] = useState(false);
+  const [organizationDropdownOpen, setOrganizationDropdownOpen] =
+    useState(false);
+
+  // EP Period filter
+  const [epPeriod, setEpPeriod] = useState<EpPeriod>("both");
+
+  // Document analysis cards
+  const [analysisCards, setAnalysisCards] = useState<AnalysisCard[]>([]);
+  const [expandedCardId, setExpandedCardId] = useState<string | null>(null);
+
+  // UI
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  // Whether progress bar should show
+  const hasProgressBar =
+    procedureEvents != null && procedureEvents.key_events.length > 0;
+
+  // Filtered lists
+  const filteredMeps = useMemo(() => {
+    if (!mepSearch.trim()) return mepList.slice(0, 15);
+    return mepList
+      .map((mep) => ({
+        mep,
+        score: Math.max(
+          fuzzyMatch(mep.name, mepSearch),
+          fuzzyMatch(mep.country, mepSearch) * 0.8,
+          fuzzyMatch(getGroupShortName(mep.political_group), mepSearch) * 0.7,
+        ),
+      }))
+      .filter(({ score }) => score > 0)
+      .sort((a, b) => b.score - a.score)
+      .slice(0, 15)
+      .map(({ mep }) => mep);
+  }, [mepList, mepSearch]);
+
+  const filteredCommittees = useMemo(() => {
+    if (!committeeSearch.trim()) return committees.slice(0, 15);
+    return committees
+      .filter((c) =>
+        c.acronym.toLowerCase().includes(committeeSearch.toLowerCase()),
+      )
+      .slice(0, 15);
+  }, [committees, committeeSearch]);
+
+  const filteredProcedures = useMemo(() => {
+    if (!procedureSearch.trim()) return procedures.slice(0, 15);
+    return procedures
+      .filter((p) =>
+        p.procedure.toLowerCase().includes(procedureSearch.toLowerCase()),
+      )
+      .slice(0, 15);
+  }, [procedures, procedureSearch]);
+
+  const filteredOrganizations = useMemo(() => {
+    if (!organizationSearch.trim()) return organizations.slice(0, 15);
+    return organizations
+      .map((org) => ({
+        org,
+        score: fuzzyMatch(org.name, organizationSearch),
+      }))
+      .filter(({ score }) => score > 0)
+      .sort((a, b) => b.score - a.score)
+      .slice(0, 15)
+      .map(({ org }) => org);
+  }, [organizations, organizationSearch]);
+
+  // Fetch initial data
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const [mepsRes, committeesRes, proceduresRes, organizationsRes] =
+          await Promise.all([
+            fetch("/api/meps"),
+            fetch("/api/committees"),
+            fetch("/api/procedures"),
+            fetch("/api/organizations"),
+          ]);
+        if (
+          !mepsRes.ok ||
+          !committeesRes.ok ||
+          !proceduresRes.ok ||
+          !organizationsRes.ok
+        )
+          throw new Error("Failed to fetch");
+        const [mepsData, committeesData, proceduresData, organizationsData] =
+          await Promise.all([
+            mepsRes.json(),
+            committeesRes.json(),
+            proceduresRes.json(),
+            organizationsRes.json(),
+          ]);
+        setMepList(mepsData.meps || []);
+        setCommittees(committeesData.committees || []);
+        setProcedures(proceduresData.procedures || []);
+        setOrganizations(organizationsData.organizations || []);
+        setError(null);
+      } catch (err) {
+        setError("Failed to load data. Make sure server.py is running.");
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchData();
+  }, []);
+
+  // Fetch MEP-specific procedures when MEP is selected, restore global when cleared
+  useEffect(() => {
+    async function updateProcedures() {
+      try {
+        if (selectedMep) {
+          const res = await fetch(`/api/meps/${selectedMep.id}/procedures`);
+          if (res.ok) {
+            const data = await res.json();
+            setProcedures(data.procedures || []);
+          }
+        } else {
+          const res = await fetch("/api/procedures");
+          if (res.ok) {
+            const data = await res.json();
+            setProcedures(data.procedures || []);
+          }
+        }
+      } catch (err) {
+        console.error("Failed to fetch procedures:", err);
+      }
+    }
+    updateProcedures();
+  }, [selectedMep]);
+
+  // Fetch timeline based on selections
+  useEffect(() => {
+    if (
+      !selectedMep &&
+      !selectedCommittee &&
+      !selectedProcedure &&
+      !selectedOrganization
+    ) {
+      setTimelineData(null);
+      return;
+    }
+
+    async function fetchTimeline() {
+      setLoading(true);
+      try {
+        const params = new URLSearchParams();
+        if (selectedMep) params.set("mep", selectedMep.id.toString());
+        if (selectedCommittee) params.set("committee", selectedCommittee);
+        if (selectedProcedure) params.set("procedure", selectedProcedure);
+        if (selectedOrganization)
+          params.set("organization", selectedOrganization);
+        if (epPeriod !== "both") params.set("ep_period", epPeriod);
+
+        const res = await fetch(`/api/timeline?${params.toString()}`);
+        if (!res.ok) throw new Error("Failed to fetch timeline");
+        const data = await res.json();
+        setTimelineData(data);
+        setError(null);
+      } catch (err) {
+        setError("Failed to load timeline.");
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchTimeline();
+  }, [
+    selectedMep,
+    selectedCommittee,
+    selectedProcedure,
+    selectedOrganization,
+    epPeriod,
+  ]);
+
+  // Fetch OEIL procedure events when a procedure is selected
+  useEffect(() => {
+    if (!selectedProcedure) {
+      setProcedureEvents(null);
+      return;
+    }
+
+    async function fetchEvents() {
+      setEventsLoading(true);
+      try {
+        const params = new URLSearchParams({ procedure: selectedProcedure });
+        const res = await fetch(`/api/procedure-events?${params.toString()}`);
+        if (res.ok) {
+          const data = await res.json();
+          setProcedureEvents(data);
+        } else {
+          setProcedureEvents(null);
+        }
+      } catch {
+        setProcedureEvents(null);
+      } finally {
+        setEventsLoading(false);
+      }
+    }
+    fetchEvents();
+  }, [selectedProcedure]);
+
+  // Document analysis handler
+  const analyzeDocument = useCallback(
+    async (documentUrl: string, documentRef: string) => {
+      if (!documentUrl) return;
+
+      const mepName = selectedMep?.name || mepSearch.trim() || "";
+
+      const isDuplicate = analysisCards.some(
+        (c) => c.documentUrl === documentUrl && c.mepName === mepName,
+      );
+      if (isDuplicate) {
+        const existing = analysisCards.find(
+          (c) => c.documentUrl === documentUrl && c.mepName === mepName && !c.loading,
+        );
+        if (existing) setExpandedCardId(existing.id);
+        return;
+      }
+
+      const cardId = `${Date.now()}-${Math.random().toString(36).slice(2, 6)}`;
+      const newCard: AnalysisCard = {
+        id: cardId,
+        loading: true,
+        documentUrl,
+        documentRef,
+        mepName,
+        result: null,
+      };
+      setAnalysisCards((prev) => [newCard, ...prev]);
+
+      try {
+        const controller = new AbortController();
+        const timeout = setTimeout(() => controller.abort(), 300000);
+        const res = await fetch("http://localhost:5001/api/analyze-document", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            document_url: documentUrl,
+            document_ref: documentRef,
+            mep_name: mepName,
+          }),
+          signal: controller.signal,
+        });
+        clearTimeout(timeout);
+
+        const data: AnalysisResult = await res.json();
+        setAnalysisCards((prev) =>
+          prev.map((c) =>
+            c.id === cardId ? { ...c, loading: false, result: data } : c,
+          ),
+        );
+      } catch (err) {
+        setAnalysisCards((prev) =>
+          prev.map((c) =>
+            c.id === cardId
+              ? {
+                  ...c,
+                  loading: false,
+                  result: {
+                    error: `Request failed: ${err instanceof Error ? err.message : "Unknown error"}`,
+                    document_url: documentUrl,
+                  },
+                }
+              : c,
+          ),
+        );
+      }
+    },
+    [selectedMep, mepSearch, analysisCards],
+  );
+
+  const toggleCardExpanded = useCallback((cardId: string) => {
+    setExpandedCardId((prev) => (prev === cardId ? null : cardId));
+  }, []);
+
+  const dismissCard = useCallback((cardId: string) => {
+    setAnalysisCards((prev) => prev.filter((c) => c.id !== cardId));
+  }, []);
+
+  const clearAll = async () => {
+    setSelectedMep(null);
+    setSelectedCommittee("");
+    setSelectedProcedure("");
+    setSelectedOrganization("");
+    setMepSearch("");
+    setCommitteeSearch("");
+    setProcedureSearch("");
+    setOrganizationSearch("");
+    setEpPeriod("both");
+    try {
+      const res = await fetch("/api/procedures");
+      if (res.ok) {
+        const data = await res.json();
+        setProcedures(data.procedures || []);
+      }
+    } catch (err) {
+      console.error("Failed to restore procedures:", err);
+    }
+  };
+
+  const handleClearMep = async () => {
+    setSelectedMep(null);
+    setMepSearch("");
+    try {
+      const res = await fetch("/api/procedures");
+      if (res.ok) {
+        const data = await res.json();
+        setProcedures(data.procedures || []);
+      }
+    } catch (err) {
+      console.error("Failed to restore procedures:", err);
+    }
+  };
 
   return (
-    <div className="p-6 h-full overflow-auto">
+    <div style={{ padding: "1.5rem", height: "100%", overflow: "auto" }}>
       {/* Header */}
-      <div className="mb-6">
-        <h2 className="text-xl font-bold text-[#1e293b] mb-2">
+      <div style={{ marginBottom: "1.5rem" }}>
+        <h2
+          style={{
+            fontSize: "1.25rem",
+            fontWeight: 700,
+            color: "#1e293b",
+            marginBottom: "0.5rem",
+          }}
+        >
           MEP Meeting Timeline
         </h2>
-        <p className="text-sm text-[#64748b]">
+        <p style={{ fontSize: "0.875rem", color: "#64748b" }}>
           Filter by MEP, committee, procedure, and/or organization.
         </p>
       </div>
 
-      {/* Search fields + EP Period toggle */}
       <FilterBar
-        mepSearch={timeline.mepSearch}
-        setMepSearch={timeline.setMepSearch}
-        selectedMep={timeline.selectedMep}
-        setSelectedMep={timeline.setSelectedMep}
-        mepDropdownOpen={timeline.mepDropdownOpen}
-        setMepDropdownOpen={timeline.setMepDropdownOpen}
-        filteredMeps={timeline.filteredMeps}
-        committeeSearch={timeline.committeeSearch}
-        setCommitteeSearch={timeline.setCommitteeSearch}
-        selectedCommittee={timeline.selectedCommittee}
-        setSelectedCommittee={timeline.setSelectedCommittee}
-        committeeDropdownOpen={timeline.committeeDropdownOpen}
-        setCommitteeDropdownOpen={timeline.setCommitteeDropdownOpen}
-        filteredCommittees={timeline.filteredCommittees}
-        procedureSearch={timeline.procedureSearch}
-        setProcedureSearch={timeline.setProcedureSearch}
-        selectedProcedure={timeline.selectedProcedure}
-        setSelectedProcedure={timeline.setSelectedProcedure}
-        procedureDropdownOpen={timeline.procedureDropdownOpen}
-        setProcedureDropdownOpen={timeline.setProcedureDropdownOpen}
-        filteredProcedures={timeline.filteredProcedures}
-        organizationSearch={timeline.organizationSearch}
-        setOrganizationSearch={timeline.setOrganizationSearch}
-        selectedOrganization={timeline.selectedOrganization}
-        setSelectedOrganization={timeline.setSelectedOrganization}
-        organizationDropdownOpen={timeline.organizationDropdownOpen}
-        setOrganizationDropdownOpen={timeline.setOrganizationDropdownOpen}
-        filteredOrganizations={timeline.filteredOrganizations}
-        epPeriod={timeline.epPeriod}
-        setEpPeriod={timeline.setEpPeriod}
+        mepSearch={mepSearch}
+        setMepSearch={setMepSearch}
+        committeeSearch={committeeSearch}
+        setCommitteeSearch={setCommitteeSearch}
+        procedureSearch={procedureSearch}
+        setProcedureSearch={setProcedureSearch}
+        organizationSearch={organizationSearch}
+        setOrganizationSearch={setOrganizationSearch}
+        selectedMep={selectedMep}
+        setSelectedMep={setSelectedMep}
+        selectedCommittee={selectedCommittee}
+        setSelectedCommittee={setSelectedCommittee}
+        selectedProcedure={selectedProcedure}
+        setSelectedProcedure={setSelectedProcedure}
+        selectedOrganization={selectedOrganization}
+        setSelectedOrganization={setSelectedOrganization}
+        mepDropdownOpen={mepDropdownOpen}
+        setMepDropdownOpen={setMepDropdownOpen}
+        committeeDropdownOpen={committeeDropdownOpen}
+        setCommitteeDropdownOpen={setCommitteeDropdownOpen}
+        procedureDropdownOpen={procedureDropdownOpen}
+        setProcedureDropdownOpen={setProcedureDropdownOpen}
+        organizationDropdownOpen={organizationDropdownOpen}
+        setOrganizationDropdownOpen={setOrganizationDropdownOpen}
+        filteredMeps={filteredMeps}
+        filteredCommittees={filteredCommittees}
+        filteredProcedures={filteredProcedures}
+        filteredOrganizations={filteredOrganizations}
+        epPeriod={epPeriod}
+        setEpPeriod={setEpPeriod}
       />
 
-      {/* Active filter chips */}
       <ActiveFilters
-        selectedMep={timeline.selectedMep}
-        setSelectedMep={timeline.setSelectedMep}
-        setMepSearch={timeline.setMepSearch}
-        clearMep={timeline.clearMep}
-        selectedCommittee={timeline.selectedCommittee}
-        setSelectedCommittee={timeline.setSelectedCommittee}
-        setCommitteeSearch={timeline.setCommitteeSearch}
-        selectedProcedure={timeline.selectedProcedure}
-        setSelectedProcedure={timeline.setSelectedProcedure}
-        setProcedureSearch={timeline.setProcedureSearch}
-        selectedOrganization={timeline.selectedOrganization}
-        setSelectedOrganization={timeline.setSelectedOrganization}
-        setOrganizationSearch={timeline.setOrganizationSearch}
-        epPeriod={timeline.epPeriod}
-        setEpPeriod={timeline.setEpPeriod}
-        clearAll={timeline.clearAll}
+        selectedMep={selectedMep}
+        selectedCommittee={selectedCommittee}
+        selectedProcedure={selectedProcedure}
+        selectedOrganization={selectedOrganization}
+        epPeriod={epPeriod}
+        onClearMep={handleClearMep}
+        onClearCommittee={() => {
+          setSelectedCommittee("");
+          setCommitteeSearch("");
+        }}
+        onClearProcedure={() => {
+          setSelectedProcedure("");
+          setProcedureSearch("");
+        }}
+        onClearOrganization={() => {
+          setSelectedOrganization("");
+          setOrganizationSearch("");
+        }}
+        onClearEpPeriod={() => setEpPeriod("both")}
+        onClearAll={clearAll}
       />
 
-      {/* Error banner */}
-      {timeline.error && (
-        <div className="p-4 bg-[#fef3c7] border border-[#fcd34d] rounded-lg text-[#92400e] text-sm mb-6">
-          {timeline.error}
+      {/* Error */}
+      {error && (
+        <div
+          style={{
+            padding: "1rem",
+            background: "#fef3c7",
+            border: "1px solid #fcd34d",
+            borderRadius: "8px",
+            color: "#92400e",
+            fontSize: "0.875rem",
+            marginBottom: "1.5rem",
+          }}
+        >
+          {error}
         </div>
       )}
 
-      {/* Loading indicator */}
-      {timeline.loading && (
-        <div className="text-[#64748b] text-sm p-8 text-center">
+      {/* Loading */}
+      {loading && (
+        <div
+          style={{
+            color: "#64748b",
+            fontSize: "0.875rem",
+            padding: "2rem",
+            textAlign: "center",
+          }}
+        >
           Loading...
         </div>
       )}
 
-      {/* Results summary card */}
-      {timeline.timelineData && !timeline.loading && (
-        <ResultsCard
-          timelineData={timeline.timelineData}
-          selectedMep={timeline.selectedMep}
-          selectedProcedure={timeline.selectedProcedure}
-          selectedCommittee={timeline.selectedCommittee}
-          procedureEvents={timeline.procedureEvents}
+      {/* Results Info Card */}
+      {timelineData && !loading && (
+        <ResultsInfoCard
+          timelineData={timelineData}
+          selectedMep={selectedMep}
+          selectedProcedure={selectedProcedure}
+          selectedCommittee={selectedCommittee}
+          procedureEvents={procedureEvents}
         />
       )}
 
-      {/* D3 timeline chart */}
-      {timeline.timelineData && !timeline.loading && (
+      {/* Timeline Chart */}
+      {timelineData && !loading && (
         <TimelineChart
-          timelineData={timeline.timelineData}
-          procedureEvents={timeline.procedureEvents}
-          showKeyEvents={timeline.showKeyEvents}
-          setShowKeyEvents={timeline.setShowKeyEvents}
-          showDocGateway={timeline.showDocGateway}
-          setShowDocGateway={timeline.setShowDocGateway}
-          eventsLoading={timeline.eventsLoading}
+          timelineData={timelineData}
+          selectedMep={selectedMep}
+          mepSearch={mepSearch}
+          procedureEvents={procedureEvents}
+          showKeyEvents={showKeyEvents}
+          setShowKeyEvents={setShowKeyEvents}
+          showDocGateway={showDocGateway}
+          setShowDocGateway={setShowDocGateway}
+          eventsLoading={eventsLoading}
+          hasProgressBar={hasProgressBar}
+          analyzeDocument={analyzeDocument}
         />
       )}
 
-      {/* Empty state */}
-      {!timeline.loading && !timeline.error && !timeline.timelineData && (
-        <div className="p-12 text-center text-[#64748b] bg-white rounded-[12px] border border-dashed border-[#e2e8f0]">
+      {/* Empty State */}
+      {!loading && !error && !timelineData && (
+        <div
+          style={{
+            padding: "3rem",
+            textAlign: "center",
+            color: "#64748b",
+            background: "white",
+            borderRadius: "12px",
+            border: "1px dashed #e2e8f0",
+          }}
+        >
           <svg
-            className="w-12 h-12 mx-auto mb-4 text-[#cbd5e1]"
+            style={{
+              width: "48px",
+              height: "48px",
+              margin: "0 auto 1rem",
+              color: "#cbd5e1",
+            }}
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -138,12 +528,20 @@ export default function MepMeetingsGraph() {
             />
           </svg>
           <p>Use the search fields above to filter meetings.</p>
-          <p className="text-xs mt-2">
+          <p style={{ fontSize: "0.75rem", marginTop: "0.5rem" }}>
             Select an MEP to see their meetings, or filter by
             committee/procedure. Organization filter works with MEP selection.
           </p>
         </div>
       )}
+
+      <AnalysisCards
+        analysisCards={analysisCards}
+        expandedCardId={expandedCardId}
+        onToggleExpanded={toggleCardExpanded}
+        onDismiss={dismissCard}
+        onCloseDialog={() => setExpandedCardId(null)}
+      />
     </div>
   );
 }
