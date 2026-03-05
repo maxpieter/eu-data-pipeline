@@ -10,6 +10,7 @@ Then access: http://localhost:5001/api/graph?mode=full
 import os
 import sys
 import json
+import threading
 from flask import Flask, request, jsonify, Response
 from flask_cors import CORS
 import numpy as np
@@ -18,7 +19,7 @@ from datetime import datetime
 from scipy.sparse import coo_matrix
 from sklearn.cluster import SpectralCoclustering
 
-from api.projections import project_politicians, project_organizations, apply_disparity_filter, detect_communities_louvain
+from api.projections import project_politicians, project_organizations, apply_disparity_filter, detect_communities_louvain, label_communities_tfidf
 from api.backbone import idf_weighted_projection, apply_idf_percentile_filter, suggest_tau_for_singles, hybrid_filter_edges, hypergeom_fdr_backbone
 
 # Load .env file (no dependency needed)
@@ -590,13 +591,23 @@ def build_graph(
         node_to_community, community_stats = detect_communities(graph['nodes'], graph['links'])
         community_method = 'spectral_coclustering'
 
+    # Label communities with TF-IDF over policy_focus_areas (org projections)
+    community_labels = {}
+    if graph_type == 'organizations':
+        community_labels = label_communities_tfidf(
+            graph['nodes'], node_to_community, orgs_df, max_terms=2,
+        )
+    for stat in community_stats:
+        stat['label'] = community_labels.get(stat['id'], '')
+
     # Add community information to nodes
     for node in graph['nodes']:
         node['community'] = node_to_community.get(node['id'], -1)
 
     print(f"Found {len(community_stats)} major communities (top 6 by size):")
     for stat in community_stats:
-        print(f"  Community {stat['id']}: {stat['size']} nodes ({stat['percentage']}%)")
+        label_str = f" — {stat['label']}" if stat.get('label') else ""
+        print(f"  Community {stat['id']}: {stat['size']} nodes ({stat['percentage']}%){label_str}")
 
     # Add metadata about the filtering parameters used
     graph['metadata'] = {
@@ -724,11 +735,29 @@ _meetings_cache = None
 _meps_cache = None
 _meetings_csv_mtime = None
 _meps_csv_mtime = None
+_server_py_mtime = None
+_cache_lock = threading.Lock()
 
 
 def _check_csv_freshness():
-    """Invalidate in-memory caches if CSV files have been modified."""
-    global _meetings_cache, _meps_cache, _meetings_csv_mtime, _meps_csv_mtime
+    """Invalidate in-memory caches if CSV files or server code have been modified."""
+    global _meetings_cache, _meps_cache, _meetings_csv_mtime, _meps_csv_mtime, _server_py_mtime
+
+    # Invalidate everything if server.py itself changed (new dedup logic, etc.)
+    try:
+        server_mtime = os.path.getmtime(__file__)
+        if _server_py_mtime is not None and server_mtime != _server_py_mtime:
+            _meetings_cache = None
+            _meetings_csv_mtime = None
+            _meps_cache = None
+            _meps_csv_mtime = None
+            _server_py_mtime = server_mtime
+            print("[CACHE] server.py changed — invalidating all caches")
+            return
+        if _server_py_mtime is None:
+            _server_py_mtime = server_mtime
+    except OSError:
+        pass
 
     try:
         meetings_mtime = os.path.getmtime(MEETINGS_CSV_PATH)
@@ -786,10 +815,14 @@ def load_meetings_data():
 
     Always collapses rows into one record per unique meeting (mep_id, title, date),
     collecting all attendees into a list. Uses meeting_id from CSV if available.
+    Thread-safe: uses _cache_lock to prevent concurrent builds.
     """
     global _meetings_cache, _meetings_csv_mtime
-    _check_csv_freshness()
-    if _meetings_cache is None:
+    with _cache_lock:
+        _check_csv_freshness()
+        if _meetings_cache is not None:
+            return _meetings_cache
+
         meps = load_meps_lookup()
 
         # Group all rows by unique meeting key
@@ -814,8 +847,8 @@ def load_meetings_data():
 
                 meetings_grouped[meeting_key].append(row)
 
-        # Always collapse into one record per meeting
-        _meetings_cache = []
+        # Build into local list, then assign atomically
+        result = []
 
         for meeting_key, rows in meetings_grouped.items():
             mep_id, title, meeting_date = meeting_key
@@ -833,7 +866,7 @@ def load_meetings_data():
                     })
 
             first_row = rows[0]
-            _meetings_cache.append({
+            result.append({
                 'meeting_id': first_row.get('meeting_id', ''),
                 'mep_id': mep_id,
                 'meeting_date': meeting_date,
@@ -850,13 +883,15 @@ def load_meetings_data():
                 }
             })
 
+        _meetings_cache = result
+
         try:
             _meetings_csv_mtime = os.path.getmtime(MEETINGS_CSV_PATH)
         except OSError:
             pass
 
-    print(f"[CACHE] meetings_cache built: {len(_meetings_cache)} entries")
-    return _meetings_cache
+        print(f"[CACHE] meetings_cache built: {len(_meetings_cache)} entries")
+        return _meetings_cache
 
 
 
@@ -922,6 +957,7 @@ def get_timeline():
     """
     try:
         meetings = load_meetings_data()
+        print(f"[DEBUG /api/timeline] cache id={id(_meetings_cache)} size={len(meetings)}")
 
         # Get all filter parameters
         mep_filter = request.args.get('mep')

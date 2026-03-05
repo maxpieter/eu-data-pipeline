@@ -121,10 +121,8 @@ const BACKEND_PORT = 5001
  * forward appropriately.
  */
 function resolveUrl(path: string, params?: Record<string, string>): string {
-  const searchString =
-    params && Object.keys(params).length > 0
-      ? `?${new URLSearchParams(params).toString()}`
-      : ''
+  const allParams = { ...params, _t: String(Date.now()) }
+  const searchString = `?${new URLSearchParams(allParams).toString()}`
 
   const base =
     typeof window !== 'undefined' && window.location.hostname === 'localhost'

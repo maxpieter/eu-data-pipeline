@@ -502,7 +502,7 @@ export default function NetworkGraph({
                     style={{ backgroundColor: communityColors[community.id % communityColors.length] }}
                   />
                   <span className="text-[0.8125rem] text-slate-600">
-                    Community {community.id} ({community.size} nodes, {community.percentage}%)
+                    {community.label || `Community ${community.id}`} ({community.size} nodes, {community.percentage}%)
                   </span>
                 </div>
               ))}
