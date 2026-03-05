@@ -9,11 +9,15 @@ Uses disparity filter to reduce noise in projections.
 Includes Louvain community detection for one-mode networks.
 """
 
+import math
+from collections import Counter
+from typing import Tuple, Dict, List, Any
+
 import numpy as np
 import networkx as nx
+import pandas as pd
 from community.community_louvain import best_partition
 from scipy.sparse import csr_matrix, coo_matrix, lil_matrix
-from typing import Tuple, Dict, List, Any
 
 
 def project_politicians(
@@ -311,29 +315,137 @@ def detect_communities_louvain(
     # Run Louvain algorithm with resolution parameter
     partition = best_partition(G, weight='weight', resolution=resolution, randomize=None, random_state=42)
     
-    # Convert partition to community assignments
-    node_to_community = {}
-    for node_id, community_id in partition.items():
-        node_to_community[node_id] = community_id
-    
-    # Calculate community statistics (top 6 communities by size)
+    # Count raw community sizes
     community_counts = {}
-    for node_id, comm_id in node_to_community.items():
+    for node_id, comm_id in partition.items():
         community_counts[comm_id] = community_counts.get(comm_id, 0) + 1
-    
+
+    # Remap top 6 communities to 0-5, everything else to -1
+    sorted_communities = sorted(community_counts.items(), key=lambda x: x[1], reverse=True)
+    top6 = [c for c, _ in sorted_communities[:6]]
+    remap = {c: i for i, c in enumerate(top6)}
+
+    node_to_community = {}
+    for node_id, comm_id in partition.items():
+        node_to_community[node_id] = remap.get(comm_id, -1)
+
+    # Also remap nodes not in the largest component (not in partition)
+    for node in nodes:
+        nid = str(node['id'])
+        if nid not in node_to_community:
+            node_to_community[nid] = -1
+
     total_nodes = len(nodes)
-    # Return stats for TOP 6 communities only (for display), sorted by size
     community_stats = [
         {
-            'id': comm_id,
+            'id': remap[c],
             'size': count,
-            'percentage': f"{(count / total_nodes * 100):.1f}%",
+            'percentage': round(count / total_nodes * 100, 1),
         }
-        for comm_id, count in sorted(
-            community_counts.items(),
-            key=lambda x: x[1],
-            reverse=True
-        )[:6]
+        for c, count in sorted_communities[:6]
     ]
-    
+
     return node_to_community, community_stats
+
+
+def label_communities_tfidf(
+    nodes: List[Dict[str, Any]],
+    node_to_community: Dict[str, int],
+    orgs_df: pd.DataFrame,
+    max_terms: int = 2,
+) -> Dict[int, str]:
+    """
+    Generate descriptive labels for communities using TF-IDF over policy_focus_areas.
+
+    For each community, finds the policy areas that are most distinctive
+    (frequent in this cluster but rare across others) and returns a short label.
+
+    Args:
+        nodes: Graph nodes (org nodes with 'id' field)
+        node_to_community: Mapping of node_id -> community_id
+        orgs_df: Full organizations DataFrame (must have 'id' and 'policy_focus_areas')
+        max_terms: Number of top TF-IDF terms per label (default 2)
+
+    Returns:
+        Dict mapping community_id -> label string (e.g. "Banking & Financial Services / Digital Economy")
+    """
+    if "policy_focus_areas" not in orgs_df.columns:
+        return {}
+
+    # Build a lookup: org id -> policy_focus_areas list
+    orgs_df = orgs_df.copy()
+    orgs_df["id"] = orgs_df["id"].astype(str)
+    pfa_lookup = {}
+    for _, row in orgs_df[["id", "policy_focus_areas"]].dropna(subset=["policy_focus_areas"]).iterrows():
+        areas = row["policy_focus_areas"]
+        if isinstance(areas, list) and areas:
+            pfa_lookup[row["id"]] = areas
+
+    # Collect all community IDs (excluding -1)
+    community_ids = sorted(set(c for c in node_to_community.values() if c >= 0))
+    if not community_ids:
+        return {}
+
+    n_communities = len(community_ids)
+
+    # Step 1: Count policy areas per community (TF)
+    community_area_counts: Dict[int, Counter] = {c: Counter() for c in community_ids}
+    for node in nodes:
+        nid = str(node["id"])
+        comm = node_to_community.get(nid, -1)
+        if comm < 0:
+            continue
+        areas = pfa_lookup.get(nid, [])
+        for area in areas:
+            community_area_counts[comm][area] += 1
+
+    # Step 2: Compute IDF — how many communities contain each area
+    area_doc_freq: Counter = Counter()
+    for comm_id in community_ids:
+        areas_in_comm = set(community_area_counts[comm_id].keys())
+        for area in areas_in_comm:
+            area_doc_freq[area] += 1
+
+    # Step 3: TF-IDF per community
+    # Areas that appear in every community get idf=0 (fully suppressed)
+    labels: Dict[int, str] = {}
+    for comm_id in community_ids:
+        counts = community_area_counts[comm_id]
+        if not counts:
+            labels[comm_id] = f"Community {comm_id}"
+            continue
+
+        total = sum(counts.values())
+        scored = []
+        for area, count in counts.items():
+            tf = count / total
+            idf = math.log(n_communities / area_doc_freq[area])  # 0 when area is in all communities
+            scored.append((area, tf * idf))
+
+        scored.sort(key=lambda x: x[1], reverse=True)
+
+        # Pick top terms, skipping near-duplicates (e.g. "Culture" vs "Culture and media")
+        top_terms = []
+        for area, score in scored:
+            if score <= 0:
+                break
+            if len(top_terms) >= max_terms:
+                break
+            area_lower = area.lower()
+            if any(area_lower in t.lower() or t.lower() in area_lower for t in top_terms):
+                continue
+            top_terms.append(area)
+
+        # Fallback: if all areas are ubiquitous (idf=0 for everything), use raw frequency
+        if not top_terms:
+            for area, _ in counts.most_common(max_terms + 2):
+                area_lower = area.lower()
+                if any(area_lower in t.lower() or t.lower() in area_lower for t in top_terms):
+                    continue
+                top_terms.append(area)
+                if len(top_terms) >= max_terms:
+                    break
+
+        labels[comm_id] = " / ".join(top_terms) if top_terms else f"Community {comm_id}"
+
+    return labels

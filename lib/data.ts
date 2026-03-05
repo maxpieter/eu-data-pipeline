@@ -43,6 +43,7 @@ export interface GraphMetadata {
     id: number
     size: number
     percentage: number
+    label?: string
   }>
   community_method?: string
   timeline?: {

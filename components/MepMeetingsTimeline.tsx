@@ -6,6 +6,16 @@ import ActiveFilters from "./mep-meetings/ActiveFilters";
 import ResultsInfoCard from "./mep-meetings/ResultsInfoCard";
 import TimelineChart from "./mep-meetings/TimelineChart";
 import AnalysisCards from "./mep-meetings/AnalysisCards";
+import {
+  fetchMeps,
+  fetchCommittees,
+  fetchMeetingProcedures,
+  fetchOrganizations,
+  fetchTimeline as apiFetchTimeline,
+  fetchMepProcedures,
+  fetchProcedureEvents as apiFetchProcedureEvents,
+  apiFetch,
+} from "@/lib/api";
 import type {
   MepInfo,
   CommitteeInfo,
@@ -64,31 +74,12 @@ export default function MepMeetingsTimeline() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const [mepsRes, committeesRes, proceduresRes, organizationsRes] =
-          await Promise.all([
-            fetch("/api/meps"),
-            fetch("/api/committees"),
-            fetch("/api/procedures"),
-            fetch("/api/organizations"),
-          ]);
-        if (
-          !mepsRes.ok ||
-          !committeesRes.ok ||
-          !proceduresRes.ok ||
-          !organizationsRes.ok
-        )
-          throw new Error("Failed to fetch");
-        const [mepsData, committeesData, proceduresData, organizationsData] =
-          await Promise.all([
-            mepsRes.json(),
-            committeesRes.json(),
-            proceduresRes.json(),
-            organizationsRes.json(),
-          ]);
-        const meps = mepsData.meps || [];
-        const comms = committeesData.committees || [];
-        const procs = proceduresData.procedures || [];
-        const orgs = organizationsData.organizations || [];
+        const [meps, comms, procs, orgs] = await Promise.all([
+          fetchMeps(),
+          fetchCommittees(),
+          fetchMeetingProcedures(),
+          fetchOrganizations(),
+        ]);
         console.log("[MepMeetingsTimeline] Initial data loaded:", {
           meps: meps.length,
           topMep: meps[0] ? `${meps[0].name}=${meps[0].meeting_count}` : "none",
@@ -112,11 +103,8 @@ export default function MepMeetingsTimeline() {
 
   const restoreProcedures = useCallback(async () => {
     try {
-      const res = await fetch("/api/procedures");
-      if (res.ok) {
-        const data = await res.json();
-        setProcedures(data.procedures || []);
-      }
+      const procs = await fetchMeetingProcedures();
+      setProcedures(procs);
     } catch (err) {
       console.error("Failed to restore procedures:", err);
     }
@@ -125,14 +113,10 @@ export default function MepMeetingsTimeline() {
   // Fetch MEP-specific procedures when MEP is selected, restore global when cleared
   useEffect(() => {
     if (selectedMep) {
-      fetch(`/api/meps/${selectedMep.id}/procedures`)
-        .then((res) => (res.ok ? res.json() : null))
-        .then((data) => {
-          if (data) {
-            const procs = data.procedures || [];
-            console.log(`[MepMeetingsTimeline] MEP ${selectedMep.id} procedures:`, procs.length, "total count sum:", procs.reduce((s: number, p: { count: number }) => s + p.count, 0));
-            setProcedures(procs);
-          }
+      fetchMepProcedures(selectedMep.id)
+        .then((procs) => {
+          console.log(`[MepMeetingsTimeline] MEP ${selectedMep.id} procedures:`, procs.length, "total count sum:", procs.reduce((s: number, p: { count: number }) => s + p.count, 0));
+          setProcedures(procs);
         })
         .catch((err) => console.error("Failed to fetch procedures:", err));
     } else {
@@ -155,25 +139,20 @@ export default function MepMeetingsTimeline() {
     async function fetchTimeline() {
       setLoading(true);
       try {
-        const params = new URLSearchParams();
-        if (selectedMep) params.set("mep", selectedMep.id.toString());
-        if (selectedCommittee) params.set("committee", selectedCommittee);
-        if (selectedProcedure) params.set("procedure", selectedProcedure);
-        if (selectedOrganization)
-          params.set("organization", selectedOrganization);
-        if (epPeriod !== "both") params.set("ep_period", epPeriod);
+        const timelineParams: Record<string, string | number | undefined> = {};
+        if (selectedMep) timelineParams.mep = selectedMep.id;
+        if (selectedCommittee) timelineParams.committee = selectedCommittee;
+        if (selectedProcedure) timelineParams.procedure = selectedProcedure;
+        if (selectedOrganization) timelineParams.organization = selectedOrganization;
+        if (epPeriod !== "both") timelineParams.ep_period = epPeriod;
 
-        const timelineUrl = `/api/timeline?${params.toString()}`;
-        console.log("[MepMeetingsTimeline] Fetching timeline:", timelineUrl);
-        const res = await fetch(timelineUrl);
-        if (!res.ok) throw new Error("Failed to fetch timeline");
-        const data = await res.json();
+        console.log("[MepMeetingsTimeline] Fetching timeline:", timelineParams);
+        const data = await apiFetchTimeline(timelineParams as import("@/lib/api").TimelineParams);
         console.log("[MepMeetingsTimeline] Timeline response:", {
           total_meetings: data.total_meetings,
           meps_involved: data.meps_involved,
           timeline_weeks: data.timeline?.length,
           sum_weekly_counts: data.timeline?.reduce((s: number, w: { count: number }) => s + w.count, 0),
-          filters: data.filters,
         });
         setTimelineData(data);
         setError(null);
@@ -202,14 +181,8 @@ export default function MepMeetingsTimeline() {
     async function fetchEvents() {
       setEventsLoading(true);
       try {
-        const params = new URLSearchParams({ procedure: selectedProcedure });
-        const res = await fetch(`/api/procedure-events?${params.toString()}`);
-        if (res.ok) {
-          const data = await res.json();
-          setProcedureEvents(data);
-        } else {
-          setProcedureEvents(null);
-        }
+        const data = await apiFetchProcedureEvents(selectedProcedure);
+        setProcedureEvents(data);
       } catch {
         setProcedureEvents(null);
       } finally {
