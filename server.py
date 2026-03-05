@@ -277,18 +277,17 @@ def build_graph(
     meetings_ts_col = guess_timestamp_column(meetings_df)
     commission_ts_col = guess_timestamp_column(commission_df)
 
-    # Apply timeline filter (inclusive)
-    start_ts, end_ts = parse_date_range(start, end)
-    if start_ts is not None or end_ts is not None:
-        meetings_df = filter_df_by_timerange(meetings_df, meetings_ts_col, start_ts, end_ts)
-        commission_df = filter_df_by_timerange(commission_df, commission_ts_col, start_ts, end_ts)
-        print(f"Timeline filter applied: {start or '…'} → {end or '…'}")
-
-    # Apply procedure filter for MEP mode (replaces timeline when selected)
+    # Apply either procedure filter OR timeline filter (not both)
     if procedure and procedure != 'all' and 'related_procedure' in meetings_df.columns:
         meetings_df = meetings_df[meetings_df['related_procedure'] == procedure].copy()
         print(f"Procedure filter applied: {procedure}")
         print(f"Meetings matching procedure: {len(meetings_df):,}")
+    else:
+        start_ts, end_ts = parse_date_range(start, end)
+        if start_ts is not None or end_ts is not None:
+            meetings_df = filter_df_by_timerange(meetings_df, meetings_ts_col, start_ts, end_ts)
+            commission_df = filter_df_by_timerange(commission_df, commission_ts_col, start_ts, end_ts)
+            print(f"Timeline filter applied: {start or '…'} → {end or '…'}")
 
     # Build nodes/edges per mode
     mep_nodes = pd.DataFrame()
