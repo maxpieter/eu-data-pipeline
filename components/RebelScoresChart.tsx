@@ -118,6 +118,15 @@ export default function RebelScoresChart({
     const rebelScoreField = viewMode === 'country' ? 'avg_country_rebel_score' : 'avg_rebel_score'
     const zScoreField = viewMode === 'country' ? 'country_z_score' : 'group_z_score'
 
+    const buildHoverText = (d: MEPData): string =>
+      `<b>${d.first_name} ${d.last_name}</b><br>` +
+      `Group: ${GROUP_NAMES[d.group] || d.group}<br>` +
+      `Country: ${COUNTRY_NAMES[d.country] || d.country}<br>` +
+      `Votes: ${d.n_votes}<br>` +
+      `Rebel Score: ${d[rebelScoreField]?.toFixed(4) || 'N/A'}<br>` +
+      `Z-Score: ${d[zScoreField]?.toFixed(2) || 'N/A'}<br>` +
+      `<i>Click for profile</i>`
+
     // Create traces for non-highlighted MEPs
     const traces: Partial<PlotData>[] = categories.map((category) => {
       const catData = hasHighlights
@@ -134,16 +143,7 @@ export default function RebelScoresChart({
         x: catData.map(() => jitter(baseX)),
         y: catData.map((d) => d[rebelScoreField] || 0),
         customdata: catData.map((d) => d['member.id']),
-        text: catData.map(
-          (d) =>
-            `<b>${d.first_name} ${d.last_name}</b><br>` +
-            `Group: ${GROUP_NAMES[d.group] || d.group}<br>` +
-            `Country: ${COUNTRY_NAMES[d.country] || d.country}<br>` +
-            `Votes: ${d.n_votes}<br>` +
-            `Rebel Score: ${d[rebelScoreField]?.toFixed(4) || 'N/A'}<br>` +
-            `Z-Score: ${d[zScoreField]?.toFixed(2) || 'N/A'}<br>` +
-            `<i>Click for profile</i>`
-        ),
+        text: catData.map(buildHoverText),
         mode: 'markers' as const,
         type: 'scatter' as const,
         marker: {
@@ -177,16 +177,7 @@ export default function RebelScoresChart({
           x: highlightedData.map((d) => jitter(categoryToX[d[categoryField]])),
           y: highlightedData.map((d) => d[rebelScoreField] || 0),
           customdata: highlightedData.map((d) => d['member.id']),
-          text: highlightedData.map(
-            (d) =>
-              `<b>${d.first_name} ${d.last_name}</b><br>` +
-              `Group: ${GROUP_NAMES[d.group] || d.group}<br>` +
-              `Country: ${COUNTRY_NAMES[d.country] || d.country}<br>` +
-              `Votes: ${d.n_votes}<br>` +
-              `Rebel Score: ${d[rebelScoreField]?.toFixed(4) || 'N/A'}<br>` +
-              `Z-Score: ${d[zScoreField]?.toFixed(2) || 'N/A'}<br>` +
-              `<i>Click for profile</i>`
-          ),
+          text: highlightedData.map(buildHoverText),
           mode: 'markers' as const,
           type: 'scatter' as const,
           marker: {

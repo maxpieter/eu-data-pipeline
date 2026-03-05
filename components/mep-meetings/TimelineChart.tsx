@@ -158,6 +158,49 @@ export default function TimelineChart({
       .style("fill", "#475569")
       .text("Number of Meetings");
 
+    // Reusable tooltip helper — renders an array of styled text lines in a white box
+    const showTooltip = (
+      tx: number,
+      ty: number,
+      lines: { text: string; fontSize: string; fill: string; fontWeight?: string }[],
+    ) => {
+      const tooltip = svg.append("g").attr("class", "tooltip");
+      const maxTextWidth = Math.max(
+        ...lines.map((l) => l.text.length * (parseFloat(l.fontSize) >= 11 ? 6.5 : 6) + 24),
+        150,
+      );
+      const tooltipX = Math.max(
+        maxTextWidth / 2,
+        Math.min(tx, width - maxTextWidth / 2),
+      );
+      const lineHeight = 14;
+      const tooltipH = lines.length * lineHeight + 10;
+      const boxTop = ty - tooltipH - 8;
+
+      tooltip
+        .append("rect")
+        .attr("x", tooltipX - maxTextWidth / 2)
+        .attr("y", boxTop)
+        .attr("width", maxTextWidth)
+        .attr("height", tooltipH)
+        .attr("fill", "white")
+        .attr("stroke", "#e2e8f0")
+        .attr("rx", 4)
+        .style("filter", "drop-shadow(0 2px 4px rgba(0,0,0,0.1))");
+
+      lines.forEach((line, i) => {
+        tooltip
+          .append("text")
+          .attr("x", tooltipX)
+          .attr("y", boxTop + 14 + i * lineHeight)
+          .attr("text-anchor", "middle")
+          .style("font-size", line.fontSize)
+          .style("fill", line.fill)
+          .style("font-weight", line.fontWeight || "normal")
+          .text(line.text);
+      });
+    };
+
     // Render stacked bars
     data.forEach((periodData) => {
       const meetings = periodData.meetings || [];
@@ -183,42 +226,31 @@ export default function TimelineChart({
           .style("cursor", "pointer")
           .on("mouseover", function (event) {
             d3.select(this).attr("stroke", "#1e293b").attr("stroke-width", 2);
-            const tooltip = svg.append("g").attr("class", "tooltip");
             const tx = barX + barWidth / 2 + margin.left;
             const ty = Math.max(segmentY + margin.top - 10, 40);
             const title =
               meeting.title.length > 40
                 ? meeting.title.slice(0, 37) + "..."
                 : meeting.title;
-            const tooltipWidth = Math.max(title.length * 6 + 20, 150);
-            tooltip
-              .append("rect")
-              .attr("x", tx - tooltipWidth / 2)
-              .attr("y", ty - 50)
-              .attr("width", tooltipWidth)
-              .attr("height", 45)
-              .attr("fill", "white")
-              .attr("stroke", "#e2e8f0")
-              .attr("rx", 4)
-              .style("filter", "drop-shadow(0 2px 4px rgba(0,0,0,0.1))");
-            tooltip
-              .append("text")
-              .attr("x", tx)
-              .attr("y", ty - 35)
-              .attr("text-anchor", "middle")
-              .style("font-size", "11px")
-              .style("fill", "#1e293b")
-              .text(title);
-            tooltip
-              .append("text")
-              .attr("x", tx)
-              .attr("y", ty - 18)
-              .attr("text-anchor", "middle")
-              .style("font-size", "10px")
-              .style("fill", "#64748b")
-              .text(
-                `${meeting.date} · ${meeting.attendee_count} attendee${meeting.attendee_count !== 1 ? "s" : ""}`,
-              );
+            const orgNames = meeting.organizations || [];
+            const orgLine = orgNames.length > 0
+              ? orgNames.length <= 2
+                ? orgNames.join(", ")
+                : orgNames.slice(0, 2).join(", ") + ` +${orgNames.length - 2} more`
+              : "";
+            const orgDisplay = orgLine.length > 50 ? orgLine.slice(0, 47) + "..." : orgLine;
+            const lines: { text: string; fontSize: string; fill: string; fontWeight?: string }[] = [
+              { text: title, fontSize: "11px", fill: "#1e293b" },
+            ];
+            if (orgDisplay) {
+              lines.push({ text: orgDisplay, fontSize: "10px", fill: "#475569", fontWeight: "500" });
+            }
+            lines.push({
+              text: meeting.date,
+              fontSize: "10px",
+              fill: "#64748b",
+            });
+            showTooltip(tx, ty, lines);
           })
           .on("mouseout", function () {
             d3.select(this).attr("stroke", "none");
@@ -315,6 +347,47 @@ export default function TimelineChart({
           .attr("opacity", 0.7);
       });
 
+      // Build tooltip lines for an event dot
+      const buildEventLines = (
+        evt: OeilEvent,
+        color: string,
+        isAnalyzable: boolean,
+        isAmendmentDoc: boolean,
+      ) => {
+        const label =
+          evt.category === "key_event"
+            ? evt.event || "Key Event"
+            : evt.doc_type || "Document";
+        const displayLabel =
+          label.length > 50 ? label.slice(0, 47) + "..." : label;
+        const detail = `${evt.date}${evt.reference ? " · " + evt.reference : ""}${evt.source ? " · " + evt.source : ""}`;
+        const lines: { text: string; fontSize: string; fill: string; fontWeight?: string }[] = [
+          {
+            text: evt.category === "key_event" ? "Key Event" : "Document",
+            fontSize: "11px",
+            fill: color,
+            fontWeight: "600",
+          },
+          { text: displayLabel, fontSize: "11px", fill: "#1e293b" },
+          {
+            text: detail.length > 60 ? detail.slice(0, 57) + "..." : detail,
+            fontSize: "10px",
+            fill: "#64748b",
+          },
+        ];
+        if (isAnalyzable) {
+          lines.push({
+            text: isAmendmentDoc
+              ? "Click to analyze MEP position"
+              : "Click to analyze document",
+            fontSize: "10px",
+            fill: "#3b82f6",
+            fontWeight: "600",
+          });
+        }
+        return lines;
+      };
+
       // When NO progress bar, draw stacked dots above the chart
       if (!hasProgressBar) {
         Object.entries(byXPos).forEach(([xKey, events]) => {
@@ -335,83 +408,11 @@ export default function TimelineChart({
               .style("cursor", "pointer")
               .on("mouseover", function () {
                 d3.select(this).attr("r", 7);
-                const tooltip = svg.append("g").attr("class", "tooltip");
-                const tx = posX + margin.left;
-                const ty = dotY + margin.top - 10;
-                const label =
-                  evt.category === "key_event"
-                    ? evt.event || "Key Event"
-                    : evt.doc_type || "Document";
-                const displayLabel =
-                  label.length > 50 ? label.slice(0, 47) + "..." : label;
-                const tooltipWidth = Math.max(
-                  displayLabel.length * 6.5 + 24,
-                  180,
+                showTooltip(
+                  posX + margin.left,
+                  dotY + margin.top - 10,
+                  buildEventLines(evt, dotColor, isAnalyzable, isAmendmentDoc),
                 );
-                const tooltipX = Math.max(
-                  tooltipWidth / 2,
-                  Math.min(tx, width - tooltipWidth / 2),
-                );
-                tooltip
-                  .append("rect")
-                  .attr("x", tooltipX - tooltipWidth / 2)
-                  .attr("y", ty - 58)
-                  .attr("width", tooltipWidth)
-                  .attr("height", 52)
-                  .attr("fill", "white")
-                  .attr("stroke", "#e2e8f0")
-                  .attr("rx", 4)
-                  .style(
-                    "filter",
-                    "drop-shadow(0 2px 4px rgba(0,0,0,0.1))",
-                  );
-                tooltip
-                  .append("text")
-                  .attr("x", tooltipX)
-                  .attr("y", ty - 42)
-                  .attr("text-anchor", "middle")
-                  .style("font-size", "11px")
-                  .style("font-weight", "600")
-                  .style("fill", dotColor)
-                  .text(
-                    evt.category === "key_event" ? "Key Event" : "Document",
-                  );
-                tooltip
-                  .append("text")
-                  .attr("x", tooltipX)
-                  .attr("y", ty - 28)
-                  .attr("text-anchor", "middle")
-                  .style("font-size", "11px")
-                  .style("fill", "#1e293b")
-                  .text(displayLabel);
-                const detail = `${evt.date}${evt.reference ? " · " + evt.reference : ""}${evt.source ? " · " + evt.source : ""}`;
-                tooltip
-                  .append("text")
-                  .attr("x", tooltipX)
-                  .attr("y", ty - 14)
-                  .attr("text-anchor", "middle")
-                  .style("font-size", "10px")
-                  .style("fill", "#64748b")
-                  .text(
-                    detail.length > 60
-                      ? detail.slice(0, 57) + "..."
-                      : detail,
-                  );
-                if (isAnalyzable) {
-                  tooltip
-                    .append("text")
-                    .attr("x", tooltipX)
-                    .attr("y", ty + 2)
-                    .attr("text-anchor", "middle")
-                    .style("font-size", "10px")
-                    .style("font-weight", "600")
-                    .style("fill", "#3b82f6")
-                    .text(
-                      isAmendmentDoc
-                        ? "Click to analyze MEP position"
-                        : "Click to analyze document",
-                    );
-                }
               })
               .on("mouseout", function () {
                 d3.select(this).attr("r", isAnalyzable ? 5 : 4);
@@ -591,79 +592,18 @@ export default function TimelineChart({
 
         const dotsGroup = progressGroup.append("g").attr("class", "bar-dots");
 
-        // Tooltip helper for a single event
         const showDotTooltip = (
           dotInfo: (typeof barDots)[0],
           tx: number,
           ty: number,
           isAnalyzable = false,
         ) => {
-          const tooltip = svg.append("g").attr("class", "tooltip");
-          const label =
-            dotInfo.evt.category === "key_event"
-              ? dotInfo.evt.event || "Key Event"
-              : dotInfo.evt.doc_type || "Document";
-          const displayLabel =
-            label.length > 50 ? label.slice(0, 47) + "..." : label;
-          const tooltipWidth = Math.max(displayLabel.length * 6.5 + 24, 180);
-          const tooltipX = Math.max(
-            tooltipWidth / 2,
-            Math.min(tx, width - tooltipWidth / 2),
+          const { isAmendmentDoc } = getEvtAnalysis(dotInfo.evt);
+          showTooltip(
+            tx,
+            ty,
+            buildEventLines(dotInfo.evt, dotInfo.color, isAnalyzable, isAmendmentDoc),
           );
-          const tooltipH = isAnalyzable ? 66 : 52;
-          const boxTop = ty - tooltipH - 8;
-
-          tooltip
-            .append("rect")
-            .attr("x", tooltipX - tooltipWidth / 2)
-            .attr("y", boxTop)
-            .attr("width", tooltipWidth)
-            .attr("height", tooltipH)
-            .attr("fill", "white")
-            .attr("stroke", "#e2e8f0")
-            .attr("rx", 4)
-            .style("filter", "drop-shadow(0 2px 4px rgba(0,0,0,0.1))");
-          tooltip
-            .append("text")
-            .attr("x", tooltipX)
-            .attr("y", boxTop + 16)
-            .attr("text-anchor", "middle")
-            .style("font-size", "11px")
-            .style("font-weight", "600")
-            .style("fill", dotInfo.color)
-            .text(
-              dotInfo.evt.category === "key_event" ? "Key Event" : "Document",
-            );
-          tooltip
-            .append("text")
-            .attr("x", tooltipX)
-            .attr("y", boxTop + 30)
-            .attr("text-anchor", "middle")
-            .style("font-size", "11px")
-            .style("fill", "#1e293b")
-            .text(displayLabel);
-          const detail = `${dotInfo.evt.date}${dotInfo.evt.reference ? " · " + dotInfo.evt.reference : ""}`;
-          tooltip
-            .append("text")
-            .attr("x", tooltipX)
-            .attr("y", boxTop + 44)
-            .attr("text-anchor", "middle")
-            .style("font-size", "10px")
-            .style("fill", "#64748b")
-            .text(
-              detail.length > 60 ? detail.slice(0, 57) + "..." : detail,
-            );
-          if (isAnalyzable) {
-            tooltip
-              .append("text")
-              .attr("x", tooltipX)
-              .attr("y", boxTop + 58)
-              .attr("text-anchor", "middle")
-              .style("font-size", "10px")
-              .style("font-weight", "600")
-              .style("fill", "#3b82f6")
-              .text("Click to analyze MEP position");
-          }
         };
 
         clusters.forEach((cluster) => {
@@ -778,16 +718,6 @@ export default function TimelineChart({
               cluster.dots.forEach((d, i) => {
                 const ey = barScreenY - 18 - i * dotSpacing;
                 const { isAnalyzable: expandAnalyzable } = getEvtAnalysis(d.evt);
-
-                expandGroup!
-                  .append("line")
-                  .attr("x1", dotScreenX)
-                  .attr("x2", dotScreenX)
-                  .attr("y1", barScreenY - clusterR)
-                  .attr("y2", ey + 5)
-                  .attr("stroke", "#cbd5e1")
-                  .attr("stroke-width", 1)
-                  .attr("stroke-dasharray", "2,2");
 
                 const eDotR = d.stageId ? 6 : 4.5;
                 const eDot = expandGroup!

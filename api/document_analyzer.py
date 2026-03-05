@@ -224,11 +224,6 @@ def truncate_text(text: str, max_chars: int = 30000) -> str:
 # System prompts & user prompts per document type
 # ---------------------------------------------------------------------------
 
-
-# ---------------------------------------------------------------------------
-# Two-pass amendment analysis prompts
-# ---------------------------------------------------------------------------
-
 SYSTEM_PROMPTS = {
     "amendments": """You analyze EU Parliament amendments to identify who benefits.
 For each amendment group, state: what it changes, who gains, who loses.
@@ -388,23 +383,34 @@ def query_ollama(prompt: str, system_prompt: str) -> str:
     return data.get("message", {}).get("content", "")
 
 
+_anthropic_client = None
+
+
+def _get_anthropic_client():
+    """Return a reused Anthropic client (avoids leaked semaphores on shutdown)."""
+    global _anthropic_client
+    if _anthropic_client is None:
+        try:
+            import anthropic
+        except ImportError:
+            raise ImportError(
+                "The 'anthropic' package is required for Claude API. "
+                "Install it with: pip install anthropic"
+            )
+
+        api_key = os.environ.get("ANTHROPIC_API_KEY")
+        if not api_key:
+            raise ValueError("ANTHROPIC_API_KEY environment variable is not set")
+
+        _anthropic_client = anthropic.Anthropic(api_key=api_key)
+    return _anthropic_client
+
+
 def query_anthropic(prompt: str, system_prompt: str) -> str:
     """Query the Anthropic Claude API."""
-    try:
-        import anthropic
-    except ImportError:
-        raise ImportError(
-            "The 'anthropic' package is required for Claude API. "
-            "Install it with: pip install anthropic"
-        )
-
-    api_key = os.environ.get("ANTHROPIC_API_KEY")
-    if not api_key:
-        raise ValueError("ANTHROPIC_API_KEY environment variable is not set")
-
+    client = _get_anthropic_client()
     model = os.environ.get("ANTHROPIC_MODEL", "claude-sonnet-4-20250514")
 
-    client = anthropic.Anthropic(api_key=api_key)
     message = client.messages.create(
         model=model,
         max_tokens=512,
@@ -545,9 +551,7 @@ def analyze_document(
     # Step 4: Query LLM
     try:
         if doc_type == "amendments":
-            analysis = _analyze_amendments(
-                text_for_llm, mep_name, document_ref
-            )
+            analysis = _analyze_amendments(text_for_llm, mep_name, document_ref)
         else:
             system_prompt = SYSTEM_PROMPTS.get(doc_type, SYSTEM_PROMPTS["other"])
             prompt = _build_prompt(doc_type, text_for_llm, mep_name, document_ref)

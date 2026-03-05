@@ -1,18 +1,18 @@
 import React from "react";
 
-interface AutocompleteDropdownProps {
-  items: any[];
+interface AutocompleteDropdownProps<T> {
+  items: T[];
   isOpen: boolean;
-  onSelect: (item: any) => void;
-  renderItem: (item: any) => React.ReactNode;
+  onSelect: (item: T) => void;
+  renderItem: (item: T) => React.ReactNode;
 }
 
-export default function AutocompleteDropdown({
+export default function AutocompleteDropdown<T>({
   items,
   isOpen,
   onSelect,
   renderItem,
-}: AutocompleteDropdownProps): React.ReactNode {
+}: AutocompleteDropdownProps<T>): React.ReactNode {
   if (!isOpen || items.length === 0) return null;
   return (
     <div

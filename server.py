@@ -855,6 +855,7 @@ def load_meetings_data():
         except OSError:
             pass
 
+    print(f"[CACHE] meetings_cache built: {len(_meetings_cache)} entries")
     return _meetings_cache
 
 
@@ -867,6 +868,7 @@ def get_meps():
     """
     try:
         meetings = load_meetings_data()
+        print(f"[/api/meps] cache size: {len(meetings)}")
 
         # Aggregate MEP info — each record is one meeting (already collapsed)
         meps = {}
@@ -888,6 +890,8 @@ def get_meps():
 
         # Sort by meeting count descending
         mep_list = sorted(meps.values(), key=lambda x: x['meeting_count'], reverse=True)
+        total_meetings = sum(m['meeting_count'] for m in mep_list)
+        print(f"[/api/meps] {len(mep_list)} MEPs, total meeting_count sum: {total_meetings}, top: {mep_list[0]['name']}={mep_list[0]['meeting_count']}")
 
         return jsonify({
             'meps': mep_list,
@@ -931,32 +935,41 @@ def get_timeline():
             return jsonify({'error': 'At least one filter required', 'timeline': []}), 400
 
         filtered = meetings
+        print(f"[/api/timeline] filters: mep={mep_filter} committee={committee_filter} procedure={procedure_filter} org={organization_filter} ep={ep_period}")
+        print(f"[/api/timeline] starting with {len(filtered)} meetings")
 
         # Apply filters
         if mep_filter:
             try:
                 mep_id = int(mep_filter)
                 filtered = [m for m in filtered if m.get('mep_id') == mep_id]
+                print(f"[/api/timeline] after mep filter: {len(filtered)}")
             except ValueError:
                 return jsonify({'error': 'Invalid MEP ID', 'timeline': []}), 400
 
         if committee_filter:
             filtered = [m for m in filtered if committee_filter in m.get('mep_committees', [])]
+            print(f"[/api/timeline] after committee filter: {len(filtered)}")
 
         if procedure_filter:
             filtered = [m for m in filtered if m.get('related_procedure') == procedure_filter]
+            print(f"[/api/timeline] after procedure filter: {len(filtered)}")
 
         if organization_filter:
             org_lower = organization_filter.lower()
             filtered = [m for m in filtered
                        if any(org_lower in att.get('name', '').lower() for att in m.get('attendees', []))]
+            print(f"[/api/timeline] after org filter: {len(filtered)}")
 
         # Apply EP period filter
         if ep_period == 'ep9':
             filtered = [m for m in filtered if m.get('meeting_date', '') <= EP9_END_DATE]
+            print(f"[/api/timeline] after EP9 filter: {len(filtered)}")
         elif ep_period == 'ep10':
             filtered = [m for m in filtered if m.get('meeting_date', '') >= EP10_START_DATE]
+            print(f"[/api/timeline] after EP10 filter: {len(filtered)}")
         # 'both' or any other value means no date filtering
+        print(f"[/api/timeline] final count: {len(filtered)}")
 
         # Aggregate by week
         from datetime import datetime
@@ -985,6 +998,7 @@ def get_timeline():
                     'title': m.get('title', ''),
                     'attendee_count': len(m.get('attendees', [])),
                     'procedure': m.get('related_procedure'),
+                    'organizations': [att.get('name', '') for att in m.get('attendees', []) if att.get('name')],
                 })
             if mep_id:
                 meps_involved.add(mep_id)
@@ -1133,6 +1147,8 @@ def get_committees():
 
         # Sort by count descending
         committee_list = sorted(committees.values(), key=lambda x: x['count'], reverse=True)
+        total_count = sum(c['count'] for c in committee_list)
+        print(f"[/api/committees] {len(committee_list)} committees, total meetings sum: {total_count}, top: {committee_list[0]['acronym']}={committee_list[0]['count']}")
 
         return jsonify({
             'committees': committee_list,
@@ -1162,6 +1178,8 @@ def get_procedures():
 
         # Sort by count descending
         procedure_list = sorted(procedures.values(), key=lambda x: x['count'], reverse=True)
+        total_count = sum(p['count'] for p in procedure_list)
+        print(f"[/api/procedures] {len(procedure_list)} procedures, total meetings sum: {total_count}, top: {procedure_list[0]['procedure']}={procedure_list[0]['count']}")
 
         return jsonify({
             'procedures': procedure_list,

@@ -69,6 +69,7 @@ export interface MeetingDetail {
   title: string;
   attendee_count: number;
   procedure: string | null;
+  organizations?: string[];
 }
 
 export interface TimelineEntry {

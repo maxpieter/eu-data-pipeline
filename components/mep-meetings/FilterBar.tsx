@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useState, useMemo } from "react";
 import AutocompleteDropdown from "./AutocompleteDropdown";
-import { getGroupColor, getGroupShortName } from "./utils";
+import { fuzzyMatch, getGroupColor, getGroupShortName } from "./utils";
 import type {
   MepInfo,
   CommitteeInfo,
@@ -28,19 +28,10 @@ interface FilterBarProps {
   selectedOrganization: string;
   setSelectedOrganization: (value: string) => void;
 
-  mepDropdownOpen: boolean;
-  setMepDropdownOpen: (value: boolean) => void;
-  committeeDropdownOpen: boolean;
-  setCommitteeDropdownOpen: (value: boolean) => void;
-  procedureDropdownOpen: boolean;
-  setProcedureDropdownOpen: (value: boolean) => void;
-  organizationDropdownOpen: boolean;
-  setOrganizationDropdownOpen: (value: boolean) => void;
-
-  filteredMeps: MepInfo[];
-  filteredCommittees: CommitteeInfo[];
-  filteredProcedures: ProcedureInfo[];
-  filteredOrganizations: OrganizationInfo[];
+  mepList: MepInfo[];
+  committees: CommitteeInfo[];
+  procedures: ProcedureInfo[];
+  organizations: OrganizationInfo[];
 
   epPeriod: EpPeriod;
   setEpPeriod: (value: EpPeriod) => void;
@@ -85,21 +76,69 @@ export default function FilterBar({
   setSelectedProcedure,
   selectedOrganization,
   setSelectedOrganization,
-  mepDropdownOpen,
-  setMepDropdownOpen,
-  committeeDropdownOpen,
-  setCommitteeDropdownOpen,
-  procedureDropdownOpen,
-  setProcedureDropdownOpen,
-  organizationDropdownOpen,
-  setOrganizationDropdownOpen,
-  filteredMeps,
-  filteredCommittees,
-  filteredProcedures,
-  filteredOrganizations,
+  mepList,
+  committees,
+  procedures,
+  organizations,
   epPeriod,
   setEpPeriod,
 }: FilterBarProps): React.ReactNode {
+  // Dropdown open/close state — only used by this component
+  const [mepDropdownOpen, setMepDropdownOpen] = useState(false);
+  const [committeeDropdownOpen, setCommitteeDropdownOpen] = useState(false);
+  const [procedureDropdownOpen, setProcedureDropdownOpen] = useState(false);
+  const [organizationDropdownOpen, setOrganizationDropdownOpen] =
+    useState(false);
+
+  // Filtered lists derived from raw data + search strings
+  const filteredMeps = useMemo(() => {
+    if (!mepSearch.trim()) return mepList.slice(0, 15);
+    return mepList
+      .map((mep) => ({
+        mep,
+        score: Math.max(
+          fuzzyMatch(mep.name, mepSearch),
+          fuzzyMatch(mep.country, mepSearch) * 0.8,
+          fuzzyMatch(getGroupShortName(mep.political_group), mepSearch) * 0.7,
+        ),
+      }))
+      .filter(({ score }) => score > 0)
+      .sort((a, b) => b.score - a.score)
+      .slice(0, 15)
+      .map(({ mep }) => mep);
+  }, [mepList, mepSearch]);
+
+  const filteredCommittees = useMemo(() => {
+    if (!committeeSearch.trim()) return committees.slice(0, 15);
+    return committees
+      .filter((c) =>
+        c.acronym.toLowerCase().includes(committeeSearch.toLowerCase()),
+      )
+      .slice(0, 15);
+  }, [committees, committeeSearch]);
+
+  const filteredProcedures = useMemo(() => {
+    if (!procedureSearch.trim()) return procedures.slice(0, 15);
+    return procedures
+      .filter((p) =>
+        p.procedure.toLowerCase().includes(procedureSearch.toLowerCase()),
+      )
+      .slice(0, 15);
+  }, [procedures, procedureSearch]);
+
+  const filteredOrganizations = useMemo(() => {
+    if (!organizationSearch.trim()) return organizations.slice(0, 15);
+    return organizations
+      .map((org) => ({
+        org,
+        score: fuzzyMatch(org.name, organizationSearch),
+      }))
+      .filter(({ score }) => score > 0)
+      .sort((a, b) => b.score - a.score)
+      .slice(0, 15)
+      .map(({ org }) => org);
+  }, [organizations, organizationSearch]);
+
   return (
     <>
       {/* Search Fields */}

@@ -1,12 +1,11 @@
 "use client";
 
-import { useEffect, useState, useMemo, useCallback } from "react";
+import { useEffect, useState, useCallback } from "react";
 import FilterBar from "./mep-meetings/FilterBar";
 import ActiveFilters from "./mep-meetings/ActiveFilters";
 import ResultsInfoCard from "./mep-meetings/ResultsInfoCard";
 import TimelineChart from "./mep-meetings/TimelineChart";
 import AnalysisCards from "./mep-meetings/AnalysisCards";
-import { fuzzyMatch, getGroupShortName } from "./mep-meetings/utils";
 import type {
   MepInfo,
   CommitteeInfo,
@@ -19,7 +18,7 @@ import type {
   EpPeriod,
 } from "./mep-meetings/types";
 
-export default function MepMeetingsGraph() {
+export default function MepMeetingsTimeline() {
   // Data
   const [mepList, setMepList] = useState<MepInfo[]>([]);
   const [committees, setCommittees] = useState<CommitteeInfo[]>([]);
@@ -46,13 +45,6 @@ export default function MepMeetingsGraph() {
   const [procedureSearch, setProcedureSearch] = useState("");
   const [organizationSearch, setOrganizationSearch] = useState("");
 
-  // Dropdown visibility
-  const [mepDropdownOpen, setMepDropdownOpen] = useState(false);
-  const [committeeDropdownOpen, setCommitteeDropdownOpen] = useState(false);
-  const [procedureDropdownOpen, setProcedureDropdownOpen] = useState(false);
-  const [organizationDropdownOpen, setOrganizationDropdownOpen] =
-    useState(false);
-
   // EP Period filter
   const [epPeriod, setEpPeriod] = useState<EpPeriod>("both");
 
@@ -67,55 +59,6 @@ export default function MepMeetingsGraph() {
   // Whether progress bar should show
   const hasProgressBar =
     procedureEvents != null && procedureEvents.key_events.length > 0;
-
-  // Filtered lists
-  const filteredMeps = useMemo(() => {
-    if (!mepSearch.trim()) return mepList.slice(0, 15);
-    return mepList
-      .map((mep) => ({
-        mep,
-        score: Math.max(
-          fuzzyMatch(mep.name, mepSearch),
-          fuzzyMatch(mep.country, mepSearch) * 0.8,
-          fuzzyMatch(getGroupShortName(mep.political_group), mepSearch) * 0.7,
-        ),
-      }))
-      .filter(({ score }) => score > 0)
-      .sort((a, b) => b.score - a.score)
-      .slice(0, 15)
-      .map(({ mep }) => mep);
-  }, [mepList, mepSearch]);
-
-  const filteredCommittees = useMemo(() => {
-    if (!committeeSearch.trim()) return committees.slice(0, 15);
-    return committees
-      .filter((c) =>
-        c.acronym.toLowerCase().includes(committeeSearch.toLowerCase()),
-      )
-      .slice(0, 15);
-  }, [committees, committeeSearch]);
-
-  const filteredProcedures = useMemo(() => {
-    if (!procedureSearch.trim()) return procedures.slice(0, 15);
-    return procedures
-      .filter((p) =>
-        p.procedure.toLowerCase().includes(procedureSearch.toLowerCase()),
-      )
-      .slice(0, 15);
-  }, [procedures, procedureSearch]);
-
-  const filteredOrganizations = useMemo(() => {
-    if (!organizationSearch.trim()) return organizations.slice(0, 15);
-    return organizations
-      .map((org) => ({
-        org,
-        score: fuzzyMatch(org.name, organizationSearch),
-      }))
-      .filter(({ score }) => score > 0)
-      .sort((a, b) => b.score - a.score)
-      .slice(0, 15)
-      .map(({ org }) => org);
-  }, [organizations, organizationSearch]);
 
   // Fetch initial data
   useEffect(() => {
@@ -142,10 +85,21 @@ export default function MepMeetingsGraph() {
             proceduresRes.json(),
             organizationsRes.json(),
           ]);
-        setMepList(mepsData.meps || []);
-        setCommittees(committeesData.committees || []);
-        setProcedures(proceduresData.procedures || []);
-        setOrganizations(organizationsData.organizations || []);
+        const meps = mepsData.meps || [];
+        const comms = committeesData.committees || [];
+        const procs = proceduresData.procedures || [];
+        const orgs = organizationsData.organizations || [];
+        console.log("[MepMeetingsTimeline] Initial data loaded:", {
+          meps: meps.length,
+          topMep: meps[0] ? `${meps[0].name}=${meps[0].meeting_count}` : "none",
+          committees: comms.length,
+          procedures: procs.length,
+          organizations: orgs.length,
+        });
+        setMepList(meps);
+        setCommittees(comms);
+        setProcedures(procs);
+        setOrganizations(orgs);
         setError(null);
       } catch (err) {
         setError("Failed to load data. Make sure server.py is running.");
@@ -156,29 +110,35 @@ export default function MepMeetingsGraph() {
     fetchData();
   }, []);
 
+  const restoreProcedures = useCallback(async () => {
+    try {
+      const res = await fetch("/api/procedures");
+      if (res.ok) {
+        const data = await res.json();
+        setProcedures(data.procedures || []);
+      }
+    } catch (err) {
+      console.error("Failed to restore procedures:", err);
+    }
+  }, []);
+
   // Fetch MEP-specific procedures when MEP is selected, restore global when cleared
   useEffect(() => {
-    async function updateProcedures() {
-      try {
-        if (selectedMep) {
-          const res = await fetch(`/api/meps/${selectedMep.id}/procedures`);
-          if (res.ok) {
-            const data = await res.json();
-            setProcedures(data.procedures || []);
+    if (selectedMep) {
+      fetch(`/api/meps/${selectedMep.id}/procedures`)
+        .then((res) => (res.ok ? res.json() : null))
+        .then((data) => {
+          if (data) {
+            const procs = data.procedures || [];
+            console.log(`[MepMeetingsTimeline] MEP ${selectedMep.id} procedures:`, procs.length, "total count sum:", procs.reduce((s: number, p: { count: number }) => s + p.count, 0));
+            setProcedures(procs);
           }
-        } else {
-          const res = await fetch("/api/procedures");
-          if (res.ok) {
-            const data = await res.json();
-            setProcedures(data.procedures || []);
-          }
-        }
-      } catch (err) {
-        console.error("Failed to fetch procedures:", err);
-      }
+        })
+        .catch((err) => console.error("Failed to fetch procedures:", err));
+    } else {
+      restoreProcedures();
     }
-    updateProcedures();
-  }, [selectedMep]);
+  }, [selectedMep, restoreProcedures]);
 
   // Fetch timeline based on selections
   useEffect(() => {
@@ -203,9 +163,18 @@ export default function MepMeetingsGraph() {
           params.set("organization", selectedOrganization);
         if (epPeriod !== "both") params.set("ep_period", epPeriod);
 
-        const res = await fetch(`/api/timeline?${params.toString()}`);
+        const timelineUrl = `/api/timeline?${params.toString()}`;
+        console.log("[MepMeetingsTimeline] Fetching timeline:", timelineUrl);
+        const res = await fetch(timelineUrl);
         if (!res.ok) throw new Error("Failed to fetch timeline");
         const data = await res.json();
+        console.log("[MepMeetingsTimeline] Timeline response:", {
+          total_meetings: data.total_meetings,
+          meps_involved: data.meps_involved,
+          timeline_weeks: data.timeline?.length,
+          sum_weekly_counts: data.timeline?.reduce((s: number, w: { count: number }) => s + w.count, 0),
+          filters: data.filters,
+        });
         setTimelineData(data);
         setError(null);
       } catch (err) {
@@ -328,7 +297,7 @@ export default function MepMeetingsGraph() {
     setAnalysisCards((prev) => prev.filter((c) => c.id !== cardId));
   }, []);
 
-  const clearAll = async () => {
+  const clearAll = () => {
     setSelectedMep(null);
     setSelectedCommittee("");
     setSelectedProcedure("");
@@ -338,29 +307,13 @@ export default function MepMeetingsGraph() {
     setProcedureSearch("");
     setOrganizationSearch("");
     setEpPeriod("both");
-    try {
-      const res = await fetch("/api/procedures");
-      if (res.ok) {
-        const data = await res.json();
-        setProcedures(data.procedures || []);
-      }
-    } catch (err) {
-      console.error("Failed to restore procedures:", err);
-    }
+    restoreProcedures();
   };
 
-  const handleClearMep = async () => {
+  const handleClearMep = () => {
     setSelectedMep(null);
     setMepSearch("");
-    try {
-      const res = await fetch("/api/procedures");
-      if (res.ok) {
-        const data = await res.json();
-        setProcedures(data.procedures || []);
-      }
-    } catch (err) {
-      console.error("Failed to restore procedures:", err);
-    }
+    restoreProcedures();
   };
 
   return (
@@ -399,18 +352,10 @@ export default function MepMeetingsGraph() {
         setSelectedProcedure={setSelectedProcedure}
         selectedOrganization={selectedOrganization}
         setSelectedOrganization={setSelectedOrganization}
-        mepDropdownOpen={mepDropdownOpen}
-        setMepDropdownOpen={setMepDropdownOpen}
-        committeeDropdownOpen={committeeDropdownOpen}
-        setCommitteeDropdownOpen={setCommitteeDropdownOpen}
-        procedureDropdownOpen={procedureDropdownOpen}
-        setProcedureDropdownOpen={setProcedureDropdownOpen}
-        organizationDropdownOpen={organizationDropdownOpen}
-        setOrganizationDropdownOpen={setOrganizationDropdownOpen}
-        filteredMeps={filteredMeps}
-        filteredCommittees={filteredCommittees}
-        filteredProcedures={filteredProcedures}
-        filteredOrganizations={filteredOrganizations}
+        mepList={mepList}
+        committees={committees}
+        procedures={procedures}
+        organizations={organizations}
         epPeriod={epPeriod}
         setEpPeriod={setEpPeriod}
       />

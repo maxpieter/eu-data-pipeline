@@ -193,7 +193,7 @@ export async function fetchCommittees(): Promise<CommitteeInfo[]> {
  * Fetches the full list of all procedures with meeting counts.
  *
  * This endpoint returns rich objects (with `procedure` and `count` fields),
- * suitable for display in the MepMeetingsGraph procedure picker.
+ * suitable for display in the MepMeetingsTimeline procedure picker.
  *
  * Endpoint: `GET /api/procedures`
  */
@@ -216,7 +216,7 @@ export async function fetchOrganizations(): Promise<OrganizationInfo[]> {
  * Fetches procedures linked to a specific MEP with meeting counts.
  *
  * Returns the same rich object shape as `fetchMeetingProcedures`, so the
- * result can be used directly in the MepMeetingsGraph procedure picker.
+ * result can be used directly in the MepMeetingsTimeline procedure picker.
  *
  * Endpoint: `GET /api/meps/:mepId/procedures`
  * @param mepId - Numeric MEP identifier
