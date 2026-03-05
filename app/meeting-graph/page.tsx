@@ -1,14 +1,31 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { Suspense, useState, useEffect } from 'react'
+import { useSearchParams } from 'next/navigation'
 import Header from '@/components/Header'
 import NetworkGraph from '@/components/NetworkGraph'
 import Sidebar from '@/components/Sidebar'
 import { GraphFilters, defaultFilters, GraphData } from '@/lib/data'
+import type { GraphMode, FilterType } from '@/lib/data'
 
-export default function NetworkPage() {
+function useInitialFilters(): GraphFilters {
+  const searchParams = useSearchParams()
+  const procedure = searchParams.get('procedure')
+  const mode = searchParams.get('mode') as GraphMode | null
+  const filterType = searchParams.get('filterType') as FilterType | null
+
+  return {
+    ...defaultFilters,
+    ...(mode && { mode }),
+    ...(filterType && { filterType }),
+    ...(procedure && { procedure, filterType: filterType ?? 'procedure' }),
+  }
+}
+
+function NetworkPageInner() {
+  const initialFilters = useInitialFilters()
   const [chargeStrength, setChargeStrength] = useState(-150)
-  const [filters, setFilters] = useState<GraphFilters>(defaultFilters)
+  const [filters, setFilters] = useState<GraphFilters>(initialFilters)
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false)
   const [graphData, setGraphData] = useState<GraphData | null>(null)
 
@@ -63,5 +80,13 @@ export default function NetworkPage() {
         </main>
       </div>
     </>
+  )
+}
+
+export default function NetworkPage() {
+  return (
+    <Suspense>
+      <NetworkPageInner />
+    </Suspense>
   )
 }

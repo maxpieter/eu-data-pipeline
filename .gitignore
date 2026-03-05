@@ -31,6 +31,10 @@ npm-debug.log*
 next-env.d.ts
 .env*.local
 
+# Large generated data files (rebuild with: python scripts/build_meetings_json.py)
+data/meetings_data_clean.json
+data/organizations_preprocessed.json
+
 # cache
 api/__pycache__/
 debug_*.py

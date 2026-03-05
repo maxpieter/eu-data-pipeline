@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 import { getGroupColor, getGroupShortName } from "./utils";
 import type { MepInfo, TimelineData, ProcedureEventsData } from "./types";
 
@@ -123,6 +124,31 @@ export default function ResultsInfoCard({
             MEPs
           </div>
         </div>
+      )}
+      {selectedProcedure && (
+        <Link
+          href={`/meeting-graph?mode=mep&filterType=procedure&procedure=${encodeURIComponent(selectedProcedure)}`}
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            gap: "0.375rem",
+            padding: "0.5rem 1rem",
+            background: "#3b82f6",
+            color: "white",
+            borderRadius: "8px",
+            fontSize: "0.8125rem",
+            fontWeight: 600,
+            textDecoration: "none",
+            whiteSpace: "nowrap",
+            marginLeft: "auto",
+          }}
+        >
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <circle cx="6" cy="6" r="2" /><circle cx="18" cy="6" r="2" /><circle cx="6" cy="18" r="2" /><circle cx="18" cy="18" r="2" />
+            <line x1="8" y1="6" x2="16" y2="6" /><line x1="6" y1="8" x2="6" y2="16" /><line x1="8" y1="18" x2="16" y2="18" /><line x1="18" y1="8" x2="18" y2="16" />
+          </svg>
+          View Network
+        </Link>
       )}
     </div>
   );
